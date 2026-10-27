@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apertura Guía 5 — Competencia 220501114 | SENA GDAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Paleta SENA Institucional Premium Claras */
+  --sena-verde: #39a900;
+  --sena-verde-dark: #236b00;
+  --sena-verde-soft: #44c702;
+  --sena-verde-bg: rgba(57, 169, 0, 0.08);
+  --sena-verde-border: rgba(57, 169, 0, 0.28);
+  
+  --sena-naranja: #ff6b00;
+  --sena-naranja-dark: #c2410c;
+  --sena-naranja-bg: rgba(255, 107, 0, 0.08);
+  --sena-naranja-border: rgba(255, 107, 0, 0.28);
+
+  --azul-tech: #0284c7;
+  --azul-tech-dark: #0369a1;
+  --azul-bg: rgba(2, 132, 199, 0.08);
+  --azul-border: rgba(2, 132, 199, 0.28);
+
+  --purpura: #7c3aed;
+  --purpura-bg: rgba(124, 58, 237, 0.08);
+
+  /* Fondos y Superficies Claras */
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --borde-light: #e2e8f0;
+  --borde-focus: #cbd5e1;
+  
+  --texto-main: #0f172a;
+  --texto-muted: #475569;
+  --texto-sub: #64748b;
+  
+  --shadow-card: 0 10px 30px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
+  --shadow-hover: 0 20px 40px rgba(57, 169, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
+  --radius-xl: 20px;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--texto-main);
+  background-color: var(--bg-main);
+  background-image: 
+    radial-gradient(circle at 5% 10%, rgba(57, 169, 0, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 95% 90%, rgba(255, 107, 0, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(2, 132, 199, 0.03) 0%, transparent 60%);
+  background-attachment: fixed;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ==========================================================
+   SIDEBAR LATERAL OBLIGATORIO (280px)
+   ========================================================== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 280px;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-right: 1px solid var(--borde-light);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 4px 0 24px rgba(15, 23, 42, 0.04);
+}
+
+.sidebar.collapsed {
+  transform: translateX(-100%);
+}
+
+.sidebar-header {
+  padding: 18px 16px;
+  border-bottom: 1px solid var(--borde-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-logo {
+  background: var(--sena-verde);
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px -2px rgba(57, 169, 0, 0.4);
+}
+
+.sidebar-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.sidebar-sub {
+  font-size: 10px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.sidebar-toggle-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #64748b;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sidebar-toggle-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-color: #e2e8f0;
+}
+
+/* Botón Flotante Reactivo */
+.floating-sidebar-toggle {
+  position: fixed;
+  top: 18px;
+  left: 20px;
+  z-index: 999;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #1e293b;
+  height: 38px;
+  padding: 0 14px 0 10px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  display: none;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.floating-sidebar-toggle:hover {
+  background: #ffffff;
+  color: var(--sena-verde-dark);
+  border-color: var(--sena-verde);
+  box-shadow: 0 8px 22px rgba(57, 169, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+.sidebar.collapsed ~ .floating-sidebar-toggle,
+.floating-sidebar-toggle.visible {
+  display: inline-flex !important;
+  animation: fadeInToggle 0.25s ease-out forwards;
+}
+
+@keyframes fadeInToggle {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.sidebar-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 10px;
+}
+
+.sidebar-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.nav-group {
+  margin-bottom: 18px;
+}
+
+.nav-group-title {
+  font-size: 9.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #94a3b8;
+  padding: 0 10px 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  color: #475569;
+  text-decoration: none;
+  font-size: 11.8px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  margin-bottom: 2px;
+  position: relative;
+}
+
+.nav-link:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.nav-link.active {
+  background: rgba(57, 169, 0, 0.1);
+  color: var(--sena-verde-dark);
+  font-weight: 700;
+}
+
+.nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3.5px;
+  background: var(--sena-verde);
+  border-radius: 0 4px 4px 0;
+}
+
+.nav-link-num {
+  font-size: 10px;
+  font-weight: 700;
+  color: #94a3b8;
+  min-width: 15px;
+}
+
+.nav-link.active .nav-link-num {
+  color: var(--sena-verde);
+}
+
+.nav-link-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.nav-link:hover .nav-link-icon {
+  color: #0f172a;
+}
+
+.nav-link.active .nav-link-icon {
+  color: var(--sena-verde-dark);
+}
+
+.nav-link-text {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-footer {
+  padding: 12px 14px;
+  border-top: 1px solid #e2e8f0;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sidebar-corte-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 107, 0, 0.08);
+  border: 1px solid rgba(255, 107, 0, 0.22);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--sena-naranja-dark);
+}
+
+.sidebar-link-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #334155;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.sidebar-link-btn:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+/* ==========================================================
+   CONTENIDO PRINCIPAL ADAPTABLE (.main-content)
+   ========================================================== */
+.main-content {
+  margin-left: 280px;
+  min-height: 100vh;
+  transition: margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.collapsed ~ .main-content {
+  margin-left: 0;
+}
+
+/* Barra Superior de Estado y Controles */
+.content-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--borde-light);
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topbar-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--texto-sub);
+  font-weight: 600;
+}
+
+.topbar-breadcrumbs .sep { color: #cbd5e1; }
+.topbar-breadcrumbs .current { color: var(--sena-verde-dark); font-weight: 700; }
+
+.topbar-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.topbar-tool-btn {
+  background: #ffffff;
+  border: 1px solid var(--borde-light);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--texto-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.topbar-tool-btn:hover {
+  background: #f8fafc;
+  color: var(--texto-main);
+  border-color: #cbd5e1;
+}
+
+/* Barra de Progreso Global */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--sena-verde), var(--sena-naranja));
+  width: 0%;
+  z-index: 2000;
+  transition: width 0.1s ease;
+}
+
+/* ==========================================================
+   ESTRUCTURA DE CADA SLIDE
+   ========================================================== */
+.slide {
+  min-height: 100vh;
+  padding: 40px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px dashed #e2e8f0;
+  position: relative;
+}
+
+.slide-inner {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.slide-num-indicator {
+  position: absolute;
+  top: 24px;
+  right: 48px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--texto-sub);
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--borde-light);
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Headers y Tipografía */
+.slide-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--sena-verde-bg);
+  border: 1px solid var(--sena-verde-border);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--sena-verde-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 14px;
+}
+
+.slide-header-badge.tech {
+  background: var(--azul-bg);
+  border-color: var(--azul-border);
+  color: var(--azul-tech);
+}
+
+.slide-header-badge.naranja {
+  background: var(--sena-naranja-bg);
+  border-color: var(--sena-naranja-border);
+  color: var(--sena-naranja-dark);
+}
+
+.slide-header-badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.sec-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(24px, 2.5vw, 34px);
+  font-weight: 800;
+  color: var(--texto-main);
+  line-height: 1.25;
+  margin-bottom: 10px;
+  letter-spacing: -0.5px;
+}
+
+.sec-desc {
+  font-size: 15px;
+  color: var(--texto-muted);
+  max-width: 860px;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.grad-verde {
+  background: linear-gradient(135deg, var(--sena-verde), var(--sena-verde-dark));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.grad-naranja {
+  background: linear-gradient(135deg, var(--sena-naranja), #ea580c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.grad-tech {
+  background: linear-gradient(135deg, var(--azul-tech), #1d4ed8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ==========================================================
+   COMPONENTES Y TARJETAS PREMIUM
+   ========================================================== */
+.card-premium {
+  background: linear-gradient(175deg, #ffffff 0%, #fbfcfe 65%, #f8fafc 100%);
+  border: 1px solid var(--borde-light);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-premium:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(57, 169, 0, 0.3);
+}
+
+.card-premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3.5px;
+  background: #cbd5e1;
+}
+
+.card-premium.top-verde::before { background: linear-gradient(90deg, var(--sena-verde), var(--sena-verde-dark)); }
+.card-premium.top-naranja::before { background: linear-gradient(90deg, var(--sena-naranja), #ea580c); }
+.card-premium.top-tech::before { background: linear-gradient(90deg, var(--azul-tech), #1d4ed8); }
+
+.card-header-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.card-icon-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  color: var(--texto-main);
+  flex-shrink: 0;
+}
+
+.card-icon-badge.verde { background: var(--sena-verde-bg); color: var(--sena-verde-dark); }
+.card-icon-badge.naranja { background: var(--sena-naranja-bg); color: var(--sena-naranja-dark); }
+.card-icon-badge.tech { background: var(--azul-bg); color: var(--azul-tech); }
+
+.card-pill-tag {
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 3px 9px;
+  border-radius: 14px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.card-pill-tag.verde { background: var(--sena-verde-bg); color: var(--sena-verde-dark); border: 1px solid var(--sena-verde-border); }
+.card-pill-tag.naranja { background: var(--sena-naranja-bg); color: var(--sena-naranja-dark); border: 1px solid var(--sena-naranja-border); }
+.card-pill-tag.tech { background: var(--azul-bg); color: var(--azul-tech); border: 1px solid var(--azul-border); }
+
+.card-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--texto-main);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+
+.card-text {
+  font-size: 13.5px;
+  color: var(--texto-muted);
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+
+.list-premium {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--texto-muted);
+}
+
+.list-premium li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.list-premium li svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* Grillas */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+
+/* Hero Portada */
+.hero-wrapper {
+  display: grid;
+  grid-template-columns: 1.25fr 0.95fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.hero-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(30px, 3.8vw, 46px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.8px;
+  color: var(--texto-main);
+  margin-bottom: 16px;
+}
+
+.hero-subtitle {
+  font-size: 16px;
+  color: var(--texto-muted);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.hero-card-widget {
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  padding: 30px;
+  border: 1px solid var(--borde-light);
+  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.06);
+}
+
+.hero-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.meta-box {
+  background: #f8fafc;
+  border: 1px solid var(--borde-light);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+
+.meta-box-title {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--texto-sub);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.meta-box-val {
+  font-family: 'Outfit', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--texto-main);
+  line-height: 1.2;
+}
+
+.meta-box-sub {
+  font-size: 11px;
+  color: var(--texto-sub);
+  margin-top: 4px;
+}
+
+/* Callout Box Institucional */
+.callout-box {
+  background: var(--sena-verde-bg);
+  border: 1.5px solid var(--sena-verde-border);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.callout-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid var(--sena-verde-border);
+  color: var(--sena-verde-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.callout-content h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--sena-verde-dark);
+  margin-bottom: 4px;
+}
+
+.callout-content p {
+  font-size: 13.5px;
+  color: var(--texto-main);
+  line-height: 1.5;
+}
+
+/* Tabla de Matriz de Sesiones */
+.table-wrapper {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--borde-light);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: var(--shadow-card);
+  width: 100%;
+}
+
+.matriz-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.matriz-table th {
+  background: #f8fafc;
+  padding: 12px 18px;
+  font-weight: 700;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--texto-sub);
+  border-bottom: 1px solid var(--borde-light);
+}
+
+.matriz-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--borde-light);
+  vertical-align: middle;
+}
+
+.matriz-table tr:hover {
+  background: #fbfcfe;
+}
+
+.sesion-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  background: #f1f5f9;
+  color: var(--texto-main);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--borde-light);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.evidencia-tag {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 600;
+  background: #f1f5f9;
+  border: 1px solid var(--borde-light);
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin: 2px;
+  color: var(--texto-muted);
+  white-space: nowrap;
+}
+
+.deadline-badge {
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.deadline-badge.corte1 {
+  color: var(--sena-naranja-dark);
+  background: var(--sena-naranja-bg);
+  border: 1px solid var(--sena-naranja-border);
+}
+
+.deadline-badge.corte2 {
+  color: var(--sena-verde-dark);
+  background: var(--sena-verde-bg);
+  border: 1px solid var(--sena-verde-border);
+}
+
+/* Botones Principales */
+.btn-action-pro {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+}
+
+.btn-action-pro.verde {
+  background: linear-gradient(135deg, var(--sena-verde), var(--sena-verde-dark));
+  color: #fff;
+  box-shadow: 0 4px 14px var(--sena-verde-bg);
+}
+
+.btn-action-pro.verde:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(57, 169, 0, 0.25);
+}
+
+.btn-action-pro.tech {
+  background: linear-gradient(135deg, var(--azul-tech), var(--azul-tech-dark));
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.25);
+}
+
+.btn-action-pro.tech:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(2, 132, 199, 0.35);
+}
+
+.btn-action-pro.neutral {
+  background: #ffffff;
+  color: var(--texto-main);
+  border: 1px solid var(--borde-light);
+}
+
+.btn-action-pro.neutral:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+/* Checklist Interactivo */
+.checklist-card {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--borde-light);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+}
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f5f9;
+  cursor: pointer;
+}
+
+.checklist-item:last-child { border-bottom: none; }
+
+.checklist-checkbox {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: 2px solid #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  background: #ffffff;
+}
+
+.checklist-item.checked .checklist-checkbox {
+  background: var(--sena-verde);
+  border-color: var(--sena-verde);
+  color: #ffffff;
+}
+
+.checklist-item.checked .checklist-text h5 {
+  text-decoration: line-through;
+  color: #94a3b8;
+}
+
+.checklist-text h5 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--texto-main);
+  margin-bottom: 3px;
+  transition: color 0.2s;
+}
+
+.checklist-text p {
+  font-size: 12.5px;
+  color: var(--texto-sub);
+  line-height: 1.4;
+}
+
+/* Toast de Notificación */
+.toast-notice {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 3000;
+}
+
+.toast-notice.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ==========================================================
+   BACKDROP Y RESPONSIVIDAD MULTIDISPOSITIVO (Móvil / Tablet)
+   ========================================================== */
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1099;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.sidebar-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    transform: translateX(-100%);
+    z-index: 1200;
+  }
+  .sidebar.mobile-open {
+    transform: translateX(0);
+    box-shadow: 10px 0 35px rgba(0, 0, 0, 0.25);
+  }
+  .main-content {
+    margin-left: 0 !important;
+  }
+  .floating-sidebar-toggle {
+    display: inline-flex !important;
+    z-index: 1050;
+  }
+  .hero-wrapper {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .slide {
+    padding: 60px 18px 40px;
+  }
+  .slide-inner {
+    max-width: 100%;
+  }
+  .slide-num-indicator {
+    top: 14px;
+    right: 18px;
+    font-size: 10.5px;
+    padding: 3px 8px;
+  }
+  .floating-sidebar-toggle {
+    top: 12px;
+    left: 14px;
+    height: 34px;
+    padding: 0 10px;
+    font-size: 11px;
+  }
+  .floating-sidebar-toggle span {
+    display: none;
+  }
+  .content-topbar {
+    padding: 8px 14px;
+    padding-left: 56px;
+    font-size: 11px;
+  }
+  .topbar-breadcrumbs {
+    font-size: 10.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .topbar-tools {
+    display: none;
+  }
+  .sec-title {
+    font-size: clamp(20px, 5.5vw, 26px);
+  }
+  .sec-desc {
+    font-size: 13.5px;
+    margin-bottom: 20px;
+  }
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .hero-cta-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cta-btn {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .matriz-table {
+    min-width: 580px;
+    font-size: 12px;
+  }
+  .matriz-table th,
+  .matriz-table td {
+    padding: 10px 12px;
+  }
+  .sesion-badge,
+  .evidencia-tag,
+  .deadline-badge {
+    font-size: 10.5px;
+    padding: 3px 7px;
+  }
+  .callout-content h4 {
+    font-size: 13.5px;
+  }
+  .callout-content p {
+    font-size: 12.5px;
+  }
+}
+
+/* ===== Extensiones GA5 (mismo sistema de diseño) ===== */
+.x-code-wrap{margin:14px 0;border-radius:12px;overflow:hidden;border:1px solid #1e293b;box-shadow:var(--shadow-card)}
+.x-code-head{display:flex;justify-content:space-between;align-items:center;background:#1e293b;color:#cbd5e1;padding:8px 14px;font-size:11.5px;font-weight:700;font-family:'Outfit',sans-serif}
+.x-code{background:#0f172a;color:#e2e8f0;padding:14px 18px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.7;overflow-x:auto;white-space:pre;margin:0}
+.x-copy{background:#39a900;color:#fff;border:0;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:800;cursor:pointer;font-family:'Outfit',sans-serif}
+.x-copy:hover{background:#44c702}.x-flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:18px 0}
+.x-flow .x-node{background:#fff;border:1px solid var(--borde-light);border-radius:14px;padding:14px;box-shadow:var(--shadow-card);position:relative}
+.x-flow .x-node h4{font-family:'Outfit',sans-serif;font-size:14px;margin:6px 0 4px}
+.x-flow .x-node p{font-size:11.8px;color:var(--texto-muted);line-height:1.5}
+.x-flow .x-node .x-tag{font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;border-radius:10px;display:inline-block}
+.x-tag.verde{background:var(--sena-verde-bg);color:var(--sena-verde-dark)}
+.x-tag.naranja{background:var(--sena-naranja-bg);color:var(--sena-naranja-dark)}
+.x-tag.tech{background:var(--azul-bg);color:var(--azul-tech-dark)}
+.x-tag.purpura{background:var(--purpura-bg);color:var(--purpura)}
+.x-steps{display:grid;gap:12px;margin:16px 0}
+.x-step{display:flex;gap:14px;background:#fff;border:1px solid var(--borde-light);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow-card)}
+.x-step-num{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:var(--sena-verde);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:800}
+.x-step h4{font-family:'Outfit',sans-serif;font-size:15px;margin-bottom:2px}
+.x-step p{font-size:12.8px;color:var(--texto-muted);line-height:1.55}
+.x-faq details{background:#fff;border:1px solid var(--borde-light);border-radius:12px;padding:12px 16px;margin-bottom:8px}
+.x-faq summary{cursor:pointer;font-weight:700;font-size:13.5px}
+.x-faq details p{font-size:13px;color:var(--texto-muted);margin-top:8px;line-height:1.6}
+.x-agenda{margin:14px 0}
+.x-agenda .bar{display:flex;height:12px;border-radius:8px;overflow:hidden;gap:3px;margin-bottom:6px}
+.x-agenda .bar span{background:var(--c);display:block}
+.x-agenda .bar-lbl{display:flex;gap:3px;font-size:10.5px;font-weight:800;color:var(--texto-sub);margin-bottom:16px}
+.x-agenda .bar-lbl span{text-align:left;overflow:hidden;white-space:nowrap}
+.x-agenda .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+@media (min-width:1280px){.x-agenda .cards{grid-template-columns:repeat(5,1fr)}.x-agenda .card{padding:16px 14px 14px}.x-agenda .card h4{font-size:14.5px}}
+.x-agenda .card{position:relative;background:#fff;border:1px solid var(--borde-light);border-top:4px solid var(--c);border-radius:16px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow-card);transition:transform .2s,box-shadow .2s}
+.x-agenda .card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(15,23,42,.10)}
+.x-agenda .card .top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.x-agenda .card .n{width:30px;height:30px;border-radius:50%;background:var(--c);color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center}
+.x-agenda .card .t{font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;color:var(--c);background:color-mix(in srgb,var(--c) 12%,#fff);padding:3px 10px;border-radius:20px}
+.x-agenda .card h4{font-family:'Syne',sans-serif;font-size:15.5px;font-weight:800;line-height:1.25;color:var(--texto-main);margin:4px 0 0}
+.x-agenda .card p{font-size:12.5px;line-height:1.55;color:var(--texto-muted);margin:0;flex:1}
+.x-agenda .card .m{font-size:10.5px;font-weight:800;color:var(--texto-sub);border-top:1px dashed var(--borde-light);padding-top:8px;display:flex;justify-content:space-between}
+.x-mini{font-size:11.5px;color:var(--texto-sub)}
+.x-pill{display:inline-block;font-size:10.5px;font-weight:800;padding:2px 9px;border-radius:10px;margin:0 4px 4px 0}
+@media (max-width:1024px){.x-flow{grid-template-columns:1fr 1fr}}
+
+.x-ctx{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.x-chip{font-size:11.5px;font-weight:700;line-height:1.45;padding:6px 12px;border-radius:10px;border:1px solid}
+.x-chip b{font-weight:800}
+.x-chip.comp{background:var(--sena-verde-bg);border-color:var(--sena-verde-border);color:var(--sena-verde-dark)}
+.x-chip.rap{background:color-mix(in srgb,var(--sena-naranja) 10%,#fff);border-color:color-mix(in srgb,var(--sena-naranja) 35%,#fff);color:#b34700}
+.x-aporte{flex-basis:100%;font-size:12.5px;color:var(--texto-muted);background:#fff;border:1px dashed var(--borde-light);border-radius:10px;padding:7px 12px;line-height:1.5}
+.x-aporte b{color:var(--texto-main)}
+.x-note{border-radius:14px;padding:16px 20px;margin:16px 0;border:1px solid;border-left-width:5px;font-size:13.5px;line-height:1.65;color:var(--texto-muted)}
+.x-note h5{font-family:'Outfit',sans-serif;font-size:11.5px;text-transform:uppercase;letter-spacing:.9px;font-weight:800;margin:0 0 6px}
+.x-note p{margin:0}
+.x-note strong{color:var(--texto-main)}
+.x-note.piensa{background:color-mix(in srgb,#7c3aed 7%,#fff);border-color:color-mix(in srgb,#7c3aed 28%,#fff);border-left-color:#7c3aed}.x-note.piensa h5{color:#7c3aed}
+.x-note.analogia{background:color-mix(in srgb,#f59e0b 9%,#fff);border-color:color-mix(in srgb,#f59e0b 32%,#fff);border-left-color:#f59e0b}.x-note.analogia h5{color:#b45309}
+.x-note.llevar{background:var(--sena-verde-bg);border-color:var(--sena-verde-border);border-left-color:var(--sena-verde)}.x-note.llevar h5{color:var(--sena-verde-dark)}
+.x-note details,.x-quiz details{margin-top:10px;background:#fff;border:1px solid var(--borde-light);border-radius:10px;padding:8px 14px}
+.x-note summary,.x-quiz summary{cursor:pointer;font-weight:700;font-size:12.5px;color:var(--sena-verde-dark)}
+.x-note details p,.x-quiz details p{margin:8px 0 0;font-size:13px;color:var(--texto-muted)}
+.x-chain{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap;margin:20px 0}
+.x-chain .st{flex:1 1 210px;background:#fff;border:2px solid var(--borde-light);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow-card)}
+.x-chain .st.comp{border-color:var(--sena-verde-border);background:linear-gradient(135deg,var(--sena-verde-bg),#fff)}
+.x-chain .st.rap{border-color:color-mix(in srgb,var(--sena-naranja) 35%,#fff);background:linear-gradient(135deg,color-mix(in srgb,var(--sena-naranja) 9%,#fff),#fff)}
+.x-chain .st.aa{border-color:color-mix(in srgb,#0284c7 30%,#fff);background:linear-gradient(135deg,color-mix(in srgb,#0284c7 8%,#fff),#fff)}
+.x-chain .lb{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--texto-sub);margin-bottom:6px}
+.x-chain .tt{font-family:'Syne',sans-serif;font-size:15.5px;font-weight:800;color:var(--texto-main);line-height:1.25;margin-bottom:6px}
+.x-chain .tx{font-size:12.5px;color:var(--texto-muted);line-height:1.5}
+.x-chain .ar{align-self:center;color:var(--sena-verde);font-size:22px;font-weight:800}
+.x-ev{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:18px 0}
+.x-ev .e{position:relative;background:#fff;border:1px solid var(--borde-light);border-top:4px solid var(--c);border-radius:14px;padding:14px 14px 12px;box-shadow:var(--shadow-card);display:flex;flex-direction:column;gap:6px}
+.x-ev .e.hoy{border:2px solid var(--c);box-shadow:0 8px 22px color-mix(in srgb,var(--c) 22%,transparent)}
+.x-ev .e .id{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--c)}
+.x-ev .e .nm{font-size:12.5px;font-weight:700;color:var(--texto-main);line-height:1.35;flex:1}
+.x-ev .e .mt{font-size:11px;color:var(--texto-sub);line-height:1.5;border-top:1px dashed var(--borde-light);padding-top:6px}
+.x-ev .e .tag{position:absolute;top:10px;right:10px;font-size:9.5px;font-weight:800;background:var(--c);color:#fff;padding:2px 8px;border-radius:10px}
+.x-quiz{display:grid;gap:10px;margin:16px 0}
+.x-quiz .q{background:#fff;border:1px solid var(--borde-light);border-radius:14px;padding:14px 18px;display:grid;grid-template-columns:36px 1fr;gap:12px;box-shadow:var(--shadow-card)}
+.x-quiz .q .n{width:30px;height:30px;border-radius:50%;background:var(--sena-verde);color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.x-quiz .q .t{font-size:13.5px;font-weight:600;color:var(--texto-main);line-height:1.5}
+@media (max-width:768px){.x-chain .ar{transform:rotate(90deg);width:100%;text-align:center}.x-chip{flex-basis:100%}}
+
+.x-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px;margin:16px 0}
+.x-form{background:#fff;border:1px solid var(--borde-light);border-top:5px solid var(--c);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow-card);display:flex;flex-direction:column;gap:10px;min-width:0}
+.x-form h4{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--c);margin:0}
+.x-form .cap{font-size:12.5px;color:var(--texto-muted);line-height:1.55;margin:0}
+.x-form .cap strong{color:var(--texto-main)}
+.x-form ul{margin:0;padding-left:18px;font-size:12.5px;color:var(--texto-muted);line-height:1.65}
+.x-form ul strong{color:var(--texto-main)}
+.x-form .x-code-wrap{margin:0}
+.x-form .x-code{font-size:11px;padding:10px 12px;white-space:pre-wrap;word-break:break-word}
+.x-mini-t{width:100%;border-collapse:collapse;font-size:11.5px}
+.x-mini-t th{background:color-mix(in srgb,var(--c) 14%,#fff);color:var(--texto-main);text-align:left;padding:6px 8px;font-weight:800;border-bottom:2px solid var(--c)}
+.x-mini-t td{padding:6px 8px;border-bottom:1px solid var(--borde-light);color:var(--texto-muted)}
+.x-quote{background:color-mix(in srgb,var(--c) 6%,#fff);border-left:4px solid var(--c);border-radius:10px;padding:12px 14px;font-style:italic;font-size:12.5px;color:var(--texto-muted);line-height:1.6}
+.x-tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;background:color-mix(in srgb,var(--c) 14%,#fff);color:var(--c);padding:2px 9px;border-radius:10px;align-self:flex-start}
+.x-ej{background:color-mix(in srgb,#0284c7 6%,#fff);border:1px dashed color-mix(in srgb,#0284c7 40%,#fff);border-radius:12px;padding:10px 14px;font-size:12px;color:var(--texto-muted);margin:10px 0}
+.x-ej b{color:#0369a1}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-brand"><div class="sidebar-logo"><svg width="24" height="24" viewBox="0 0 64 62" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+          <g transform="translate(-377 -19)">
+            <path d="M409.164 19C412.922 19 415.992 22.09 415.992 25.8778 415.992 29.6656 412.932 32.7556 409.164 32.7556 405.397 32.7556 402.336 29.6656 402.336 25.8778 402.336 22.09 405.407 19 409.164 19"/>
+            <path d="M384.305 41.1884 384.305 41.2183C384.285 41.3379 384.275 41.4177 384.275 41.4675 384.275 41.8264 384.474 42.0855 384.873 42.265 385.282 42.4344 385.9 42.5241 386.747 42.5241 387.395 42.5241 387.893 42.4543 388.262 42.3148 388.631 42.1752 388.81 41.9759 388.81 41.7267 388.81 41.3479 388.082 41.0489 386.647 40.8096 386.478 40.7797 386.348 40.7598 386.268 40.7498 386.179 40.7299 386.039 40.71 385.86 40.6801 383.567 40.3013 382.092 39.8926 381.434 39.454 381.115 39.2347 380.876 38.9855 380.706 38.6965 380.547 38.4074 380.467 38.0785 380.467 37.7096 380.467 36.8125 380.995 36.1248 382.052 35.6563 383.109 35.1878 384.654 34.9486 386.677 34.9486 388.7 34.9486 390.166 35.1678 391.133 35.6064 392.1 36.045 392.578 36.7228 392.578 37.6399L392.578 37.7495 388.78 37.7495 388.78 37.7096C388.78 37.3907 388.591 37.1614 388.202 36.992 387.813 36.8325 387.255 36.7428 386.508 36.7428 385.929 36.7428 385.481 36.8026 385.182 36.9122 384.863 37.0318 384.713 37.1913 384.713 37.4006 384.713 37.7794 385.541 38.1084 387.195 38.3675 387.514 38.4174 387.764 38.4572 387.943 38.4871 389.119 38.6865 389.966 38.8559 390.465 38.9955 390.963 39.135 391.392 39.3045 391.761 39.4939 392.159 39.7132 392.478 39.9923 392.698 40.3312 392.917 40.6701 393.027 41.0389 393.027 41.4476 393.027 42.3746 392.448 43.0823 391.302 43.5907 390.156 44.0891 388.501 44.3383 386.348 44.3383 384.195 44.3383 382.67 44.099 381.723 43.6206 380.766 43.1421 380.298 42.3746 380.298 41.308L380.298 41.1685 384.305 41.1685ZM394.711 44.1987 394.711 35.0881 405.546 35.0881 405.546 37.0518 398.778 37.0518 398.778 38.5071 405.028 38.5071 405.028 40.4508 398.778 40.4508 398.778 42.2151 405.795 42.2151 405.795 44.2087 394.711 44.2087ZM407.5 44.1987 407.5 35.0881 412.643 35.0881 418.155 41.2084 418.155 35.0881 422.063 35.0881 422.063 44.1987 416.72 44.1987 411.387 38.0585 411.387 44.1987 407.49 44.1987ZM432.569 40.5604 430.625 37.2511 428.572 40.5604 432.579 40.5604ZM426.369 44.1987 422.292 44.1987 428.592 35.0881 433.107 35.0881 439.118 44.1987 434.592 44.1987 433.675 42.554 427.366 42.554 426.389 44.1987Z"/>
+            <path d="M389.309 76.3351 385.67 72.9161 396.735 53.6881C397.333 52.6415 396.585 51.3257 395.379 51.3257L377.267 51.3257 377.267 46.5113 406.413 46.5113 389.309 76.3351Z"/>
+            <path d="M428.701 76.3351 432.34 72.9161 421.275 53.6881C420.677 52.6415 421.425 51.3257 422.631 51.3257L440.743 51.3257 440.743 46.5113 411.597 46.5113 428.701 76.3351Z"/>
+            <path d="M408.965 51.5949C408.965 51.5949 409.005 51.5251 409.005 51.5251L425.432 78.7174 421.066 80.99 410.48 63.2373C409.852 62.1907 408.347 62.1907 407.729 63.2373 404.2 69.1981 397.213 80.99 397.213 80.99L392.947 78.8768C392.947 78.8768 408.088 53.09 408.965 51.5949"/>
+          </g>
+        </svg></div>
+      <div><div class="sidebar-title">GDAI · F23 y F24</div><div class="sidebar-sub">Apertura Guía 5</div></div></div>
+    <button class="sidebar-toggle-btn" onclick="toggleSidebar()" title="Colapsar Menú Lateral">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="9" x2="9" y1="3" y2="21"/><path d="m14 9-3 3 3 3"/></svg>
+    </button>
+  </div>
+  <div class="sidebar-scroll"><div class="nav-group"><div class="nav-group-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Bloque 1: Apertura & RAP</span></div><a href="#slide-1" class="nav-link active" data-slide="1"><span class="nav-link-num">01</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span><span class="nav-link-text">Portada &amp; Presentación</span></a><a href="#slide-2" class="nav-link" data-slide="2"><span class="nav-link-num">02</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg></span><span class="nav-link-text">Ficha Técnica &amp; Tiempos</span></a><a href="#slide-3" class="nav-link" data-slide="3"><span class="nav-link-num">03</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></span><span class="nav-link-text">Competencia &amp; RAP</span></a></div><div class="nav-group"><div class="nav-group-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg><span>Bloque 2: Ruta Curricular</span></div><a href="#slide-4" class="nav-link" data-slide="4"><span class="nav-link-num">04</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span><span class="nav-link-text">Ruta de 5 Evidencias</span></a><a href="#slide-5" class="nav-link" data-slide="5"><span class="nav-link-num">05</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><span class="nav-link-text">Cronograma 7 Sesiones</span></a></div><div class="nav-group"><div class="nav-group-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg><span>Bloque 3: Enfoque Práctico</span></div><a href="#slide-6" class="nav-link" data-slide="6"><span class="nav-link-num">06</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg></span><span class="nav-link-text">Proyecto Integrador</span></a><a href="#slide-7" class="nav-link" data-slide="7"><span class="nav-link-num">07</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span><span class="nav-link-text">Reglas de Entrega</span></a></div><div class="nav-group"><div class="nav-group-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Bloque 4: Cierre</span></div><a href="#slide-8" class="nav-link" data-slide="8"><span class="nav-link-num">08</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><span class="nav-link-text">Checklist de Inicio</span></a></div></div>
+  <div class="sidebar-footer"><div class="sidebar-corte-badge"><span>EV01: 04/Nov</span><span>EV05: 09/Dic</span></div><a href="../docs/Guia_aprendizaje_5.pdf" target=_blank class="sidebar-link-btn" style=""><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg> Guía 5 (PDF) ↗</a><a href="../explorar.html"  class="sidebar-link-btn" style="background:#f1f5f9;border-color:#e2e8f0;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Volver al Hub</a></div>
+</aside>
+<button class="floating-sidebar-toggle" id="floatingToggle" onclick="toggleSidebar()">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="9" x2="9" y1="3" y2="21"/><path d="m11 9 3 3-3 3"/></svg>
+  <span>Menú (8 Slides)</span>
+</button>
+<div class="main-content" id="mainContent">
+
+  <section class="slide" id="slide-1" data-slide="1" data-title="01. Portada &amp; Presentación">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 01 / 08</div>
+    <div class="slide-inner"><div class="hero-wrapper"><div>
+      <div class="slide-header-badge"><span class="dot"></span> APERTURA GUÍA DE APRENDIZAJE 5 (GA5)</div>
+      <h1 class="hero-title">Sistematización de <span class="grad-verde">Datos Masivos</span> &amp; <span class="grad-naranja">Analítica</span></h1>
+      <p class="hero-subtitle">Bienvenido a la competencia <strong>220501114</strong>. Aquí encuentras la ruta pedagógica oficial, el resultado de aprendizaje, las 5 evidencias de la Actividad GA5-220501114-AA1 y el cronograma de 7 sesiones sincrónicas de la <strong>Fase de Planeación</strong>.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a href="#slide-2" class="btn-action-pro verde"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" ><polygon points="5 3 19 12 5 21 5 3"/></svg> Explorar Ruta de Aprendizaje</a>
+        <a href="../docs/Guia_aprendizaje_5.pdf" target="_blank" class="btn-action-pro tech"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg> Guía de Aprendizaje 5 (PDF) ↗</a>
+      </div>
+    </div>
+    <div class="hero-card-widget">
+      <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--texto-main);margin-bottom:18px;display:flex;align-items:center;justify-content:space-between">
+        <span>DATOS DE LA GUÍA 5</span>
+        <span style="font-size:10.5px;color:var(--sena-verde-dark);background:var(--sena-verde-bg);padding:3px 10px;border-radius:12px;border:1px solid var(--sena-verde-border);font-weight:800">AP2 VIRTUAL</span></div>
+      <div class="hero-meta-grid">
+        <div class="meta-box"><div class="meta-box-title">Competencia</div><div class="meta-box-val">220501114</div><div class="meta-box-sub">Datos masivos</div></div>
+        <div class="meta-box"><div class="meta-box-title">Horas AA1</div><div class="meta-box-val">72 Horas</div><div class="meta-box-sub">7 Ses. sincrónicas de 1 h</div></div>
+        <div class="meta-box"><div class="meta-box-title">Apertura Oficial</div><div class="meta-box-val">26 / Oct / 2026</div><div class="meta-box-sub">Lunes · Anuncio Zajuna</div></div>
+        <div class="meta-box"><div class="meta-box-title">Última Sesión</div><div class="meta-box-val">08 / Dic / 2026</div><div class="meta-box-sub">Cierre y dudas</div></div>
+      </div>
+      <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--borde-light);font-size:12.5px;color:var(--texto-muted);display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:8px"><div class="card-icon-badge verde" style="width:26px;height:26px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><span><strong>Instructor:</strong> Julián Andrés Trujillo</span></div>
+        <span style="font-size:11px;color:var(--texto-sub)">Fichas 3466323 · 3466324</span></div>
+    </div></div></div>
+  </section>
+
+  <section class="slide" id="slide-2" data-slide="2" data-title="02. Ficha Técnica &amp; Tiempos">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 02 / 08</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge tech"><span class="dot"></span> PARÁMETROS INSTITUCIONALES SENA</div>
+      <h2 class="sec-title">Ficha Técnica y Tiempos de Ejecución</h2>
+      <p class="sec-desc">La Guía 5 integra cuatro competencias; en este espacio trabajamos la competencia técnica <strong>220501114 — Sistematizar datos masivos de acuerdo con métodos de analítica y herramientas tecnológicas</strong>, mediante una única actividad de aprendizaje con cinco evidencias.</p>
+      
+      <div class="grid-3"><div class="card-premium top-verde"><div>
+  <div class="card-header-flex"><div class="card-icon-badge verde"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><span class="card-pill-tag verde">Proyecto formativo</span></div>
+  <h3 class="card-title">Programa y Proyecto</h3><p class="card-text">Tecnólogo en Gestión del Desarrollo Administrativo e Innovación (código 122153).</p><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Proyecto:</strong> Definición de estrategias de análisis y diagnóstico organizacional para la toma de decisiones, basadas en propuestas de innovación</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Fase:</strong> Planeación · <strong>AP2</strong></span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Guía:</strong> 252 h (156 técnicas · 48 claves · 48 transversales)</span></li></ul>
+</div></div><div class="card-premium top-naranja"><div>
+  <div class="card-header-flex"><div class="card-icon-badge naranja"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg></div><span class="card-pill-tag naranja">7 sesiones · 1 h c/u</span></div>
+  <h3 class="card-title">Cronograma Sincrónico</h3><p class="card-text">Encuentros en vivo por Microsoft Teams, organizados 1 a 1 con las carpetas del repositorio:</p><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Días:</strong> todos los martes, del 27/10 al 08/12/2026</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Ficha 3466323:</strong> 7:30 p. m. – 8:30 p. m.</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Ficha 3466324:</strong> 8:30 p. m. – 9:30 p. m.</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Estructura:</strong> 5 sesiones de contenido + 2 de dudas (S4 y S7)</span></li></ul>
+</div></div><div class="card-premium top-tech"><div>
+  <div class="card-header-flex"><div class="card-icon-badge tech"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg></div><span class="card-pill-tag tech">72 h · AA1</span></div>
+  <h3 class="card-title">Trabajo Autónomo y Material</h3><p class="card-text">La actividad de aprendizaje GA5-220501114-AA1 se apoya en:</p><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Componente formativo:</strong> "Modelos matemáticos y estadísticos aplicados en Big Data"</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Herramientas:</strong> Excel, Access o Power BI</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Canales:</strong> Zajuna (foro de dudas) y Teams</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Grabaciones:</strong> publicadas en el Hub tras cada sesión</span></li></ul>
+</div></div></div>
+      
+    </div>
+  </section>
+
+  <section class="slide" id="slide-3" data-slide="3" data-title="03. Competencia &amp; RAP">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 03 / 08</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge"><span class="dot"></span> MARCO CURRICULAR INSTITUCIONAL</div>
+      <h2 class="sec-title">Competencia Técnica y Resultado de Aprendizaje</h2>
+      <p class="sec-desc">La competencia <strong>220501114</strong> (Sistematización y analítica de datos, 288 h) se desarrolla por resultados de aprendizaje. La Guía 5 evalúa el <strong>RAP 01</strong>:</p>
+      
+      <div class="grid-3"><div class="card-premium top-verde"><div>
+  <div class="card-header-flex"><div class="card-icon-badge verde"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></div><span class="card-pill-tag verde">RAP de esta guía</span></div>
+  <h3 class="card-title">220501114-01</h3><p class="card-text"><strong>Interpretar métodos de analítica de datos de acuerdo con marco legal y modelo de gestión de la organización.</strong></p><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Es el único resultado de aprendizaje de la competencia que se evalúa en la Guía 5</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Se evidencia en las 5 evidencias de GA5-220501114-AA1</span></li></ul>
+</div></div><div class="card-premium top-naranja"><div>
+  <div class="card-header-flex"><div class="card-icon-badge naranja"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div><span class="card-pill-tag naranja">Siguientes guías</span></div>
+  <h3 class="card-title">RAP 02, 03 y 04 de la competencia</h3><p class="card-text">Completan las 288 h de la competencia en guías posteriores:</p><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>RAP 2:</strong> aplicar herramientas de analítica de datos de acuerdo con normativa y política de la empresa</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>RAP 3:</strong> verificar el comportamiento de la ciencia de los datos</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>RAP 4:</strong> ejecutar acciones de mejora en el uso de herramientas informáticas</span></li></ul>
+</div></div><div class="card-premium top-tech"><div>
+  <div class="card-header-flex"><div class="card-icon-badge tech"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span class="card-pill-tag tech">Criterios de evaluación</span></div>
+  <h3 class="card-title">Qué se evalúa en las 5 evidencias</h3><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Reconoce las fuentes de información según normativa y requerimientos de la organización</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Describe los componentes de modelos matemáticos y estadísticos</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Analiza actividades cotidianas con técnicas de toma de decisiones</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Determina los elementos de la ciencia de los datos</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Reconoce técnicas de análisis de datos y herramientas tecnológicas para el ciclo de vida, gestión y análisis de datos</span></li></ul>
+</div></div></div>
+      
+    </div>
+  </section>
+
+  <section class="slide" id="slide-4" data-slide="4" data-title="04. Ruta de 5 Evidencias">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 04 / 08</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge naranja"><span class="dot"></span> ESTRUCTURA DE LA ACTIVIDAD GA5-220501114-AA1</div>
+      <h2 class="sec-title">Ruta de las 5 Evidencias</h2>
+      <p class="sec-desc">Implementar técnicas de gestión y análisis de datos mediante herramientas ofimáticas, de acuerdo con el marco legal y el modelo de gestión de la organización:</p>
+      
+      <div class="x-flow"><div class="x-node"><span class="x-tag verde">EV01 · Conocimiento</span><h4>Recolectar</h4><p>Elegir una empresa real, identificar sus sistemas de gestión y almacenar la información relevante en carpetas seguras.</p></div><div class="x-node"><span class="x-tag tech">EV02 · Desempeño</span><h4>Sistematizar</h4><p>Depurar y segmentar los datos con Excel, Access o Power BI y llevar un registro de control.</p></div><div class="x-node"><span class="x-tag naranja">EV03 · Desempeño</span><h4>Analizar</h4><p>Plan de gestión y análisis, método estadístico, tabla y gráfico dinámico, dashboard.</p></div><div class="x-node"><span class="x-tag verde">EV04 · Producto</span><h4>Estructurar</h4><p>Base de datos final con campos, claves, relaciones y política de captura de datos.</p></div><div class="x-node"><span class="x-tag purpura">EV05 · Conocimiento</span><h4>Evaluarse</h4><p>Cuestionario en línea de 30 preguntas sobre modelos matemáticos y estadísticos en Big Data.</p></div></div><div class="callout-box"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div>
+<div class="callout-content"><h4>¿Por qué están en este orden?</h4><p>Las evidencias forman un <strong>flujo de trabajo de datos</strong>: lo que recolectas en EV01 se depura en EV02, se analiza en EV03 y se estructura en EV04. EV05 evalúa los fundamentos teóricos (modelos matemáticos y estadísticos en Big Data) que sostienen todo el proceso. Una buena EV01 hace más fácil todo lo demás.</p></div></div>
+      
+    </div>
+  </section>
+
+  <section class="slide" id="slide-5" data-slide="5" data-title="05. Cronograma 7 Sesiones">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 05 / 08</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge naranja"><span class="dot"></span> MATRIZ DE SESIONES Y FECHAS DE ENTREGA</div>
+      <h2 class="sec-title">Cronograma, Carpetas y Fechas de Entrega</h2>
+      <p class="sec-desc">Mapeo de la <strong>Apertura</strong> y las <strong>7 sesiones sincrónicas</strong> (5 de contenido y 2 de dudas) con las carpetas del repositorio y las fechas límite en Zajuna:</p>
+      
+      <div class="table-wrapper"><table class="matriz-table"><thead><tr><th>Carpeta</th><th>Fecha</th><th>Horario</th><th>Tema central</th><th>Evidencia</th><th>Entrega en Zajuna</th></tr></thead><tbody><tr><td><span class="sesion-badge" style="background:var(--sena-verde-bg);color:var(--sena-verde-dark);font-weight:800">📁 Apertura/</span></td><td>Lunes, 26 de octubre de 2026</td><td style="font-size:12px;white-space:nowrap">Asincrónica (Zajuna)</td><td>Apertura de la competencia y ruta de trabajo</td><td><span class="evidencia-tag">Inducción</span></td><td><span class="evidencia-tag">Informativa</span></td></tr><tr><td><span class="sesion-badge">📁 Sesión 1/</span></td><td>Martes, 27 de octubre de 2026</td><td style="font-size:12px;white-space:nowrap">F23 · 7:30–8:30 p. m.<br>F24 · 8:30–9:30 p. m.</td><td>Fuentes de información y recolección de modelos de gestión</td><td><span class="evidencia-tag">AA1-EV01</span></td><td><span class="deadline-badge corte1">04/Nov/2026</span></td></tr><tr><td><span class="sesion-badge">📁 Sesión 2/</span></td><td>Martes, 3 de noviembre de 2026</td><td style="font-size:12px;white-space:nowrap">F23 · 7:30–8:30 p. m.<br>F24 · 8:30–9:30 p. m.</td><td>Sistematización y depuración de los datos recopilados</td><td><span class="evidencia-tag">AA1-EV02</span></td><td><span class="deadline-badge corte1">11/Nov/2026</span></td></tr><tr><td><span class="sesion-badge">📁 Sesión 3/</span></td><td>Martes, 10 de noviembre de 2026</td><td style="font-size:12px;white-space:nowrap">F23 · 7:30–8:30 p. m.<br>F24 · 8:30–9:30 p. m.</td><td>Gestión para el análisis de datos depurados (estadística, tabla/gráfico dinámico y dashboard)</td><td><span class="evidencia-tag">AA1-EV03</span></td><td><span class="deadline-badge corte1">18/Nov/2026</span></td></tr><tr><td><span class="sesion-badge">📁 Sesión 4/</span></td><td>Martes, 17 de noviembre de 2026</td><td style="font-size:12px;white-space:nowrap">F23 · 7:30–8:30 p. m.<br>F24 · 8:30–9:30 p. m.</td><td>Sesión de dudas 1: asesoría y retroalimentación de EV01–EV03</td><td><span class="evidencia-tag">Dudas</span></td><td><span class="evidencia-tag">Asesoría</span></td></tr><tr><td><span class="sesion-badge">📁 Sesión 5/</span></td><td>Martes, 24 de noviembre de 2026</td><td style="font-size:12px;white-space:nowrap">F23 · 7:30–8:30 p. m.<br>F24 · 8:30–9:30 p. m.</td><td>Base de datos final para gestión de análisis</td><td><span class="evidencia-tag">AA1-EV04</span></td><td><span class="deadline-badge corte1">02/Dic/2026</span></td></tr><tr><td><span class="sesion-badge">📁 Sesión 6/</span></td><td>Martes, 1 de diciembre de 2026</td><td style="font-size:12px;white-space:nowrap">F23 · 7:30–8:30 p. m.<br>F24 · 8:30–9:30 p. m.</td><td>Modelos matemáticos y estadísticos en Big Data y preparación del cuestionario</td><td><span class="evidencia-tag">AA1-EV05</span></td><td><span class="deadline-badge corte1">09/Dic/2026</span></td></tr><tr><td><span class="sesion-badge">📁 Sesión 7/</span></td><td>Martes, 8 de diciembre de 2026</td><td style="font-size:12px;white-space:nowrap">F23 · 7:30–8:30 p. m.<br>F24 · 8:30–9:30 p. m.</td><td>Sesión de dudas 2: asesoría de EV04–EV05 y cierre de la guía</td><td><span class="evidencia-tag">Dudas</span></td><td><span class="evidencia-tag">Asesoría</span></td></tr></tbody></table></div><div class="callout-box"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+<div class="callout-content"><h4>Regla de entrega: 8 días después de cada sesión</h4><p>Cada evidencia se explica en su sesión (martes) y se entrega en Zajuna <strong>el miércoles de la semana siguiente</strong> (8 días calendario después), a las 11:59 p. m. Las sesiones 4 y 7 son de dudas (una a mitad de camino y otra al final): úsalas para llegar con tus evidencias listas, sin represamientos de última hora.</p></div></div>
+      
+    </div>
+  </section>
+
+  <section class="slide" id="slide-6" data-slide="6" data-title="06. Proyecto Integrador">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 06 / 08</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge"><span class="dot"></span> ENFOQUE DE TRABAJO EN EQUIPO</div>
+      <h2 class="sec-title">Proyecto Integrador: Tu Empresa a lo Largo de la Guía</h2>
+      <p class="sec-desc">A diferencia de ejercicios sueltos, en esta guía construyes <strong>un único caso real</strong> de principio a fin. Elegir bien la empresa en la primera semana define la calidad de todo lo demás:</p>
+      
+      <div class="grid-2"><div class="card-premium top-verde"><div>
+  <div class="card-header-flex"><div class="card-icon-badge verde"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div><span class="card-pill-tag verde">EV01</span></div>
+  <h3 class="card-title">Cómo elegir la empresa del equipo</h3><p class="card-text">El equipo (4 aprendices) selecciona <strong>una empresa real</strong> o una cuyo acceso a información sea libre desde la web:</p><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Que tenga al menos un <strong>sistema de gestión</strong> identificable (calidad, ambiental, SST, seguridad de la información, MIPG, etc.)</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Que publique información suficiente (informes, políticas, indicadores, datos abiertos)</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Que la información sea <strong>autorizada</strong> para ser tratada y depurada (sin datos personales sensibles)</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Ejemplos de fuentes: sitio web corporativo, datos.gov.co, SECOP II, RUES, informes de gestión o sostenibilidad</span></li></ul>
+</div></div><div class="card-premium top-naranja"><div>
+  <div class="card-header-flex"><div class="card-icon-badge naranja"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg></div><span class="card-pill-tag naranja">Un solo caso</span></div>
+  <h3 class="card-title">Una empresa, cuatro entregables encadenados</h3><p class="card-text">Todo el aprendizaje se aplica sobre los mismos datos:</p><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>EV01:</strong> carpeta con la información recolectada</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>EV02:</strong> subcarpeta <code>sistematizado_xxx</code> con datos depurados + registro de control</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>EV03:</strong> plan de análisis + tabla/gráfico dinámico + dashboard</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>EV04:</strong> base de datos final estructurada con los informes anteriores</span></li></ul>
+</div></div></div>
+      
+    </div>
+  </section>
+
+  <section class="slide" id="slide-7" data-slide="7" data-title="07. Reglas de Entrega">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 07 / 08</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge naranja"><span class="dot"></span> PAUTAS DE CALIDAD Y ENTREGA</div>
+      <h2 class="sec-title">Reglas de Oro y Trabajo en Equipo</h2>
+      <p class="sec-desc">Pautas obligatorias para entregar evidencias que se califiquen a la primera:</p>
+      
+      <div class="grid-2"><div class="card-premium top-verde"><div>
+  <div class="card-header-flex"><div class="card-icon-badge verde"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><span class="card-pill-tag verde">Estándar SENA</span></div>
+  <h3 class="card-title">Reglas de Oro para las Entregas</h3><p class="card-text">Criterios que determinan la aprobación de tus evidencias:</p><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Marco legal primero:</strong> la recolección debe estar dentro de los parámetros normativos de manejo de datos (protección de datos personales, habeas data)</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Formatos exactos:</strong> EV03 en PDF de máx. 5 páginas; tabla, gráfico y dashboard en Excel/Power BI; EV04 en Excel, Access o Power BI</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Enlaces con permiso:</strong> carpetas en la nube compartidas como "cualquier persona con el enlace puede ver"</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Tamaños máximos:</strong> carpeta 10 GB; archivo de control de EV02, 1 GB</span></li></ul>
+</div></div><div class="card-premium top-tech"><div>
+  <div class="card-header-flex"><div class="card-icon-badge tech"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><span class="card-pill-tag tech">Acompañamiento</span></div>
+  <h3 class="card-title">Equipos, Canales y Apoyo</h3><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Equipos de 4:</strong> EV01, EV03 y EV04 se hacen en equipo; define roles desde hoy</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Foro de dudas</strong> en Zajuna y sesiones 4 y 7 de asesoría</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Hub de materiales:</strong> presentaciones, manuales y grabaciones en <a href="https://juliantrujilo.github.io/materiales-gdai-ga5/" target="_blank" style="color:var(--azul-tech);font-weight:700">juliantrujilo.github.io/materiales-gdai-ga5/</a></span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Respaldo:</strong> guarda copia de tu trabajo en OneDrive/Drive antes de cada entrega</span></li></ul>
+</div></div></div>
+      
+    </div>
+  </section>
+
+  <section class="slide" id="slide-8" data-slide="8" data-title="08. Checklist de Inicio">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 08 / 08</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge naranja"><span class="dot"></span> ALISTAMIENTO PARA ARRANCAR</div>
+      <h2 class="sec-title">Checklist de Inicio y Próximo Paso</h2>
+      <p class="sec-desc">Verifica que tienes todo listo antes de la primera sesión técnica:</p>
+      
+      <div class="grid-2">
+<div class="card-premium top-verde"><div>
+  <div class="card-header-flex"><div class="card-icon-badge verde"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg></div><span class="card-pill-tag verde">Mañana</span></div>
+  <h3 class="card-title">Primera sesión: martes 27 de octubre</h3><p class="card-text">Sesión 1 — Fuentes de información y recolección de modelos de gestión (EV01).</p><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Ficha 3466323:</strong> 7:30 p. m. – 8:30 p. m.</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Ficha 3466324:</strong> 8:30 p. m. – 9:30 p. m.</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Llega con una idea de empresa para tu equipo</span></li></ul>
+</div></div>
+<div class="checklist-card"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+<h4 style="font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:var(--texto-main);">Checklist de Alistamiento</h4>
+<span id="checklistCounter" style="font-size:11px;font-weight:800;color:var(--sena-verde-dark);background:var(--sena-verde-bg);padding:3px 9px;border-radius:12px;border:1px solid var(--sena-verde-border)">0 / 4 Completados</span></div>
+<div class="checklist-item" onclick="toggleChecklistItem(this)"><div class="checklist-checkbox">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+<div class="checklist-text"><h5>Acceso a Zajuna y a Teams</h5><p>Verifiqué mi usuario en Zajuna y el enlace de Teams de mi ficha; guardé en marcadores el Hub de materiales.</p></div></div><div class="checklist-item" onclick="toggleChecklistItem(this)"><div class="checklist-checkbox">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+<div class="checklist-text"><h5>Equipo de 4 conformado</h5><p>Ya tengo equipo (o lo estoy conformando) y definimos un canal de comunicación (WhatsApp/Teams).</p></div></div><div class="checklist-item" onclick="toggleChecklistItem(this)"><div class="checklist-checkbox">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+<div class="checklist-text"><h5>Herramienta de datos lista</h5><p>Tengo Excel instalado (y opcionalmente Access o Power BI Desktop) para sistematizar y analizar datos.</p></div></div><div class="checklist-item" onclick="toggleChecklistItem(this)"><div class="checklist-checkbox">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+<div class="checklist-text"><h5>Fechas claras</h5><p>Tengo agendadas las sesiones de los martes y las fechas de entrega: EV01 04/Nov · EV02 11/Nov · EV03 18/Nov · EV04 02/Dic · EV05 09/Dic.</p></div></div></div></div>
+<div style="text-align:center;margin-top:36px"><a href="../explorar.html" class="btn-action-pro verde" style="padding:14px 32px;font-size:14px;box-shadow:0 8px 24px rgba(57,169,0,0.3)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" ><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Ingresar al Hub de Materiales GA5</a></div>
+      
+    </div>
+  </section>
+</div>
+<div class="toast-notice" id="toastNotice"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span id="toastMessage">Copiado</span></div>
+<script>
+
+function toggleSidebar(){const s=document.getElementById('sidebar'),f=document.getElementById('floatingToggle'),b=document.getElementById('sidebarBackdrop');
+ if(window.innerWidth<=1024){s.classList.toggle('mobile-open');if(b)b.classList.toggle('active',s.classList.contains('mobile-open'));}
+ else{s.classList.toggle('collapsed');f.classList.toggle('visible',s.classList.contains('collapsed'));}}
+document.addEventListener('DOMContentLoaded',()=>{
+ document.querySelectorAll('.sidebar .nav-link').forEach(l=>l.addEventListener('click',()=>{if(window.innerWidth<=1024){document.getElementById('sidebar').classList.remove('mobile-open');const b=document.getElementById('sidebarBackdrop');if(b)b.classList.remove('active');}}));
+ const slides=document.querySelectorAll('.slide'),links=document.querySelectorAll('.sidebar .nav-link'),bar=document.getElementById('progressBar');
+ window.addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-window.innerHeight;bar.style.width=(h>0?window.scrollY/h*100:0)+'%';
+  let cur=null;slides.forEach(s=>{const r=s.getBoundingClientRect();if(r.top<=window.innerHeight*0.4&&r.bottom>=window.innerHeight*0.4)cur=s;});
+  if(cur){const n=cur.getAttribute('data-slide');links.forEach(l=>{if(l.getAttribute('data-slide')===n){l.classList.add('active');l.scrollIntoView({block:'nearest',behavior:'smooth'});}else l.classList.remove('active');});}});
+});
+function showToast(m){const t=document.getElementById('toastNotice');document.getElementById('toastMessage').textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);}
+function toggleChecklistItem(i){i.classList.toggle('checked');const tot=document.querySelectorAll('.checklist-item').length,ok=document.querySelectorAll('.checklist-item.checked').length,c=document.getElementById('checklistCounter');
+ if(c){c.textContent=ok+' / '+tot+' Completados';if(ok===tot){c.style.background='var(--sena-verde)';c.style.color='#fff';showToast('¡Listo! Alistamiento completo para la Guía 5.');}else{c.style.background='var(--sena-verde-bg)';c.style.color='var(--sena-verde-dark)';}}}
+function copiarBloque(id,btn){const el=document.getElementById(id);navigator.clipboard.writeText(el.innerText).then(()=>{const o=btn.textContent;btn.textContent='¡Copiado!';showToast('Contenido copiado al portapapeles');setTimeout(()=>btn.textContent=o,1800);}).catch(()=>showToast('Selecciona y copia el texto manualmente'));}
+document.addEventListener('keydown',e=>{const a=document.querySelector('.sidebar .nav-link.active'),n=a?parseInt(a.getAttribute('data-slide')):1,T=8;
+ if(e.key==='ArrowRight'||e.key==='PageDown'){if(n<T){e.preventDefault();const t=document.getElementById('slide-'+(n+1));if(t)t.scrollIntoView({behavior:'smooth'});}}
+ else if(e.key==='ArrowLeft'||e.key==='PageUp'){if(n>1){e.preventDefault();const t=document.getElementById('slide-'+(n-1));if(t)t.scrollIntoView({behavior:'smooth'});}}});
+</script>
+</body>
+</html>
