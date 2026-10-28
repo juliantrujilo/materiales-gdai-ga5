@@ -389,6 +389,31 @@ Fecha de consulta: 2026-10-29
 4. **Renombren** cada archivo con la convención `AAAA-MM-DD_Sistema_Proceso_Descripcion_v01.ext`.
 5. Guarden las autorizaciones y licencias en `05_Soportes_legales`.
 
+#### Qué va en cada carpeta del árbol
+
+Piensa en la carpeta como el **archivador de una oficina**: cada cajón tiene un propósito y quien llega por primera vez debe poder encontrar todo sin preguntar. El árbol está pensado para que el evaluador entienda tres cosas en pocos minutos: **qué empresa es**, **qué sistemas de gestión tiene** y **de dónde salió cada dato**. Estas son las carpetas, una por una:
+
+| Carpeta | Para qué sirve | Qué guardas ahí | Ejemplo |
+|---|---|---|---|
+| `EV01_Recoleccion_[Empresa]_Equipo[N]/` | Es la **carpeta raíz**: contiene todo lo demás y es la que compartes con el instructor. | Solo las subcarpetas y el LEEME; nada suelto. | `EV01_Recoleccion_LacteosDelValle_Equipo3` |
+| `00_LEEME.txt` | Es la **portada de la carpeta**. Explica qué es, quién la hizo y cómo está organizada. | Un archivo de texto con: empresa, integrantes, fecha, qué contiene cada subcarpeta y cómo se relaciona con la matriz (ver Paso 7). | Un `.txt` de media página |
+| `00_Gestion_del_equipo/` | Muestra **cómo se organizaron** como equipo. | Reparto de roles, cronograma de trabajo, actas de las reuniones o capturas del chat donde se acordaron tareas. | `Roles_y_cronograma.pdf` |
+| `01_Empresa_y_contexto/` | Da el **contexto de la empresa**: sin saber qué hace, los datos no se entienden. | Ficha de la empresa (nombre, NIT público, sector, ciudad, qué produce o vende), organigrama, mapa de procesos, misión y visión. | `2026-10-30_General_Direccion_OrganigramaEmpresa_v01.pdf` |
+| `02_Sistemas_de_gestion/` | Es el **corazón de la evidencia**: aquí está la prueba de qué sistemas tiene la empresa. Tiene una subcarpeta por cada sistema que **sí encontraron**. | Solo las subcarpetas de los sistemas que la empresa realmente tiene. | Ver las cuatro filas siguientes |
+| `02_.../01_Calidad/` | Información del sistema de **calidad** (ISO 9001). | Certificado, política de calidad, objetivos, indicadores de satisfacción del cliente, manual de calidad si es público. | `Certificado_ISO9001.pdf`, `PoliticaCalidad.pdf` |
+| `02_.../02_Ambiental/` | Información del sistema **ambiental** (ISO 14001). | Política ambiental, informes de consumo de agua o energía, gestión de residuos, informe de sostenibilidad. | `InformeSostenibilidad2025.pdf` |
+| `02_.../03_SST/` | Información de **seguridad y salud en el trabajo** (ISO 45001 y SG-SST). | Política de SST, indicadores de accidentalidad **agregados** (cifras, nunca nombres), plan de emergencias. | `IndicadoresSST2025.xlsx` |
+| `02_.../04_Seguridad_Informacion/` | Información del sistema de **seguridad de la información** (ISO 27001) y protección de datos. | Política de tratamiento de datos personales, política de seguridad de la información, avisos de privacidad. | `PoliticaTratamientoDatos.pdf` |
+| `03_Datos_crudos/` | Guarda los **datos tal como se descargaron**, sin tocarlos. En la EV02 los depurarán; si hoy los modifican, pierden la prueba de cómo eran originalmente. | Archivos Excel (`.xlsx`) y CSV descargados de datos.gov.co, del DANE, de SECOP II o del sitio de la empresa. **No** pongas aquí PDF de informes: esos van en la carpeta de su sistema. | `2026-10-30_Calidad_Comercial_SatisfaccionClientes_v01.csv` |
+| `04_Matriz_de_recoleccion.xlsx` | Es el **inventario**: una fila por cada archivo o dato de la carpeta, con su fuente, tipo y si está autorizado. | El archivo de Excel con las columnas de la sección 6.3. Si un archivo no está en la matriz, no debería estar en la carpeta. | `04_Matriz_de_recoleccion.xlsx` con una fila por archivo |
+| `05_Soportes_legales/` | Guarda **la prueba de que pueden usar esa información** legalmente. | Licencias de los datos abiertos (por ejemplo, «Creative Commons» del conjunto de datos), autorizaciones escritas de la empresa y capturas de pantalla de la política de datos. | `Licencia_datos_gov_co.pdf`, `Autorizacion_empresa.pdf` |
+
+> [!tech] **Regla para decidir dónde guardar un archivo:** hazte dos preguntas. **1) ¿De qué sistema de gestión habla?** Si habla de calidad, va en `01_Calidad`. **2) ¿Es una tabla de datos descargada (Excel o CSV)?** Entonces va en `03_Datos_crudos`. Y si es una licencia o una autorización, va en `05_Soportes_legales`. Un mismo archivo no se guarda en dos carpetas: si lo necesitas en dos lugares, anótalo en la matriz.
+
+> [!naranja] **No todas las carpetas de sistemas son obligatorias.** Si la empresa no tiene sistema de seguridad de la información, **no crees** la carpeta `04_Seguridad_Informacion`. Crear una carpeta vacía sugiere que sí lo tiene. Si no encuentran evidencia pública de un sistema, anótalo en el LEEME («no se encontró evidencia pública»).
+
+#### Nombra bien cada archivo
+
 | ❌ Nombre que genera problemas | ✅ Nombre recomendado |
 |---|---|
 | `informe final (2).pdf` | `2026-10-30_Calidad_GestionComercial_InformeGestion_v01.pdf` |
@@ -583,6 +608,8 @@ Fecha de recolección: ____/____/2026
 ```
 
 ### 6.2. Estructura de carpetas sugerida
+Copia este árbol como punto de partida. Qué va en cada carpeta se explica en el **Paso 5** (sección 4).
+
 ```text title="📁 Árbol de carpetas jerárquico" btn="Copiar árbol"
 EV01_Recoleccion_[Empresa]_Equipo[N]/
 ├── 00_LEEME.txt

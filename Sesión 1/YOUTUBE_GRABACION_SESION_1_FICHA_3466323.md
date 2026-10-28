@@ -6,7 +6,7 @@
 
 ### ENLACE PUBLICADO EN YOUTUBE
 ```text
-[PEGAR_ENLACE_YOUTUBE_FICHA_3466323]
+https://youtu.be/8OJSSeVjsa4
 ```
 
 ---
