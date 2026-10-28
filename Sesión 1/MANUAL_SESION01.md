@@ -12,14 +12,14 @@
 ## 1. Antes de empezar: qué vas a hacer
 Este manual está escrito para que puedas **hacer la evidencia sin dudas**, paso a paso. Léelo con tu equipo y úsalo como lista de tareas.
 
-> [!verde] **La EV01 en una frase:** elijan una **empresa real**, comprueben **qué sistemas de gestión tiene**, recolecten su información **de forma legal y autorizada**, guárdenla **organizada en una carpeta de Google Drive** y entreguen el **enlace en Zajuna** antes del miércoles, 4 de noviembre de 2026, 11:59 p. m.
+> [!verde] **La EV01 en una frase:** elijan una **empresa real**, comprueben **qué sistemas de gestión tiene**, recolecten su información **de forma legal y autorizada**, guárdenla **organizada en una carpeta de Google Drive** y entreguen en Zajuna un **PDF con la portada y el enlace** antes del miércoles, 4 de noviembre de 2026, 11:59 p. m.
 
 | Pregunta | Respuesta |
 |---|---|
-| ¿Qué entrego? | Una carpeta de Drive con **toda la información recolectada**, la matriz de recolección y el archivo LEEME. Se entrega el **enlace** de la carpeta. |
+| ¿Qué entrego? | Una carpeta de Drive con **toda la información recolectada**, la matriz de recolección y el archivo LEEME. Además, un **PDF de entrega** (portada, introducción y enlace de la carpeta) que se sube a Zajuna. |
 | ¿Quién la hace? | Un **equipo de 4 aprendices**. Entregan una sola carpeta por equipo. |
 | ¿Cuándo se entrega? | Antes del **miércoles, 4 de noviembre de 2026, 11:59 p. m.** |
-| ¿Dónde se entrega? | En **Zajuna**, en el espacio *GA5-220501114-AA1-EV01 — Recolección de información de modelos de gestión de la organización*. |
+| ¿Dónde se entrega? | El **PDF** `EV01_NombreEmpresa.pdf` se sube en **Zajuna**, en el espacio *GA5-220501114-AA1-EV01 — Recolección de información de modelos de gestión de la organización*. |
 | ¿Con quién comparto la carpeta? | Con el instructor: **instructorjuliantrujilo@gmail.com** (permiso *Comentador*). |
 | ¿Cómo me evalúan? | Con la lista de verificación **IE-GA5-220501114-AA1-EV01** y los criterios de la guía (sección 7). |
 
@@ -54,7 +54,7 @@ Esto es lo que dice la guía de aprendizaje para la EV01. A la derecha lo traduc
 | *«De cada sistema, obtengan la información relevante para los procesos»* | Para cada sistema encontrado, reunir los documentos y datos que muestran cómo funciona. | Sistema de calidad → política de calidad, mapa de procesos e indicadores de satisfacción. |
 | *«Almacenen en una carpeta con subcarpetas según la jerarquía»* | Ordenar los archivos en carpetas con lógica (por sistema o por proceso). | `02_Sistemas_de_gestion/01_Calidad/` |
 | *«Almacenen en sitio seguro, en equipo o nube»* | Guardar con copia de respaldo y permisos controlados. | Carpeta en Drive del equipo y una copia en otro medio. |
-| *«Archivo o carpeta comprimida en la nube, máximo 10 GB»* | Subes a Zajuna un enlace que debe **abrir sin iniciar sesión**. | Enlace de Drive con «Cualquier persona con el enlace». |
+| *«Archivo o carpeta comprimida en la nube, máximo 10 GB»* | Subes a Zajuna un PDF con el enlace de la carpeta; ese enlace debe **abrir sin iniciar sesión**. | Enlace de Drive con «Cualquier persona con el enlace». |
 
 ### Los cuatro criterios de recolección
 La guía dice que la recolección **debe cumplir cuatro criterios**. Antes de guardar cualquier archivo hazle estas cuatro preguntas:
@@ -433,7 +433,7 @@ Fecha de consulta: 2026-10-29
 **Cómo sabes que quedó bien:** quien abra la carpeta entiende en un minuto qué empresa es, qué sistemas tiene y qué contiene cada subcarpeta.
 
 ### Paso 8: Compartan, prueben y entreguen
-**Qué debes hacer:** dejar la carpeta lista y subir el enlace en Zajuna.
+**Qué debes hacer:** dejar la carpeta lista, armar el PDF de entrega y subirlo a Zajuna.
 
 **Cómo hacerlo:**
 1. **Revisen con la lista de chequeo** de la sección 11.
@@ -441,13 +441,52 @@ Fecha de consulta: 2026-10-29
 3. **Habilita el acceso por enlace:** en *Acceso general* elige «Cualquier persona con el enlace» con permiso **Lector**, y copia el enlace.
 4. **Prueba el enlace** en una ventana de incógnito. Si te pide iniciar sesión, la entrega será rechazada: corrígelo.
 5. **Haz una copia de respaldo** (descarga la carpeta comprimida y guárdala en otro medio): regla **3-2-1** (3 copias, 2 medios distintos, 1 externa).
-6. **Sube el enlace en Zajuna**, en el espacio *GA5-220501114-AA1-EV01*, antes del miércoles, 4 de noviembre de 2026, 11:59 p. m. Usa el texto sugerido:
+6. **Arma el PDF de entrega y súbelo a Zajuna** (se explica justo abajo).
 
-```text title="📝 Texto sugerido para el envío en Zajuna" btn="Copiar texto"
-Empresa elegida: [nombre de la empresa]
-Integrantes: [nombre 1, nombre 2, nombre 3, nombre 4]
-Enlace de la carpeta de Drive (compartida con instructorjuliantrujilo@gmail.com): [pegar enlace]
+#### El PDF de entrega: portada, introducción y enlace
+
+En Zajuna **no se sube la carpeta**: se sube **un PDF** que la presenta. Es la cara formal de tu evidencia: dice quiénes son, qué empresa eligieron y dónde está la carpeta con toda la información.
+
+1. **Abre un documento nuevo** en Google Docs o en Word. Usa letra legible (Arial o Calibri 11–12).
+2. **Copia la plantilla** de abajo, pégala en la primera hoja y reemplaza todo lo que está entre [corchetes].
+3. **Escribe la introducción** (5 a 8 renglones): qué empresa eligieron y por qué, qué sistemas de gestión encontraron y qué información recolectaron.
+4. **Pega el enlace de la carpeta** y haz clic en él para comprobar que abre. La carpeta debe estar compartida con instructorjuliantrujilo@gmail.com (*Comentador*).
+5. **Descarga el PDF:** en Google Docs, *Archivo → Descargar → Documento PDF*; en Word, *Archivo → Guardar como → PDF*.
+6. **Nómbralo con el nombre de la empresa:** `EV01_NombreEmpresa.pdf`, por ejemplo `EV01_LacteosDelValle.pdf`. Sin tildes, sin espacios y sin símbolos.
+7. **Súbelo en Zajuna**, en el espacio *GA5-220501114-AA1-EV01*, antes del miércoles, 4 de noviembre de 2026, 11:59 p. m. Un integrante lo sube por todo el equipo.
+
+```text title="📄 Plantilla de portada, introducción y enlace" btn="Copiar plantilla"
+SERVICIO NACIONAL DE APRENDIZAJE – SENA
+Tecnólogo en Gestión del Desarrollo Administrativo e Innovación
+Ficha: [3466323 o 3466324]
+
+EVIDENCIA GA5-220501114-AA1-EV01
+Recolección de información de modelos de gestión de la organización
+
+EMPRESA: [nombre de la empresa]
+
+INTEGRANTES
+1. [Nombre completo] – C.C. [documento] – Rol: [coordinador]
+2. [Nombre completo] – C.C. [documento] – Rol: [investigador de sistemas]
+3. [Nombre completo] – C.C. [documento] – Rol: [responsable de datos]
+4. [Nombre completo] – C.C. [documento] – Rol: [responsable de almacenamiento]
+
+Instructor: Julián Andrés Trujillo Morales
+Fecha de entrega: [día de mes de año]
+------------------------------------------------------------
+INTRODUCCIÓN
+Escribe de 5 a 8 renglones: qué empresa eligieron y por qué, a qué se dedica,
+qué sistemas de gestión encontraron (con su prueba) y qué información recolectaron.
+------------------------------------------------------------
+CARPETA DE DRIVE CON LA EVIDENCIA
+Enlace: [pegar enlace]
+Compartida con instructorjuliantrujilo@gmail.com (permiso Comentador)
+
+CONTENIDO DE LA CARPETA
+[Lista de subcarpetas con una línea sobre qué hay en cada una]
 ```
+
+> [!naranja] Los nombres de los **cuatro integrantes** van dentro de la portada, no en el nombre del archivo. El archivo solo lleva el nombre de la empresa.
 
 **Cómo sabes que quedó bien:** el enlace abre en incógnito sin iniciar sesión y la carpeta pesa menos de 10 GB.
 
@@ -463,7 +502,7 @@ Enlace de la carpeta de Drive (compartida con instructorjuliantrujilo@gmail.com)
 | 5. Carpeta | Árbol con tres sistemas y 6 archivos en subcarpetas; `03_Datos_crudos` con el CSV y el XLSX |
 | 6. Matriz | Matriz de 6 filas, una por archivo |
 | 7. LEEME | Diligenciado (ver abajo) |
-| 8. Entrega | Carpeta de 1,2 GB; enlace «Cualquier persona con el enlace», probado en incógnito; compartida con el instructor; enlace subido a Zajuna antes de la fecha límite |
+| 8. Entrega | Carpeta de 1,2 GB; enlace «Cualquier persona con el enlace», probado en incógnito; compartida con el instructor; PDF `EV01_LacteosDelValle.pdf` con portada y enlace subido a Zajuna antes de la fecha límite |
 
 Así quedó la **carpeta**:
 ```text title="📁 Carpeta del ejemplo resuelto" btn="Copiar árbol"
@@ -614,11 +653,11 @@ La evidencia se valora con la lista de verificación **IE-GA5-220501114-AA1-EV01
 
 **¿Cuántos documentos necesito?** La guía no fija una cantidad: el criterio es la pertinencia. Recomendación: varios documentos por sistema de gestión y al menos un conjunto de datos tabular.
 
-**¿Entrego un .zip o un enlace?** La guía acepta una carpeta digital comprimida en la nube. Lo esencial es que el enlace abra sin iniciar sesión.
+**¿Qué subo a Zajuna?** Un PDF con la portada, la introducción y el enlace de la carpeta de Drive, llamado `EV01_NombreEmpresa.pdf`. La evidencia completa queda en la carpeta, compartida con el instructor, y el enlace debe abrir sin iniciar sesión.
 
 **¿Qué hago si una empresa no tiene un sistema de gestión?** Documéntalo como «no se encontró evidencia pública» y continúa con los demás. Determinar qué sistemas **no** tiene también es parte del trabajo.
 
-**¿Todos los integrantes deben subir algo a Zajuna?** Entrega una sola carpeta por equipo. Pónganse de acuerdo en quién sube el enlace.
+**¿Todos los integrantes deben subir algo a Zajuna?** Entrega una sola carpeta por equipo. Pónganse de acuerdo en quién sube el PDF; los nombres de todos van en la portada.
 
 **¿Puedo cambiar el contenido de la carpeta después de compartirla?** Sí, el enlace es el mismo. Pero la versión que cuenta es la que esté en la carpeta **a la fecha límite**.
 
@@ -632,7 +671,7 @@ Esta es una **sugerencia** de reparto del tiempo para llegar con calma a la fech
 | 30 de octubre al 1 de noviembre | Recolectar la información y llenar la matriz | Archivos descargados y matriz con una fila por archivo |
 | 2 de noviembre | Crear la carpeta en Drive, renombrar y escribir el LEEME | Carpeta organizada |
 | Martes 3 de noviembre (Sesión 2) | Traer la carpeta con lo que lleven y resolver dudas | Observaciones del instructor |
-| Miércoles 4 de noviembre | Revisar con la lista de chequeo, compartir y **entregar en Zajuna** | Enlace entregado antes de las 11:59 p. m. |
+| Miércoles 4 de noviembre | Revisar con la lista de chequeo, compartir y **entregar en Zajuna** | PDF `EV01_NombreEmpresa.pdf` entregado antes de las 11:59 p. m. |
 
 > [!tech] **Consejo:** no dejen la entrega para el último minuto. Si el enlace falla o la carpeta pesa demasiado, necesitarán tiempo para corregirlo. Entreguen **un día antes** si pueden.
 
@@ -649,6 +688,7 @@ Marca cada casilla antes de subir tu evidencia a Zajuna:
 - [ ] Hay almacenamiento seguro y respaldo — Nube con permisos controlados y una copia adicional.
 - [ ] La carpeta está compartida con el instructor — Permiso Comentador a instructorjuliantrujilo@gmail.com.
 - [ ] El enlace abre sin iniciar sesión y pesa menos de 10 GB — Probado desde una ventana de incógnito.
+- [ ] El PDF de entrega está listo — Portada con ficha, empresa y los 4 integrantes; introducción; enlace; nombre `EV01_NombreEmpresa.pdf`.
 
 ## 12. Glosario
 | Término | Significado sencillo |
