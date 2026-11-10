@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual Didáctico del Aprendiz — Sesión 3 (EV03) | SENA GDAI GA5</title>
+
+  <!-- Tipografías Google Fonts Institucionales de Alta Gama -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@600;700;800;900&family=Syne:wght@700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --sena-verde: #39a900;
+      --sena-verde-dark: #236b00;
+      --sena-verde-bg: #f0fdf4;
+      --sena-verde-border: #bbf7d0;
+      --sena-naranja: #ff6b00;
+      --sena-naranja-dark: #c2410c;
+      --sena-naranja-bg: #fff7ed;
+      --sena-naranja-border: #fed7aa;
+      --azul-tech: #0284c7;
+      --azul-tech-dark: #0369a1;
+      --azul-bg: #eff6ff;
+      --azul-border: #bfdbfe;
+      --purpura-pro: #7c3aed;
+      --purpura-bg: #faf5ff;
+      --purpura-border: #e9d5ff;
+
+      --bg-page: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-subtle: #f1f5f9;
+      --borde-light: #e2e8f0;
+      --texto-main: #0f172a;
+      --texto-muted: #334155;
+      --texto-sub: #64748b;
+      --texto-dimmer: #94a3b8;
+
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-card: 0 8px 24px rgba(15,23,42,0.06);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-page);
+      color: var(--texto-main);
+      line-height: 1.7;
+    }
+
+    /* Topbar Fijo */
+    .doc-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--borde-light);
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sena-badge {
+      background: linear-gradient(135deg, var(--sena-verde), var(--sena-verde-dark));
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      padding: 5px 12px;
+      border-radius: 8px;
+      letter-spacing: 0.5px;
+    }
+    .topbar-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--texto-main);
+    }
+    .topbar-sub {
+      font-size: 11.5px;
+      color: var(--texto-sub);
+    }
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-topbar {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 7px 14px;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-topbar.portal {
+      background: #f1f5f9;
+      color: var(--texto-muted);
+      border: 1px solid var(--borde-light);
+    }
+    .btn-topbar.portal:hover {
+      background: #e2e8f0;
+      color: var(--texto-main);
+    }
+    .btn-topbar.pres {
+      background: linear-gradient(135deg, var(--sena-verde), var(--sena-verde-dark));
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(57,169,0,0.25);
+    }
+    .btn-topbar.pres:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(57,169,0,0.35);
+    }
+    .btn-topbar.print {
+      background: #ffffff;
+      color: var(--azul-tech);
+      border: 1px solid var(--azul-border);
+    }
+    .btn-topbar.print:hover {
+      background: var(--azul-bg);
+    }
+
+    /* Layout Doc: Sidebar + Contenido */
+    .doc-layout {
+      display: flex;
+      max-width: 1440px;
+      margin: 0 auto;
+      min-height: calc(100vh - 65px);
+    }
+
+    /* Sidebar Índice de Navegación */
+    .doc-sidebar {
+      width: 300px;
+      flex-shrink: 0;
+      background: #ffffff;
+      border-right: 1px solid var(--borde-light);
+      position: sticky;
+      top: 61px;
+      height: calc(100vh - 61px);
+      overflow-y: auto;
+      padding: 24px 16px;
+    }
+    .sidebar-heading {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--texto-sub);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      padding-left: 8px;
+    }
+    .doc-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .doc-nav-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--texto-muted);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      line-height: 1.35;
+    }
+    .doc-nav-link:hover {
+      background: #f8fafc;
+      color: var(--sena-verde-dark);
+      padding-left: 15px;
+    }
+    .doc-nav-link.active {
+      background: var(--sena-verde-bg);
+      color: var(--sena-verde-dark);
+      border-left: 3px solid var(--sena-verde);
+      font-weight: 700;
+    }
+    .doc-nav-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--texto-dimmer);
+      width: 18px;
+      text-align: right;
+    }
+
+    /* Contenedor del Artículo */
+    .doc-main {
+      flex: 1;
+      min-width: 0;
+      padding: 40px 48px 80px;
+      max-width: 960px;
+    }
+
+    @media (max-width: 992px) {
+      .doc-sidebar { display: none; }
+      .doc-main { padding: 24px 20px; }
+    }
+
+    /* Tipografía y Elementos del Manual */
+    .doc-header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--sena-verde-bg);
+      border: 1px solid var(--sena-verde-border);
+      padding: 5px 14px;
+      border-radius: 30px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--sena-verde-dark);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+    .doc-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 3.5vw, 40px);
+      font-weight: 800;
+      color: var(--texto-main);
+      line-height: 1.2;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+    .doc-subtitle {
+      font-size: 16px;
+      color: var(--texto-muted);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    /* Meta Caja */
+    .meta-box-panel {
+      background: #ffffff;
+      border: 1px solid var(--borde-light);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow-sm);
+    }
+    .meta-item-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--texto-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+    .meta-item-val {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--texto-main);
+    }
+
+    /* Secciones de Contenido */
+    .doc-section {
+      margin-bottom: 56px;
+      scroll-margin-top: 80px;
+    }
+    .sec-h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--texto-main);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sec-h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--texto-main);
+      margin: 24px 0 12px;
+    }
+    p { margin-bottom: 16px; font-size: 14.5px; color: var(--texto-muted); }
+
+    /* Callouts / Alertas Didácticas */
+    .callout {
+      border-radius: var(--radius-md);
+      padding: 18px 22px;
+      margin: 20px 0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      border: 1px solid;
+    }
+    .callout-icon { flex-shrink: 0; margin-top: 2px; }
+    .callout-content { font-size: 13.5px; line-height: 1.6; }
+    .callout-content strong { color: var(--texto-main); }
+    .callout.verde {
+      background: var(--sena-verde-bg);
+      border-color: var(--sena-verde-border);
+      color: #14532d;
+    }
+    .callout.naranja {
+      background: var(--sena-naranja-bg);
+      border-color: var(--sena-naranja-border);
+      color: #7c2d12;
+    }
+    .callout.tech {
+      background: var(--azul-bg);
+      border-color: var(--azul-border);
+      color: #0c4a6e;
+    }
+
+    /* Cajas de Plantillas Copiables con Botón */
+    .copy-box-container {
+      background: #ffffff;
+      border: 1.5px solid var(--borde-light);
+      border-radius: var(--radius-md);
+      margin: 20px 0;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .copy-box-header {
+      background: #f8fafc;
+      border-bottom: 1px solid var(--borde-light);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .copy-box-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--texto-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-copy {
+      background: #ffffff;
+      border: 1px solid var(--borde-light);
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--sena-verde-dark);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .btn-copy:hover {
+      background: var(--sena-verde);
+      border-color: var(--sena-verde);
+      color: #ffffff;
+    }
+    .copy-box-body {
+      padding: 16px 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #334155;
+      background: #ffffff;
+      white-space: pre-wrap;
+      line-height: 1.6;
+      max-height: 380px;
+      overflow-y: auto;
+    }
+
+    /* Tablas Estructuradas Responsivas */
+    .table-card {
+      background: #ffffff;
+      border: 1px solid var(--borde-light);
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 20px 0;
+      box-shadow: var(--shadow-sm);
+      width: 100%;
+    }
+    .doc-table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+    }
+    .doc-table th {
+      background: #f8fafc;
+      padding: 12px 16px;
+      font-weight: 700;
+      color: var(--texto-main);
+      border-bottom: 2px solid var(--borde-light);
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+    .doc-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--borde-light);
+      color: var(--texto-muted);
+      vertical-align: middle;
+    }
+    .doc-table tr:hover { background: #f8fafc; }
+    .badge-pk {
+      background: #fef08a;
+      color: #854d0e;
+      font-weight: 800;
+      font-size: 10.5px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid #fde047;
+    }
+    .badge-fk {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-weight: 800;
+      font-size: 10.5px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid #bae6fd;
+    }
+
+    /* Lista de Chequeo Interactiva */
+    .checklist-container {
+      background: #ffffff;
+      border: 1.5px solid var(--borde-light);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin: 24px 0;
+      box-shadow: var(--shadow-sm);
+    }
+    .checklist-progress-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    .checklist-item:hover { background: #f8fafc; }
+    .check-custom {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: all 0.2s ease;
+    }
+    .checklist-item.checked .check-custom {
+      background: var(--sena-verde);
+      border-color: var(--sena-verde);
+      color: #fff;
+    }
+    .checklist-item.checked .checklist-text {
+      text-decoration: line-through;
+      color: var(--texto-dimmer);
+    }
+    .checklist-text {
+      font-size: 13.5px;
+      color: var(--texto-main);
+      line-height: 1.5;
+    }
+    .checklist-tip {
+      font-size: 11px;
+      color: var(--texto-sub);
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* Estilos de Impresión */
+    @media print {
+      .doc-topbar, .doc-sidebar, .btn-copy, .btn-topbar { display: none !important; }
+      .doc-main { max-width: 100% !important; padding: 0 !important; }
+      body { background: #fff !important; color: #000 !important; }
+      .copy-box-container, .table-card, .checklist-container { box-shadow: none !important; border-color: #ccc !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="doc-topbar">
+    <div class="topbar-left"><div class="sena-badge">SENA</div><div><div class="topbar-title">GDAI · Guía 5 | Manual de la Sesión 3</div><div class="topbar-sub">Gestión para el análisis de los datos depurados (EV03)</div></div></div>
+    <div class="topbar-actions">
+      <a href="../explorar.html" class="btn-topbar portal"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Volver al Hub</a>
+      <a href="./PRESENTACION_SESION03_ANALISIS_DATOS.html" target="_blank" class="btn-topbar pres"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><polygon points="5 3 19 12 5 21 5 3"/></svg> Ver Presentación ↗</a>
+      <button type="button" class="btn-topbar print" onclick="window.print()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg> Imprimir / Guardar PDF</button>
+    </div>
+  </header>
+  <div class="doc-layout">
+    <aside class="doc-sidebar"><div class="sidebar-heading">Índice del Manual</div><ul class="doc-nav-list"><li><a href="#sec-1" class="doc-nav-link active"><span class="doc-nav-num">01</span> Antes de empezar: qué vas a hacer</a></li><li><a href="#sec-2" class="doc-nav-link"><span class="doc-nav-num">02</span> ¿Por qué hay que analizar? Datos limpios no bastan</a></li><li><a href="#sec-3" class="doc-nav-link"><span class="doc-nav-num">03</span> Conceptos clave explicados con ejemplos</a></li><li><a href="#sec-4" class="doc-nav-link"><span class="doc-nav-num">04</span> Tu plantilla de Excel y cómo se escribe una fórmula</a></li><li><a href="#sec-5" class="doc-nav-link"><span class="doc-nav-num">05</span> Paso 2 · Las medidas de resumen en Excel</a></li><li><a href="#sec-6" class="doc-nav-link"><span class="doc-nav-num">06</span> Paso 3 · Las tablas dinámicas</a></li><li><a href="#sec-7" class="doc-nav-link"><span class="doc-nav-num">07</span> Paso 4 · Los gráficos dinámicos</a></li><li><a href="#sec-8" class="doc-nav-link"><span class="doc-nav-num">08</span> Paso 5 · El dashboard</a></li><li><a href="#sec-9" class="doc-nav-link"><span class="doc-nav-num">09</span> El plan de gestión y análisis</a></li><li><a href="#sec-10" class="doc-nav-link"><span class="doc-nav-num">10</span> La carpeta del equipo: dónde queda todo</a></li><li><a href="#sec-11" class="doc-nav-link"><span class="doc-nav-num">11</span> La evidencia EV03 explicada frase por frase</a></li><li><a href="#sec-12" class="doc-nav-link"><span class="doc-nav-num">12</span> Paso a paso para construir la EV03</a></li><li><a href="#sec-13" class="doc-nav-link"><span class="doc-nav-num">13</span> Ejemplo resuelto: una EV03 de principio a fin</a></li><li><a href="#sec-14" class="doc-nav-link"><span class="doc-nav-num">14</span> El PDF de entrega</a></li><li><a href="#sec-15" class="doc-nav-link"><span class="doc-nav-num">15</span> Cómo se evalúa la evidencia y cómo dejarlo evidenciado</a></li><li><a href="#sec-16" class="doc-nav-link"><span class="doc-nav-num">16</span> Errores frecuentes y cómo evitarlos</a></li><li><a href="#sec-17" class="doc-nav-link"><span class="doc-nav-num">17</span> Preguntas frecuentes</a></li><li><a href="#sec-18" class="doc-nav-link"><span class="doc-nav-num">18</span> Plan de trabajo sugerido</a></li><li><a href="#sec-19" class="doc-nav-link"><span class="doc-nav-num">19</span> Lista de chequeo anti-rechazo</a></li><li><a href="#sec-20" class="doc-nav-link"><span class="doc-nav-num">20</span> Glosario</a></li><li><a href="#sec-21" class="doc-nav-link"><span class="doc-nav-num">21</span> Referencias</a></li></ul></aside>
+    <main class="doc-main">
+      <header style="margin-bottom:32px;">
+        <div class="doc-header-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Material Didáctico del Aprendiz — Sesión 3</div>
+        <h1 class="doc-title">Manual de Gestión para el Análisis de Datos</h1>
+        <p class="doc-subtitle">Guía paso a paso para calcular medidas de resumen, construir tablas y gráficos dinámicos, armar el dashboard y escribir el plan de gestión y análisis de la evidencia <strong>GA5-220501114-AA1-EV03</strong>.</p>
+        <div class="meta-box-panel"><div><div class="meta-item-label">Programa</div><div class="meta-item-val">GDAI (Fichas 3466323 y 3466324)</div></div><div><div class="meta-item-label">Fase del Proyecto</div><div class="meta-item-val">Planeación (AP2)</div></div><div><div class="meta-item-label">Competencia</div><div class="meta-item-val">220501114 — Datos masivos</div></div><div><div class="meta-item-label">Fecha Límite Zajuna</div><div class="meta-item-val" style="color:var(--sena-naranja-dark);">18 / Nov / 2026</div></div></div>
+      </header>
+      <section id="sec-1" class="doc-section"><h2 class="sec-h2">1. Antes de empezar: qué vas a hacer</h2><p>Este manual está escrito para que puedas <strong>hacer la evidencia sin dudas</strong>, paso a paso. Primero entenderás <strong>qué es analizar</strong> y cómo se elige el método y el gráfico; luego harás en Excel <strong>las medidas de resumen, las tablas dinámicas, los gráficos dinámicos y el dashboard</strong>; y al final escribirás <strong>el plan de gestión y análisis</strong> que se entrega en Zajuna.</p><div class="callout verde"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div><div class="callout-content"><strong>La EV03 en una frase:</strong> con los datos que depuraron en la EV02, planteen <strong>preguntas de negocio</strong>, <strong>caractericen las variables</strong>, calculen <strong>medidas de resumen</strong>, construyan <strong>tablas y gráficos dinámicos</strong> y un <strong>dashboard</strong> en Excel, y escriban un <strong>plan de gestión y análisis</strong> (PDF, máximo 5 páginas) con el enlace de la carpeta de Drive.</div></div><div class="table-card"><table class="doc-table"><thead><tr><th>Pregunta</th><th>Respuesta</th></tr></thead><tbody><tr><td>¿Qué entrego?</td><td>Dos productos: el <strong>plan de gestión y análisis en PDF</strong> (máximo 5 páginas) que se sube a Zajuna, y el <strong>libro de Excel</strong> <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">analisis_clientes.xlsx</code> con tabla dinámica, gráfico dinámico y dashboard, dentro de la subcarpeta <strong>08_analisis_xxx</strong> de Drive.</td></tr><tr><td>¿Quién la hace?</td><td>Un <strong>equipo de 4 aprendices</strong>. Entregan un solo plan y un solo libro por equipo.</td></tr><tr><td>¿Cuándo?</td><td>Antes del <strong>miércoles, 18 de noviembre de 2026, 11:59 p. m.</strong></td></tr><tr><td>¿Dónde se entrega?</td><td>El <strong>PDF</strong> <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">EV03_NombreEmpresa.pdf</code> se sube en <strong>Zajuna</strong>, en el espacio <em>GA5-220501114-AA1-EV03</em>.</td></tr><tr><td>¿Con quién comparto la carpeta?</td><td>Con el instructor: <strong>instructorjuliantrujilo@gmail.com</strong> (permiso <em>Comentador</em>).</td></tr></tbody></table></div><div class="callout naranja"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg></div><div class="callout-content"><strong>Qué NO pide la EV03:</strong> modelos de predicción ni estadística avanzada. Se pide <strong>describir y presentar</strong> los datos que ya tienes: medidas de resumen, tabla dinámica, gráfico dinámico, dashboard y un plan que explique cómo y por qué lo hiciste.</div></div><h3 class="sec-h3">Cómo usar este manual</h3><ol style="margin:0 0 14px 22px;line-height:1.8;"><li>Lee las secciones <strong>2 y 3</strong> para entender qué es analizar, los tipos de variable y cómo se elige el método y el gráfico.</li><li>Lee la sección <strong>4</strong> para conocer la plantilla y cómo se escribe una fórmula con tablas de Excel.</li><li>Sigue las secciones <strong>5 a 8</strong> con la plantilla abierta: medidas, tablas dinámicas, gráficos dinámicos y dashboard. Son los mismos pasos de la hoja <strong>LEEME</strong>.</li><li>Usa la sección <strong>9</strong> para escribir el plan y la <strong>10</strong> para dejar la carpeta en orden.</li><li>Lee la sección <strong>11</strong> para ver qué pide la guía frase por frase y la <strong>12</strong> para el paso a paso del equipo.</li><li>Antes de entregar, revisa la <strong>lista de chequeo</strong> (sección 19).</li></ol><h3 class="sec-h3">Dónde encaja esta evidencia</h3><p>La competencia <strong>220501114 — Sistematizar datos masivos de acuerdo con métodos de analítica y herramientas tecnológicas</strong> se trabaja con la actividad <strong>GA5-220501114-AA1</strong> (72 horas), que evalúa el <strong>RAP 220501114-01</strong>: <em>Interpretar métodos de analítica de datos de acuerdo con marco legal y modelo de gestión de la organización</em>.</p><p>Volvemos a la cocina: en la EV01 <strong>compraste los ingredientes</strong> y en la EV02 los <strong>lavaste y cortaste</strong>. Hoy, en la EV03, por fin <strong>cocinas</strong>: conviertes los datos limpios en respuestas para quien toma decisiones.</p><div class="table-card"><table class="doc-table"><thead><tr><th>Evidencia</th><th>Qué haces</th><th>Analogía</th></tr></thead><tbody><tr><td>EV01</td><td>Recolectar información legal y organizada</td><td>Comprar los ingredientes</td></tr><tr><td>EV02</td><td>Sistematizar y depurar los datos</td><td>Lavar y cortar</td></tr><tr><td><strong>EV03</strong> (hoy)</td><td>Gestión para el análisis (estadística, tabla dinámica, dashboard)</td><td>Cocinar</td></tr><tr><td>EV04</td><td>Base de datos final</td><td>Servir en el plato</td></tr><tr><td>EV05</td><td>Cuestionario individual</td><td>Probar si quedó bien</td></tr></tbody></table></div></section><section id="sec-2" class="doc-section"><h2 class="sec-h2">2. ¿Por qué hay que analizar? Datos limpios no bastan</h2><p>En la EV02 dejaste las ventas de Lácteos del Valle <strong>limpias y ordenadas</strong>. Ahora el gerente, don Carlos, te hace preguntas: <em>¿en qué ciudad se vende más?, ¿cuánto vende una venta típica?, ¿hay ventas raras?</em> Mirar la tabla no responde esas preguntas. Hay tres problemas:</p><div class="table-card"><table class="doc-table"><thead><tr><th>Problema</th><th>Qué pasa</th><th>Cómo lo resuelve el análisis</th></tr></thead><tbody><tr><td>Mirar no basta</td><td>Con 19 filas todavía se puede contar a mano. Con 1.900, no.</td><td>Medidas de resumen y tablas dinámicas que resumen en segundos.</td></tr><tr><td>El promedio engaña</td><td>Una sola venta de 650 unidades sube el promedio a 47,9, aunque la venta típica es de 8.</td><td>Comparar media y mediana, y explicar los atípicos.</td></tr><tr><td>Sin gráfico no se comunica</td><td>Una tabla de números no se entiende en 10 segundos.</td><td>Un gráfico bien elegido y un dashboard con lo importante arriba.</td></tr></tbody></table></div><div class="callout tech"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div><div class="callout-content"><strong>Analogía:</strong> tener los ingredientes lavados y cortados <strong>no es tener el plato servido</strong>. Falta cocinarlos con una receta. El análisis es esa receta, y el plan de gestión y análisis es la receta escrita para que cualquiera la pueda repetir.</div></div></section><section id="sec-3" class="doc-section"><h2 class="sec-h2">3. Conceptos clave explicados con ejemplos</h2><h3 class="sec-h3">3.1. ¿Qué es analizar los datos?</h3><p>Analizar no es «hacer gráficos». Es <strong>hacerle preguntas a los datos y responderlas con un método</strong>. Se hace en cinco pasos:</p><div class="table-card"><table class="doc-table"><thead><tr><th>Paso</th><th>Qué haces</th><th>Ejemplo con la pregunta de don Carlos</th></tr></thead><tbody><tr><td>1. Empieza por la pregunta</td><td>Escribe qué necesita saber quien decide, en una pregunta corta y concreta.</td><td>«¿En qué ciudad vendemos más?»</td></tr><tr><td>2. Mira qué datos tienes</td><td>Revisa qué columnas hay y de qué tipo es cada una.</td><td>Ciudad (categoría) y Factura (para contar ventas).</td></tr><tr><td>3. Elige el método</td><td>Decide qué operación responde la pregunta: contar, sumar, promediar, comparar.</td><td>Contar ventas por ciudad y calcular el porcentaje.</td></tr><tr><td>4. Muestra el resultado</td><td>Una tabla para los números exactos y un gráfico para entenderlo de un vistazo.</td><td>Tabla dinámica y gráfico de barras ordenado.</td></tr><tr><td>5. Ayuda a decidir</td><td>El análisis termina cuando alguien puede hacer algo con él.</td><td>«Cali concentra 11 de las 17 ventas: conviene reforzar allí la distribución.»</td></tr></tbody></table></div><div class="callout verde"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div><div class="callout-content"><strong>Buena pregunta:</strong> «¿En qué ciudad vendemos más?» (concreta, se responde con datos). <strong>Mala pregunta:</strong> «¿Cómo van las ventas?» (demasiado general: ¿en qué, dónde, comparado con qué?).</div></div><h3 class="sec-h3">3.2. De la pregunta al gráfico</h3><p>Cada pregunta se traduce siempre igual: <strong>pregunta → variables → método → gráfico</strong>. Este recorrido es la tabla central de tu plan (hoja <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">4_Plan</code> de la plantilla).</p><div class="table-card"><table class="doc-table"><thead><tr><th>Pregunta</th><th>Variables</th><th>Método</th><th>Gráfico</th></tr></thead><tbody><tr><td>¿En qué ciudad se vende más?</td><td>Ciudad + Factura</td><td>Contar ventas por ciudad y su porcentaje</td><td>Barras ordenadas</td></tr><tr><td>¿Qué referencia mueve más unidades?</td><td>Referencia + Unidades</td><td>Sumar unidades por referencia</td><td>Columnas</td></tr><tr><td>¿Cuánto vende una venta típica?</td><td>Unidades</td><td>Media, mediana y moda</td><td>Cuadro de resumen</td></tr><tr><td>¿Hay ventas fuera de lo normal?</td><td>Unidades</td><td>Mínimo, máximo y comparar con la mediana</td><td>Barras ordenadas</td></tr><tr><td>¿Cómo se comportan las ventas en el tiempo?</td><td>Fecha + Unidades</td><td>Sumar unidades por día</td><td>Líneas</td></tr></tbody></table></div><h3 class="sec-h3">3.3. Tipos de variable: lo primero que debes saber de cada columna</h3><p>Caracterizar los datos es decir <strong>de qué tipo es cada columna</strong>. De eso depende qué cuentas puedes hacer.</p><div class="table-card"><table class="doc-table"><thead><tr><th>Variable</th><th>Ejemplo</th><th>Tipo</th><th>Qué se puede calcular</th></tr></thead><tbody><tr><td>Ciudad</td><td>Cali</td><td>Cualitativa nominal</td><td>Contar, porcentaje, moda</td></tr><tr><td>Referencia</td><td>LV-002</td><td>Cualitativa nominal</td><td>Contar, porcentaje, moda</td></tr><tr><td>Nivel de satisfacción</td><td>Alta</td><td>Cualitativa ordinal</td><td>Contar, ordenar, mediana</td></tr><tr><td>Unidades</td><td>8</td><td>Cuantitativa discreta</td><td>Suma, media, mediana, moda, mínimo, máximo</td></tr><tr><td>Peso del pedido (kg)</td><td>12,45</td><td>Cuantitativa continua</td><td>Suma, media, mediana, desviación</td></tr><tr><td>Factura</td><td>F-1002</td><td>Identificador</td><td>Solo contar (no se suma ni se promedia)</td></tr></tbody></table></div><p>Para reconocer el tipo, hazte tres preguntas:</p><ol style="margin:0 0 14px 22px;line-height:1.8;"><li><strong>¿Es un nombre o un número?</strong> Si responde «¿cuál?» (Cali, LV-002) es <strong>cualitativa</strong>; si responde «¿cuánto?» es <strong>cuantitativa</strong>.</li><li><strong>Si es número, ¿se cuenta o se mide?</strong> Si se cuenta (8 unidades) es <strong>discreta</strong>; si se mide (12,45 kg) es <strong>continua</strong>.</li><li><strong>Si es categoría, ¿tiene orden?</strong> Cali y Palmira no tienen orden: <strong>nominal</strong>. Baja, media y alta sí: <strong>ordinal</strong>.</li></ol><div class="callout naranja"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg></div><div class="callout-content"><strong>Ojo con los códigos:</strong> el teléfono o el número de factura <strong>parecen números pero no son cantidades</strong>. Excel deja sumarlos, pero el resultado no significa nada. Se tratan como identificadores.</div></div><h3 class="sec-h3">3.4. Elegir el método estadístico: ¿media o mediana?</h3><p>Piensa en una cafetería con cinco empleados: cuatro ganan cerca de $1.500.000 y el dueño gana $9.000.000.</p><div class="table-card"><table class="doc-table"><thead><tr><th>Medida</th><th>Cómo se calcula</th><th>Resultado</th><th>¿Describe a la mayoría?</th></tr></thead><tbody><tr><td>Media (promedio)</td><td>Suma ÷ cantidad = 14.900.000 ÷ 5</td><td>$2.980.000</td><td>No: el sueldo del dueño la sube</td></tr><tr><td>Mediana</td><td>Ordena y toma el del medio</td><td>$1.500.000</td><td>Sí</td></tr></tbody></table></div><ul style="margin:0 0 14px 22px;line-height:1.8;"><li>Con <strong>categorías</strong> (Ciudad, Referencia) no hay promedio: se <strong>cuentan</strong> y se calcula el <strong>porcentaje</strong>; la moda dice cuál se repite más.</li><li>Con <strong>números</strong> (Unidades) se resume el valor típico con <strong>media, mediana y moda</strong>.</li><li>Si hay <strong>valores extremos</strong>, usa la <strong>mediana</strong> o reporta las dos.</li></ul><div class="callout verde"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div><div class="callout-content"><strong>En tu plan lo justificas con una frase:</strong> «Unidades es cuantitativa discreta y tiene un valor extremo, por eso usamos la mediana como valor típico y reportamos también la media».</div></div><h3 class="sec-h3">3.5. Las medidas de resumen</h3><div class="table-card"><table class="doc-table"><thead><tr><th>Medida</th><th>Qué dice</th><th>Fórmula en Excel</th></tr></thead><tbody><tr><td>Recuento</td><td>Cuántos datos numéricos hay</td><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">=CONTAR(rango)</code></td></tr><tr><td>Suma</td><td>El total</td><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">=SUMA(rango)</code></td></tr><tr><td>Media</td><td>Cuánto le toca a cada uno si se reparte por igual</td><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">=PROMEDIO(rango)</code></td></tr><tr><td>Mediana</td><td>El valor del medio de los datos ordenados</td><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">=MEDIANA(rango)</code></td></tr><tr><td>Moda</td><td>El valor que más se repite</td><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">=MODA.UNO(rango)</code></td></tr><tr><td>Mínimo y máximo</td><td>El menor y el mayor</td><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">=MIN(rango)</code> y <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">=MAX(rango)</code></td></tr><tr><td>Rango</td><td>La distancia entre el mayor y el menor</td><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">=MAX(rango)-MIN(rango)</code></td></tr><tr><td>Desviación estándar</td><td>Qué tan separados están los datos de la media</td><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">=DESVEST.M(rango)</code></td></tr></tbody></table></div><h3 class="sec-h3">3.6. El dato atípico y el promedio</h3><p>Las 17 ventas válidas van casi todas de 4 a 12 unidades, pero hay una de 50 y una de <strong>650</strong>. Esa sola venta <strong>empuja la media</strong> hacia arriba:</p><div class="table-card"><table class="doc-table"><thead><tr><th>Medida</th><th>Con la venta de 650</th><th>Sin la venta de 650</th></tr></thead><tbody><tr><td>Media</td><td>47,9</td><td>10,25</td></tr><tr><td>Mediana</td><td>8</td><td>7,5</td></tr><tr><td>Máximo</td><td>650</td><td>50</td></tr></tbody></table></div><p>Qué hacer con un atípico:</p><ol style="margin:0 0 14px 22px;line-height:1.8;"><li><strong>Verifica el dato:</strong> revisa la factura o pregunta a quien la capturó.</li><li><strong>Decide:</strong> si es real, <strong>se queda y se explica</strong>; si es un error comprobado, se corrige o se excluye con una justificación escrita.</li><li><strong>Cuéntalo:</strong> en el plan y en el dashboard, reporta media y mediana y explica el atípico.</li></ol><div class="callout naranja"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg></div><div class="callout-content"><strong>Nunca escondas un atípico.</strong> En el ejemplo, la venta de 650 es real (un mayorista en Yumbo): se deja y se reportan las dos medidas.</div></div><h3 class="sec-h3">3.7. Elegir el gráfico adecuado</h3><div class="table-card"><table class="doc-table"><thead><tr><th>Gráfico</th><th>Para qué sirve</th><th>Pregunta de ejemplo</th></tr></thead><tbody><tr><td>Barras o columnas</td><td>Comparar categorías</td><td>¿En qué ciudad se vende más?</td></tr><tr><td>Circular</td><td>Partes de un todo (pocas categorías)</td><td>¿Qué porcentaje de las ventas es de cada ciudad?</td></tr><tr><td>Líneas</td><td>Cambios en el tiempo</td><td>¿Cómo evolucionaron las ventas por día?</td></tr><tr><td>Histograma</td><td>Cómo se reparten los valores de un número</td><td>¿Cuántas ventas son de 0 a 10 unidades, de 11 a 20…?</td></tr><tr><td>Dispersión</td><td>Si dos números se relacionan</td><td>¿Si sube el precio, bajan las unidades?</td></tr></tbody></table></div><div class="callout tech"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div><div class="callout-content"><strong>Antes de graficar, respóndete:</strong> 1) ¿qué pregunta responde?, 2) ¿de qué tipo es la variable?, 3) ¿qué debería notar quien lo vea? Usa un color de énfasis, empieza el eje en cero y pon un título que diga la conclusión.</div></div></section><section id="sec-4" class="doc-section"><h2 class="sec-h2">4. Tu plantilla de Excel y cómo se escribe una fórmula</h2><h3 class="sec-h3">4.1. La plantilla: un libro, siete hojas</h3><p>Descarga <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">Plantilla_EV03_Analisis.xlsx</code> desde el Hub (carpeta <strong>Sesión 3</strong>). También está el <strong>ejemplo resuelto</strong> <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">Ejemplo_EV03_Dashboard.xlsx</code> para que compares.</p><div class="table-card"><table class="doc-table"><thead><tr><th>Hoja</th><th>Qué tiene</th><th>Qué haces</th></tr></thead><tbody><tr><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">LEEME</code></td><td>Instrucciones, paso a paso y errores frecuentes</td><td>Léela primero: tiene los mismos pasos de este manual</td></tr><tr><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">1_Ventas</code></td><td>Las 19 ventas depuradas de la EV02 como tabla de Excel (<code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">tblVentas</code>). Dos están marcadas POR VERIFICAR con Incluir = No</td><td>Revisas los datos</td></tr><tr><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">2_Clientes</code></td><td>Los 19 clientes depurados (<code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">tblClientes</code>)</td><td>Cuentas clientes por ciudad si lo necesitas</td></tr><tr><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">3_Estadisticos</code></td><td>Las medidas de resumen de Unidades</td><td>Escribes las fórmulas en las celdas amarillas</td></tr><tr><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">4_Plan</code></td><td>Caracterización de variables y tabla pregunta → variables → método → gráfico</td><td>La completas con las preguntas de tu equipo</td></tr><tr><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">5_Tablas_dinamicas</code></td><td>Hoja en blanco con una guía en la fila 39</td><td>Construyes las 5 tablas dinámicas y los 2 gráficos</td></tr><tr><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">6_Dashboard</code></td><td>Hoja con recuadros para indicadores, gráficos y segmentación</td><td>Armas el dashboard</td></tr></tbody></table></div><h3 class="sec-h3">4.2. Un archivo por grupo: original y copia</h3><ol style="margin:0 0 14px 22px;line-height:1.8;"><li><strong>Guarda el original:</strong> el coordinador sube la plantilla, <strong>sin editarla</strong>, a la carpeta <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">03_Datos_crudos</code> de Drive del equipo (la misma de la EV01).</li><li><strong>Haz una copia:</strong> en Drive, clic derecho sobre la plantilla ▸ <em>Hacer una copia</em>. Crea la subcarpeta <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">08_analisis_xxx</code> (por ejemplo <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">08_analisis_LacteosDelValle</code>), mueve la copia allí y cámbiale el nombre a <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">analisis_clientes.xlsx</code>.</li><li><strong>Todos trabajan en la copia.</strong> Las tablas dinámicas, las segmentaciones y el dashboard funcionan mejor en <strong>Excel de escritorio</strong>: trabajen por turnos (descargar, editar, volver a subir y avisar al equipo).</li></ol><div class="callout naranja"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg></div><div class="callout-content"><strong>Rutas largas:</strong> si descargas la carpeta a tu computador dentro de varias subcarpetas de OneDrive, Excel puede decir que la ruta «es mayor que 259 caracteres». Usa nombres cortos o guarda la carpeta más cerca del escritorio.</div></div><h3 class="sec-h3">4.3. Cómo se escribe una fórmula con tablas de Excel (léelo primero)</h3><p>En la plantilla, los datos están como <strong>tabla de Excel</strong>. Por eso las fórmulas no usan rangos como <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">C2:C20</code>, sino el nombre de la tabla y la columna: <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">tblVentas[Unidades]</code> significa «la columna Unidades de la tabla de ventas».</p><ol style="margin:0 0 14px 22px;line-height:1.8;"><li>Haz clic en la <strong>celda amarilla</strong> de la columna C, en la fila de la medida.</li><li>Escribe <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">=CONTAR(</code> y luego <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">tblV</code>. Al escribir <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">tbl</code>, Excel muestra las tablas del libro (<strong>tblClientes</strong> y <strong>tblVentas</strong>). Escribe hasta la <strong>V</strong> para que quede solo <strong>tblVentas</strong> y pulsa <strong>Tab</strong>.</li><li>Escribe <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">[</code> y Excel muestra las columnas de la tabla. Elige <strong>Unidades</strong> y pulsa <strong>Tab</strong>.</li><li>Cierra con <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">)</code> y pulsa <strong>Enter</strong>.</li><li>Compara tu resultado con la columna <strong>Resultado esperado</strong>.</li></ol><div class="callout tech"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div><div class="callout-content"><strong>Cómo sacar los corchetes.</strong> Teclado latinoamericano: <strong>Shift + la tecla <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">{</code></strong> (a la derecha de la Ñ) para <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">[</code>, y <strong>Shift + <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">}</code></strong> para <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">]</code>. Teclado de España: <strong>Alt Gr + <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">`</code></strong> y <strong>Alt Gr + <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">+</code></strong>. En cualquier teclado: <strong>Alt + 91</strong> y <strong>Alt + 93</strong> con el teclado numérico.</div></div><div class="callout naranja"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg></div><div class="callout-content"><strong>La columna B solo es la guía.</strong> En <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">3_Estadisticos</code> la columna B muestra la fórmula como texto para que la copies. No escribas encima: la fórmula va en la celda amarilla de la columna C.</div></div><h3 class="sec-h3">4.4. Errores frecuentes con las fórmulas</h3><div class="table-card"><table class="doc-table"><thead><tr><th>Lo que ves</th><th>Por qué pasa</th><th>Qué haces</th></tr></thead><tbody><tr><td>No aparece la columna Unidades</td><td>Elegiste tblClientes en vez de tblVentas</td><td>Pulsa Esc y vuelve a escribir <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">tblV</code> antes de pulsar Tab</td></tr><tr><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">#¿NOMBRE?</code></td><td>La función o el nombre de la tabla está mal escrito</td><td>Usa las sugerencias de Excel; la función va en español</td></tr><tr><td>La fórmula se ve escrita y no calcula</td><td>La celda está en formato Texto</td><td>Inicio ▸ Número ▸ General y vuelve a escribirla</td></tr><tr><td>Error de sintaxis</td><td>Tu Excel usa coma en vez de punto y coma</td><td>Cambia <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">;</code> por <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">,</code> (solo en fórmulas con varios argumentos)</td></tr></tbody></table></div></section><section id="sec-5" class="doc-section"><h2 class="sec-h2">5. Paso 2 · Las medidas de resumen en Excel</h2><p>Trabaja en la hoja <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">3_Estadisticos</code>. Las ventas POR VERIFICAR son texto y estas funciones las ignoran: por eso se cuentan <strong>17 ventas</strong>, no 19.</p><h3 class="sec-h3">5.1. Recuento de ventas (celda C2)</h3><div class="copy-box-container"><div class="copy-box-header"><span class="copy-box-title">Fórmula para la celda C2</span>
+<button class="btn-copy" onclick="copiarAlPortapapeles('code1', this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copiar fórmula</button></div>
+<div class="copy-box-body" id="code1">=CONTAR(tblVentas[Unidades])</div></div><p><strong>Qué hace:</strong> cuenta solo las celdas que tienen número. <strong>Resultado esperado: 17.</strong></p><h3 class="sec-h3">5.2. Suma de unidades (celda C3)</h3><div class="copy-box-container"><div class="copy-box-header"><span class="copy-box-title">Fórmula para la celda C3</span>
+<button class="btn-copy" onclick="copiarAlPortapapeles('code2', this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copiar fórmula</button></div>
+<div class="copy-box-body" id="code2">=SUMA(tblVentas[Unidades])</div></div><p><strong>Qué hace:</strong> suma todas las unidades vendidas; los textos se ignoran. <strong>Resultado esperado: 814.</strong></p><h3 class="sec-h3">5.3. Media o promedio (celda C4)</h3><div class="copy-box-container"><div class="copy-box-header"><span class="copy-box-title">Fórmula para la celda C4</span>
+<button class="btn-copy" onclick="copiarAlPortapapeles('code3', this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copiar fórmula</button></div>
+<div class="copy-box-body" id="code3">=PROMEDIO(tblVentas[Unidades])</div></div><p><strong>Qué hace:</strong> divide la suma entre el recuento (814 ÷ 17). Se infla con ventas muy grandes. <strong>Resultado esperado: 47,88.</strong></p><h3 class="sec-h3">5.4. Mediana (celda C5)</h3><div class="copy-box-container"><div class="copy-box-header"><span class="copy-box-title">Fórmula para la celda C5</span>
+<button class="btn-copy" onclick="copiarAlPortapapeles('code4', this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copiar fórmula</button></div>
+<div class="copy-box-body" id="code4">=MEDIANA(tblVentas[Unidades])</div></div><p><strong>Qué hace:</strong> ordena las ventas y toma la del medio. No se deja afectar por los atípicos. <strong>Resultado esperado: 8.</strong></p><h3 class="sec-h3">5.5. Moda (celda C6)</h3><div class="copy-box-container"><div class="copy-box-header"><span class="copy-box-title">Fórmula para la celda C6</span>
+<button class="btn-copy" onclick="copiarAlPortapapeles('code5', this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copiar fórmula</button></div>
+<div class="copy-box-body" id="code5">=MODA.UNO(tblVentas[Unidades])</div></div><p><strong>Qué hace:</strong> devuelve el valor que más se repite. Si tu Excel no la reconoce, usa <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">=MODA(tblVentas[Unidades])</code>. <strong>Resultado esperado: 7.</strong></p><h3 class="sec-h3">5.6. Mínimo y máximo (celdas C7 y C8)</h3><div class="copy-box-container"><div class="copy-box-header"><span class="copy-box-title">Fórmulas para las celdas C7 y C8</span>
+<button class="btn-copy" onclick="copiarAlPortapapeles('code6', this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copiar fórmulas</button></div>
+<div class="copy-box-body" id="code6">=MIN(tblVentas[Unidades])
+=MAX(tblVentas[Unidades])</div></div><p><strong>Qué hacen:</strong> la venta más pequeña y la más grande. <strong>Resultados esperados: 4 y 650.</strong></p><h3 class="sec-h3">5.7. Rango (celda C9)</h3><div class="copy-box-container"><div class="copy-box-header"><span class="copy-box-title">Fórmula para la celda C9</span>
+<button class="btn-copy" onclick="copiarAlPortapapeles('code7', this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copiar fórmula</button></div>
+<div class="copy-box-body" id="code7">=MAX(tblVentas[Unidades])-MIN(tblVentas[Unidades])</div></div><p><strong>Qué hace:</strong> resta el mínimo al máximo: muestra qué tan lejos están los extremos. <strong>Resultado esperado: 646.</strong></p><h3 class="sec-h3">5.8. Desviación estándar (celda C10)</h3><div class="copy-box-container"><div class="copy-box-header"><span class="copy-box-title">Fórmula para la celda C10</span>
+<button class="btn-copy" onclick="copiarAlPortapapeles('code8', this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copiar fórmula</button></div>
+<div class="copy-box-body" id="code8">=DESVEST.M(tblVentas[Unidades])</div></div><p><strong>Qué hace:</strong> mide qué tan separados están los datos de la media. Si es mayor que la media, hay atípicos. <strong>Resultado esperado: 155,52.</strong></p><h3 class="sec-h3">5.9. Interpreta los resultados</h3><p>Compara la <strong>media (47,88)</strong> con la <strong>mediana (8)</strong>: están muy separadas porque hay ventas atípicas (50 y 650). Por eso la mediana describe mejor la venta típica. Anota en <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">4_Plan</code> y en el plan cómo trataste los atípicos.</p><div class="callout verde"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div><div class="callout-content"><strong>Cómo sabes que quedó bien:</strong> las nueve celdas amarillas coinciden con la columna Resultado esperado.</div></div></section><section id="sec-6" class="doc-section"><h2 class="sec-h2">6. Paso 3 · Las tablas dinámicas</h2><p>Una <strong>tabla dinámica</strong> agrupa y resume miles de filas arrastrando los nombres de las columnas a cuatro cajas: <strong>Filtros, Columnas, Filas y Valores</strong>. Vas a crear 5 tablas en la hoja <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">5_Tablas_dinamicas</code>: 3 para analizar y 2 que alimentan los gráficos del dashboard. Todas salen de <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">tblVentas</code> y todas filtran <strong>Incluir = Sí</strong>.</p><div class="table-card"><table class="doc-table"><thead><tr><th>Caja</th><th>Qué va ahí</th><th>Ejemplo</th></tr></thead><tbody><tr><td>Filas</td><td>Lo que quieres comparar</td><td>Ciudad</td></tr><tr><td>Valores</td><td>Lo que quieres calcular</td><td>Recuento de Factura, Suma de Unidades</td></tr><tr><td>Filtros</td><td>Lo que dejas fuera</td><td>Incluir = Sí</td></tr><tr><td>Columnas</td><td>Opcional: una segunda categoría</td><td>Referencia</td></tr></tbody></table></div><h3 class="sec-h3">6.1. Inserta la primera tabla</h3><ol style="margin:0 0 14px 22px;line-height:1.8;"><li>Ve a <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">1_Ventas</code> y haz clic en cualquier celda de los datos.</li><li><strong>Insertar ▸ Tabla dinámica ▸ Desde una tabla o rango.</strong> Verifica que en <em>Tabla o rango</em> diga <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">tblVentas</code>.</li><li>Marca <strong>Hoja de cálculo existente</strong>, haz clic en la pestaña <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">5_Tablas_dinamicas</code> y luego en la celda <strong>A4</strong> ▸ <strong>Aceptar</strong>.</li><li>A la derecha aparece el panel <strong>Campos de tabla dinámica</strong>.</li></ol><h3 class="sec-h3">6.2. Tabla 1: ventas y unidades por ciudad (A4)</h3><ol style="margin:0 0 14px 22px;line-height:1.8;"><li>Arrastra <strong>Ciudad</strong> a <strong>Filas</strong>.</li><li>Arrastra <strong>Factura</strong> a <strong>Valores</strong> (queda <em>Cuenta de Factura</em>).</li><li>Arrastra <strong>Unidades</strong> a <strong>Valores</strong>. Si dice <em>Cuenta de Unidades</em>: clic en ella ▸ <strong>Configuración de campo de valor ▸ Suma ▸ Aceptar</strong>.</li><li>Arrastra <strong>Incluir</strong> a <strong>Filtros</strong> y en la celda B2 elige <strong>Sí</strong>.</li><li>Escribe en B4 <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">Ventas</code> y en C4 <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">Unidades vendidas</code>.</li></ol><p><strong>Resultado esperado:</strong> Cali 11 y 80 · Palmira 3 y 64 · Yumbo 2 y 659 · Jamundí 1 y 11 · Total 17 y 814.</p><h3 class="sec-h3">6.3. Ponle nombre a la tabla</h3><p>Con el cursor dentro de la tabla: <strong>Analizar tabla dinámica ▸ Nombre de tabla dinámica</strong> (a la izquierda) ▸ escribe <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">tdCiudad</code> y pulsa Enter. El nombre sirve para reconocerla al conectar la segmentación del dashboard.</p><h3 class="sec-h3">6.4. Tabla 2: unidades por referencia (G4)</h3><p>Repite el paso 6.1 con la ubicación <strong>G4</strong>. <strong>Referencia</strong> a Filas, <strong>Unidades</strong> a Valores (Suma) e <strong>Incluir</strong> a Filtros = Sí. Escribe en H4 <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">Unidades por referencia</code> y llámala <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">tdReferencia</code>.</p><p><strong>Resultado esperado:</strong> LV-001 82 · LV-002 46 · LV-003 686 · Total 814.</p><h3 class="sec-h3">6.5. Tabla 3: ciudad por referencia (A16)</h3><p>Repite el paso 6.1 con la ubicación <strong>A16</strong>. <strong>Ciudad</strong> a Filas, <strong>Referencia</strong> a Columnas, <strong>Factura</strong> a Valores (Cuenta) e <strong>Incluir</strong> a Filtros = Sí. Llámala <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">tdCruzada</code>.</p><p><strong>Resultado esperado:</strong> una tabla cruzada con Total general 17 (Cali: 4, 4 y 3).</p><h3 class="sec-h3">6.6. Tabla 4: para el gráfico de ciudades (A32)</h3><p>Repite el paso 6.1 con la ubicación <strong>A32</strong>. <strong>Ciudad</strong> a Filas, <strong>Factura</strong> a Valores e <strong>Incluir</strong> a Filtros = Sí. Escribe en B32 <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">Número de ventas</code>. Ordena: clic derecho sobre un número ▸ <strong>Ordenar ▸ De mayor a menor</strong>. Llámala <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">pgCiudad</code>.</p><h3 class="sec-h3">6.7. Tabla 5: para el gráfico de referencias (G32)</h3><p>Repite el paso 6.1 con la ubicación <strong>G32</strong>. <strong>Referencia</strong> a Filas, <strong>Unidades</strong> a Valores (Suma) e <strong>Incluir</strong> a Filtros = Sí. Llámala <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">pgReferencia</code>.</p><div class="callout tech"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div><div class="callout-content"><strong>¿Por qué las tablas 4 y 5 van aparte?</strong> Un gráfico dinámico cambia la tabla de la que sale (orden, filtros, formato). Con tablas propias para los gráficos, las tablas de análisis no se alteran.</div></div><div class="callout verde"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div><div class="callout-content"><strong>Otras preguntas con la misma tabla:</strong> para ver el porcentaje de cada ciudad, en Valores: <strong>Configuración de campo de valor ▸ Mostrar valores como ▸ % del total general</strong>. Para ver qué ventas forman un número, haz <strong>doble clic</strong> sobre él.</div></div></section><section id="sec-7" class="doc-section"><h2 class="sec-h2">7. Paso 4 · Los gráficos dinámicos</h2><p>Un <strong>gráfico dinámico</strong> está conectado a su tabla dinámica: si filtras la tabla, el gráfico cambia. Vas a crear 2 gráficos, uno desde <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">pgCiudad</code> y otro desde <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">pgReferencia</code>.</p><h3 class="sec-h3">7.1. Gráfico de ventas por ciudad</h3><ol style="margin:0 0 14px 22px;line-height:1.8;"><li>Haz clic dentro de la tabla <strong>pgCiudad</strong> (A32).</li><li><strong>Analizar tabla dinámica ▸ Gráfico dinámico ▸ Columna ▸ Columna agrupada ▸ Aceptar.</strong></li><li>Haz clic en el título y escribe la conclusión: <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">Cali concentra 11 de las 17 ventas válidas</code>.</li><li>Quita la leyenda: botón <strong>+</strong> al lado del gráfico ▸ desmarca <strong>Leyenda</strong>. Si quieres, marca <strong>Etiquetas de datos</strong>.</li></ol><h3 class="sec-h3">7.2. Gráfico de unidades por referencia</h3><ol style="margin:0 0 14px 22px;line-height:1.8;"><li>Haz clic dentro de la tabla <strong>pgReferencia</strong> (G32).</li><li><strong>Gráfico dinámico ▸ Columna agrupada ▸ Aceptar.</strong></li><li>Título: <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">Unidades por referencia (LV-003 incluye el atípico de 650)</code>. Quita la leyenda.</li></ol><h3 class="sec-h3">7.3. Lleva los gráficos al dashboard</h3><p>Los dos gráficos quedaron en la hoja <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">5_Tablas_dinamicas</code>. Muévelos uno por uno:</p><ol style="margin:0 0 14px 22px;line-height:1.8;"><li><strong>Gráfico de ventas por ciudad</strong> (paso 7.1): haz clic en su borde ▸ pestaña <strong>Diseño de gráfico ▸ Mover gráfico ▸ Objeto en: 6_Dashboard ▸ Aceptar</strong>. En <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">6_Dashboard</code> arrástralo sobre el recuadro <strong>Gráfico dinámico 1 (celda B8)</strong>.</li><li><strong>Gráfico de unidades por referencia</strong> (paso 7.2): repite lo mismo y ubícalo sobre el recuadro <strong>Gráfico dinámico 2 (celda H8)</strong>.</li><li>Ajusta ambos al mismo tamaño arrastrando sus esquinas.</li></ol><div class="callout tech"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div><div class="callout-content"><strong>Un gráfico claro:</strong> ordenado de mayor a menor, con un título que diga el mensaje, sin leyenda si hay una sola serie y con un solo color de énfasis. Para ocultar los botones grises: <strong>Analizar gráfico dinámico ▸ Botones de campo</strong>.</div></div></section><section id="sec-8" class="doc-section"><h2 class="sec-h2">8. Paso 5 · El dashboard</h2><p>Un <strong>dashboard</strong> junta en <strong>una sola pantalla</strong> los indicadores y los gráficos que responden las preguntas. Tres principios: <strong>una sola pantalla</strong>, <strong>lo importante arriba</strong> y <strong>pocos gráficos y pocos colores</strong> (2 a 4 gráficos, 2 o 3 colores).</p><h3 class="sec-h3">8.1. Título</h3><p>En <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">6_Dashboard</code>, celda B2: <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">Dashboard · Lácteos del Valle S.A.S. · octubre 2026</code> (con el nombre de tu empresa y el periodo). Si quieres, quita la cuadrícula: <strong>Vista ▸ desmarca Líneas de cuadrícula</strong>.</p><h3 class="sec-h3">8.2. Indicadores clave</h3><div class="table-card"><table class="doc-table"><thead><tr><th>Celda</th><th>Título (fila 4)</th><th>Fórmula (fila 5)</th><th>Resultado</th></tr></thead><tbody><tr><td>B4 / B5</td><td>Ventas válidas</td><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">=CONTAR.SI(tblVentas[Incluir];"Sí")</code></td><td>17</td></tr><tr><td>F4 / F5</td><td>Unidades vendidas</td><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">=SUMAR.SI(tblVentas[Incluir];"Sí";tblVentas[Unidades])</code></td><td>814</td></tr><tr><td>I4 / I5</td><td>Mediana por venta</td><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">=MEDIANA(tblVentas[Unidades])</code></td><td>8</td></tr></tbody></table></div><div class="copy-box-container"><div class="copy-box-header"><span class="copy-box-title">Fórmulas de los indicadores</span>
+<button class="btn-copy" onclick="copiarAlPortapapeles('code9', this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copiar fórmulas</button></div>
+<div class="copy-box-body" id="code9">=CONTAR.SI(tblVentas[Incluir];&quot;Sí&quot;)
+=SUMAR.SI(tblVentas[Incluir];&quot;Sí&quot;;tblVentas[Unidades])
+=MEDIANA(tblVentas[Unidades])</div></div><p>Pon los números grandes (tamaño 24) y en negrita. Recuerda escribir <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">tblV</code> y pulsar Tab para que Excel complete <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">tblVentas</code>.</p><h3 class="sec-h3">8.3. Segmentación de datos por ciudad</h3><p>Haz clic en uno de los gráficos ▸ <strong>Analizar gráfico dinámico ▸ Insertar segmentación de datos</strong> ▸ marca <strong>Ciudad</strong> ▸ <strong>Aceptar</strong>. Ubícala en el recuadro de la celda <strong>B24</strong>.</p><h3 class="sec-h3">8.4. Conecta la segmentación a todas las tablas</h3><p>Haz clic en la segmentación ▸ pestaña <strong>Segmentación ▸ Conexiones de informe</strong> ▸ marca las 5 tablas (<code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">tdCiudad</code>, <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">tdReferencia</code>, <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">tdCruzada</code>, <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">pgCiudad</code>, <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">pgReferencia</code>) ▸ <strong>Aceptar</strong>.</p><h3 class="sec-h3">8.5. Prueba y guarda</h3><p>Haz clic en <strong>Cali</strong> en la segmentación: los gráficos y las tablas dinámicas se filtran. Los 3 indicadores no cambian porque son fórmulas sobre toda la tabla. Para quitar el filtro, usa el embudo con X de la segmentación. Guarda el libro y súbelo a <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">08_analisis_xxx</code> como <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">analisis_clientes.xlsx</code>.</p><div class="callout verde"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div><div class="callout-content"><strong>Cómo sabes que quedó bien:</strong> el dashboard se ve completo sin desplazarte, tiene título, 3 indicadores, 2 gráficos con título que dice la conclusión y una segmentación que filtra los dos gráficos.</div></div></section><section id="sec-9" class="doc-section"><h2 class="sec-h2">9. El plan de gestión y análisis</h2><p>La guía pide un documento que describa <strong>los procedimientos, la caracterización de los datos y el manejo y control de la información</strong>, con el método estadístico y los gráficos elegidos. Es como <strong>la receta de un plato</strong>: quien la lea debe poder repetir el análisis y entender por qué se hizo así.</p><h3 class="sec-h3">9.1. Las seis secciones del plan</h3><div class="table-card"><table class="doc-table"><thead><tr><th>Sección</th><th>Pregunta que responde</th><th>De dónde sale</th></tr></thead><tbody><tr><td>1. Introducción y objetivo</td><td>¿Qué quiero saber y por qué?</td><td>La pregunta de negocio y la empresa de la EV01</td></tr><tr><td>2. Caracterización de los datos</td><td>¿Con qué datos cuento?</td><td>Tabla A de <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">4_Plan</code> y la hoja <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">4_Criterios</code> de la EV02</td></tr><tr><td>3. Procedimientos</td><td>¿Cómo los preparé y analicé?</td><td>Matriz de la EV01, registro de la EV02, columna Incluir y los pasos de este manual</td></tr><tr><td>4. Manejo y control de la información</td><td>¿Cómo cuido la información?</td><td>Carpetas de Drive, permisos, respaldo y soportes legales de la EV01</td></tr><tr><td>5. Método y gráficos</td><td>¿Qué método y qué gráficos usé, y por qué?</td><td>Tabla B de <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">4_Plan</code></td></tr><tr><td>6. Dashboard y hallazgos</td><td>¿Qué encontré?</td><td>Hojas <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">3_Estadisticos</code> y <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">6_Dashboard</code></td></tr></tbody></table></div><h3 class="sec-h3">9.2. Completa la hoja 4_Plan</h3><ol style="margin:0 0 14px 22px;line-height:1.8;"><li><strong>Tabla A (caracterización):</strong> para cada variable escribe el tipo, un ejemplo, la regla de calidad y para qué se usa.</li><li><strong>Tabla B (preguntas):</strong> escribe <strong>al menos tres preguntas</strong> con sus variables, método, gráfico y una frase que justifique la elección.</li><li>Las filas en gris son ejemplos: reemplázalas por las de tu equipo.</li></ol><h3 class="sec-h3">9.3. Manejo y control: una frase por cada riesgo</h3><div class="table-card"><table class="doc-table"><thead><tr><th>¿Qué pasaría si…?</th><th>Protección</th><th>Qué escribes en el plan</th></tr></thead><tbody><tr><td>Se daña el archivo</td><td>Respaldo 3-2-1 y todo en Drive</td><td>«Los archivos se guardan en Drive con copia en…»</td></tr><tr><td>Alguien cambia un dato</td><td>Historial de versiones y registro de cambios</td><td>«Cada cambio se registra en…»</td></tr><tr><td>Entra quien no debe</td><td>Permisos: instructor Comentador, equipo Editor</td><td>«El instructor tiene permiso de Comentador…»</td></tr><tr><td>Hay datos de personas</td><td>Ley 1581 de 2012: datos ficticios o anonimizados</td><td>«No se usan datos personales reales…»</td></tr><tr><td>Nadie sabe quién hace qué</td><td>Roles definidos</td><td>«El coordinador…, el analista…»</td></tr><tr><td>No se encuentra el archivo</td><td>Un solo lugar: <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">08_analisis_xxx</code></td><td>«El libro de análisis está en…»</td></tr></tbody></table></div><h3 class="sec-h3">9.4. Plantilla del documento</h3><p>Copia la plantilla en Google Docs o Word (Arial 11 o 12) y reemplaza lo que está entre corchetes. <strong>Máximo 5 páginas.</strong></p><div class="copy-box-container"><div class="copy-box-header"><span class="copy-box-title">Plantilla del plan de gestión y análisis</span>
+<button class="btn-copy" onclick="copiarAlPortapapeles('code10', this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copiar plantilla</button></div>
+<div class="copy-box-body" id="code10">SERVICIO NACIONAL DE APRENDIZAJE – SENA
+Tecnólogo en Gestión del Desarrollo Administrativo e Innovación
+Ficha: [3466323 o 3466324]
+
+EVIDENCIA GA5-220501114-AA1-EV03
+Plan de gestión y análisis de datos
+
+EMPRESA DE LA EV01: [nombre de la empresa que eligió tu equipo]
+
+INTEGRANTES (si trabajas solo, deja una sola fila)
+1. [Nombre completo] – [documento] – Rol: [coordinador]
+2. [Nombre completo] – [documento] – Rol: [analista estadístico]
+3. [Nombre completo] – [documento] – Rol: [responsable de gráficos y dashboard]
+4. [Nombre completo] – [documento] – Rol: [responsable del plan y el control]
+
+Instructor: Julián Andrés Trujillo Morales
+Fecha de entrega: [día de mes de año]
+------------------------------------------------------------
+1. INTRODUCCIÓN Y OBJETIVO DEL ANÁLISIS
+[Qué empresa, qué datos y qué preguntas de negocio quieren responder]
+
+2. CARACTERIZACIÓN DE LOS DATOS
+[Tabla: variable, tipo, ejemplo, regla de calidad (tabla A de 4_Plan)]
+
+3. PROCEDIMIENTOS
+[Cómo se recolectaron (EV01), cómo se depuraron (EV02), qué criterio de inclusión usaron (columna Incluir) y cómo se analizaron en Excel]
+
+4. MANEJO Y CONTROL DE LA INFORMACIÓN
+[Dónde se guarda, respaldo, versiones, permisos, marco legal y responsables]
+
+5. MÉTODO ESTADÍSTICO Y GRÁFICOS SELECCIONADOS
+[Tabla: pregunta, variables, método, gráfico y por qué (tabla B de 4_Plan)]
+
+6. DASHBOARD Y HALLAZGOS
+[Qué muestran las medidas y el dashboard, cómo trataron los atípicos y qué recomiendan]
+
+CARPETA DE DRIVE CON LA EVIDENCIA
+Enlace: [pegar enlace]
+Compartida con instructorjuliantrujilo@gmail.com (permiso Comentador)</div></div></section><section id="sec-10" class="doc-section"><h2 class="sec-h2">10. La carpeta del equipo: dónde queda todo</h2><p>Se trabaja <strong>en la misma carpeta de Drive de la EV01</strong>. La EV03 solo agrega la plantilla original en <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">03_Datos_crudos</code> y la subcarpeta <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">08_analisis_xxx</code>. Todo archivo llega <strong>primero a datos crudos</strong> y luego se copia a la carpeta que le corresponde.</p><div class="copy-box-container"><div class="copy-box-header"><span class="copy-box-title">Carpeta completa del equipo y evidencia de cada parte</span>
+<button class="btn-copy" onclick="copiarAlPortapapeles('code11', this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copiar árbol</button></div>
+<div class="copy-box-body" id="code11">EV01_Recoleccion_[Empresa]_Equipo[N]/        (carpeta raíz · EV01 a EV03)
+├── 00_LEEME.txt                         EV01
+├── 00_Gestion_del_equipo/               EV01
+├── 01_Empresa_y_contexto/               EV01
+├── 02_Sistemas_de_gestion/              EV01
+│   ├── 01_Calidad/
+│   ├── 02_Ambiental/
+│   ├── 03_SST/
+│   └── 04_Seguridad_Informacion/        (solo si la empresa lo tiene)
+├── 03_Datos_crudos/                     todo llega primero aquí, sin modificar
+│   ├── (datos descargados)              EV01
+│   ├── Plantilla_EV02_Depuracion.xlsx   EV02
+│   └── Plantilla_EV03_Analisis.xlsx     EV03
+├── 04_Matriz_de_recoleccion.xlsx        EV01
+├── 05_Soportes_legales/                 EV01
+├── 06_Registro_de_depuracion.xlsx       EV02
+├── 07_sistematizado_[xxx]/              EV02
+│   └── sistematizado_clientes.xlsx
+└── 08_analisis_[xxx]/                   EV03 (NUEVO)
+    └── analisis_clientes.xlsx</div></div><div class="table-card"><table class="doc-table"><thead><tr><th>Elemento</th><th>Qué va dentro</th><th>Detalle</th></tr></thead><tbody><tr><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">03_Datos_crudos/Plantilla_EV03_Analisis.xlsx</code></td><td>La plantilla original, tal como se descargó</td><td>No se abre para trabajar</td></tr><tr><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">08_analisis_[xxx]/</code></td><td>La subcarpeta del análisis</td><td>Empieza por «08_analisis_» y termina con una palabra corta: <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">08_analisis_LacteosDelValle</code></td></tr><tr><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">analisis_clientes.xlsx</code></td><td>La copia de la plantilla con todo el trabajo</td><td>Medidas, tablas dinámicas, gráficos y dashboard</td></tr></tbody></table></div><div class="callout tech"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div><div class="callout-content"><strong>No muevas ni borres nada de la EV01 ni de la EV02.</strong> Quien abra tu carpeta debe poder seguir el recorrido completo: datos crudos → datos depurados → análisis.</div></div></section><section id="sec-11" class="doc-section"><h2 class="sec-h2">11. La evidencia EV03 explicada frase por frase</h2><div class="table-card"><table class="doc-table"><thead><tr><th>Lo que dice la guía</th><th>Qué significa</th><th>Ejemplo</th></tr></thead><tbody><tr><td><em>«Se realizará un análisis completo de información recolectada en las evidencias anteriores»</em></td><td>Analizas los datos que recolectaste (EV01) y depuraste (EV02).</td><td>Hojas <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">1_Ventas</code> y <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">2_Clientes</code></td></tr><tr><td><em>«Utilizando las herramientas estadísticas para estructurar la información»</em></td><td>Aplicas medidas de resumen y tablas dinámicas en Excel.</td><td>Media, mediana, moda y tabla dinámica</td></tr><tr><td><em>En equipo de 4 aprendices</em></td><td>Se reparten roles.</td><td>Coordinador, analista, gráficos y dashboard, plan y control</td></tr><tr><td><em>«Elaboren un plan de gestión para el análisis de datos, documentando los procedimientos, caracterización de datos, manejo y control de información»</em></td><td>Un documento con esas partes.</td><td>El plan de 6 secciones, máximo 5 páginas</td></tr><tr><td><em>«Seleccionen el método estadístico más acertado… según su tipo (discreto, continuo, cuantitativo o cualitativo)»</em></td><td>Caracterizas las variables y eliges el método que corresponde.</td><td>Unidades es discreta: media, mediana y moda</td></tr><tr><td><em>«Seleccionen del abanico de herramientas gráficas, las más acertadas»</em></td><td>Eliges el gráfico según la pregunta y justificas por qué.</td><td>Barras para comparar ciudades</td></tr><tr><td><em>«Elaboren una tabla y un gráfico dinámico, relacionado con un dashboard»</em></td><td>Construyes tabla dinámica, gráfico dinámico y un dashboard conectado.</td><td>Hojas <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">5_Tablas_dinamicas</code> y <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">6_Dashboard</code></td></tr><tr><td><strong>Producto:</strong> plan (PDF, máx. 5 páginas) + tabla, gráfico dinámico y dashboard</td><td>Dos entregables: el documento y el libro de Excel.</td><td><code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">EV03_NombreEmpresa.pdf</code> y <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">analisis_clientes.xlsx</code></td></tr><tr><td><em>«Envío en el espacio GA5-220501114-AA1-EV03»</em></td><td>Entregas en Zajuna.</td><td>El PDF, con el enlace a la carpeta</td></tr></tbody></table></div></section><section id="sec-12" class="doc-section"><h2 class="sec-h2">12. Paso a paso para construir la EV03</h2><p>Estos son los nueve pasos del equipo, en orden. Sigue el orden para no repetir trabajo.</p><h3 class="sec-h3">Paso 1: Reúnanse y repartan los roles</h3><p><strong>Qué debes hacer:</strong> repartir los cuatro roles: coordinador, analista estadístico, responsable de gráficos y dashboard, y responsable del plan y el control.<br><strong>Cómo sabes que quedó bien:</strong> cada integrante sabe qué parte hace.</p><h3 class="sec-h3">Paso 2: Suban la plantilla a Drive</h3><p><strong>Qué debes hacer:</strong> subir el original a <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">03_Datos_crudos</code> y la copia a <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">08_analisis_xxx</code> como <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">analisis_clientes.xlsx</code> (sección 4.2).<br><strong>Cómo sabes que quedó bien:</strong> hay un original intacto y una sola copia de trabajo.</p><h3 class="sec-h3">Paso 3: Definan las preguntas del análisis</h3><p><strong>Qué debes hacer:</strong> escribir al menos tres preguntas en la tabla B de <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">4_Plan</code> (sección 3.2).<br><strong>Cómo sabes que quedó bien:</strong> cada pregunta es concreta y se responde con columnas que existen.</p><h3 class="sec-h3">Paso 4: Caractericen las variables</h3><p><strong>Qué debes hacer:</strong> completar la tabla A de <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">4_Plan</code> con el tipo de cada variable (sección 3.3).<br><strong>Cómo sabes que quedó bien:</strong> cada variable tiene tipo, ejemplo y regla de calidad.</p><h3 class="sec-h3">Paso 5: Calculen las medidas de resumen</h3><p><strong>Qué debes hacer:</strong> escribir las fórmulas en <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">3_Estadisticos</code> y comparar media y mediana (sección 5).<br><strong>Cómo sabes que quedó bien:</strong> las celdas amarillas coinciden con el resultado esperado y decidieron qué hacer con los atípicos.</p><h3 class="sec-h3">Paso 6: Construyan las tablas y los gráficos dinámicos</h3><p><strong>Qué debes hacer:</strong> las 5 tablas y los 2 gráficos de las secciones 6 y 7.<br><strong>Cómo sabes que quedó bien:</strong> los totales dan 17 ventas y 814 unidades, y cada gráfico tiene un título con la conclusión.</p><h3 class="sec-h3">Paso 7: Armen el dashboard</h3><p><strong>Qué debes hacer:</strong> título, indicadores, gráficos y segmentación conectada (sección 8).<br><strong>Cómo sabes que quedó bien:</strong> al filtrar una ciudad, los dos gráficos cambian.</p><h3 class="sec-h3">Paso 8: Escriban el plan</h3><p><strong>Qué debes hacer:</strong> las seis secciones con la plantilla de la sección 9.4, máximo 5 páginas, con el enlace de la carpeta.<br><strong>Cómo sabes que quedó bien:</strong> cada método y cada gráfico tiene su justificación.</p><h3 class="sec-h3">Paso 9: Revisen, compartan y entreguen</h3><p><strong>Qué debes hacer:</strong> revisar con el checklist (sección 19), compartir la carpeta con el instructor, probar el enlace en incógnito, descargar el plan en PDF y subirlo a Zajuna.<br><strong>Cómo sabes que quedó bien:</strong> el PDF se llama <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">EV03_NombreEmpresa.pdf</code> y el enlace abre sin iniciar sesión.</p></section><section id="sec-13" class="doc-section"><h2 class="sec-h2">13. Ejemplo resuelto: una EV03 de principio a fin</h2><div class="callout naranja"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg></div><div class="callout-content"><strong>Aviso:</strong> la empresa <strong>«Lácteos del Valle S.A.S.» es ficticia</strong>. Sus datos son los mismos para todos los grupos. Descarga <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">Ejemplo_EV03_Dashboard.xlsx</code> desde el Hub para ver el libro terminado.</div></div><div class="table-card"><table class="doc-table"><thead><tr><th>Parte</th><th>Cómo quedó en el ejemplo</th></tr></thead><tbody><tr><td>Preguntas</td><td>¿En qué ciudad se vende más? ¿Qué referencia mueve más unidades? ¿Cuánto vende una venta típica?</td></tr><tr><td>Caracterización</td><td>Ciudad y Referencia: cualitativas nominales. Unidades: cuantitativa discreta. Fecha: temporal. Factura: identificador</td></tr><tr><td>Medidas</td><td>17 ventas válidas, 814 unidades, media 47,88, mediana 8, moda 7, mínimo 4, máximo 650, desviación 155,52</td></tr><tr><td>Atípicos</td><td>La venta de 650 (Yumbo) es real: se deja y se reportan media y mediana. Las 2 ventas POR VERIFICAR quedan fuera con Incluir = No</td></tr><tr><td>Tablas dinámicas</td><td>tdCiudad (A4), tdReferencia (G4), tdCruzada (A16), pgCiudad (A32) y pgReferencia (G32)</td></tr><tr><td>Gráficos</td><td>«Cali concentra 11 de las 17 ventas válidas» y «Unidades por referencia (LV-003 incluye el atípico de 650)»</td></tr><tr><td>Dashboard</td><td>Título, 3 indicadores (17, 814 y 8), 2 gráficos y segmentación por ciudad conectada a las 5 tablas</td></tr><tr><td>Hallazgo</td><td>Cali concentra la mayoría de las ventas; por unidades, Yumbo y LV-003 lideran por una sola venta mayorista</td></tr></tbody></table></div></section><section id="sec-14" class="doc-section"><h2 class="sec-h2">14. El PDF de entrega</h2><p>En Zajuna <strong>se sube el plan en PDF</strong>. A diferencia de la EV01 y la EV02, en la EV03 el PDF <strong>no es solo una portada</strong>: es el plan completo, con el enlace de la carpeta donde está el Excel.</p><ol style="margin:0 0 14px 22px;line-height:1.8;"><li>Escribe el plan con la plantilla de la sección 9.4.</li><li>Revisa que tenga <strong>máximo 5 páginas</strong>.</li><li>Pega el <strong>enlace de la carpeta</strong> y haz clic en él para comprobar que abre en una ventana de incógnito.</li><li>Descárgalo: <strong>Archivo ▸ Descargar ▸ Documento PDF</strong> (en Word: <strong>Archivo ▸ Guardar como ▸ PDF</strong>).</li><li>Nómbralo con el nombre de la empresa: <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">EV03_NombreEmpresa.pdf</code>, por ejemplo <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">EV03_LacteosDelValle.pdf</code>. Sin tildes, sin espacios y sin símbolos.</li><li>Súbelo en Zajuna, en el espacio <em>GA5-220501114-AA1-EV03</em>.</li></ol><div class="callout naranja"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg></div><div class="callout-content">Los nombres de <strong>todos los integrantes</strong> van dentro de la portada, no en el nombre del archivo.</div></div></section><section id="sec-15" class="doc-section"><h2 class="sec-h2">15. Cómo se evalúa la evidencia y cómo dejarlo evidenciado</h2><div class="table-card"><table class="doc-table"><thead><tr><th>Indicador del instrumento</th><th>Cómo lo dejas evidenciado</th></tr></thead><tbody><tr><td>1.1 Utiliza información relevante para la organización</td><td>La introducción del plan dice qué pregunta de negocio se responde y por qué esos datos importan.</td></tr><tr><td>1.2 Son claros los campos (columnas con información caracterizada)</td><td>La tabla de caracterización: nombre, tipo, ejemplo y regla de calidad de cada variable.</td></tr><tr><td>1.3 La información está libre de sesgo e independiente para su análisis</td><td>Datos depurados en la EV02 y un criterio escrito de qué entra y qué no (columna Incluir). Los atípicos se explican.</td></tr><tr><td>1.4 La segmentación es adecuada</td><td>Cada tabla dinámica usa el segmento que corresponde a su pregunta (ventas o clientes).</td></tr><tr><td>2.1 Evidencia en el formato sugerido</td><td>Plan en PDF (máx. 5 páginas) y libro de Excel con tabla dinámica, gráfico dinámico y dashboard.</td></tr><tr><td>2.2 Usa la web y la nube en carpetas y subcarpetas</td><td>Todo en Drive, en la carpeta de la EV01 con la subcarpeta <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">08_analisis_xxx</code>.</td></tr><tr><td>3.1 Normativa: permisos y cumplimiento de normas</td><td>Carpeta compartida con el instructor (Comentador), sin datos personales reales y con el manejo y control descrito en el plan.</td></tr></tbody></table></div></section><section id="sec-16" class="doc-section"><h2 class="sec-h2">16. Errores frecuentes y cómo evitarlos</h2><div class="table-card"><table class="doc-table"><thead><tr><th>Error</th><th>Cómo evitarlo</th></tr></thead><tbody><tr><td>La tabla dinámica propone Recuento en vez de Suma</td><td>La columna tiene texto mezclado (POR VERIFICAR). Cámbiala a Suma en Configuración de campo de valor y filtra Incluir = Sí.</td></tr><tr><td>El total no da 17 ventas o 814 unidades</td><td>Falta el filtro: arrastra Incluir a Filtros y elige Sí.</td></tr><tr><td>Excel creó una hoja nueva para la tabla</td><td>Marcaste Nueva hoja de cálculo. Borra esa hoja y repite eligiendo Hoja de cálculo existente.</td></tr><tr><td>La segmentación no filtra todos los gráficos</td><td>Clic en la segmentación ▸ Conexiones de informe ▸ marca las 5 tablas.</td></tr><tr><td>La tabla dinámica no cambia al editar los datos</td><td>Datos ▸ Actualizar todo.</td></tr><tr><td>Se usa la media con un atípico sin explicarlo</td><td>Reporta media y mediana y explica el atípico en el plan.</td></tr><tr><td>El plan pasa de 5 páginas</td><td>Acorta los párrafos y deja las tablas.</td></tr><tr><td>Dashboard sin tabla ni gráfico dinámico detrás</td><td>Los gráficos del dashboard deben salir de tablas dinámicas, no dibujarse a mano.</td></tr><tr><td>El enlace pide iniciar sesión</td><td>Compártelo como «Cualquier persona con el enlace» y pruébalo en incógnito.</td></tr></tbody></table></div></section><section id="sec-17" class="doc-section"><h2 class="sec-h2">17. Preguntas frecuentes</h2><p><strong>¿Puedo usar Power BI en vez de Excel?</strong><br>La guía permite Excel, Power BI u hoja de cálculo. En la sesión trabajamos con Excel porque es el que todos tenemos.</p><p><strong>¿Cuántas preguntas debo plantear?</strong><br>Al menos tres, con su variable, método y gráfico. Más preguntas no mejoran la nota si el plan pasa de 5 páginas.</p><p><strong>¿Qué hago si mi equipo depuró distinto en la EV02?</strong><br>Usa tus datos: pégalos en <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">1_Ventas</code> y <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">2_Clientes</code>, ajusta la columna Incluir y anota las diferencias en el plan.</p><p><strong>¿Qué hago con un valor atípico?</strong><br>Verifícalo. Si es real, déjalo y reporta media y mediana; si es un error comprobado, exclúyelo y justifícalo en el plan.</p><p><strong>¿Por qué los indicadores del dashboard no cambian con la segmentación?</strong><br>Porque son fórmulas sobre toda la tabla <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">tblVentas</code>. La segmentación solo filtra tablas y gráficos dinámicos.</p><p><strong>¿Puedo trabajar en Hojas de cálculo de Google?</strong><br>Para las fórmulas sí. Las tablas dinámicas, las segmentaciones y el dashboard funcionan mejor en Excel de escritorio.</p></section><section id="sec-18" class="doc-section"><h2 class="sec-h2">18. Plan de trabajo sugerido</h2><div class="table-card"><table class="doc-table"><thead><tr><th>Fecha</th><th>Qué hacer</th><th>Resultado</th></tr></thead><tbody><tr><td>Martes 10 de noviembre (Sesión 3)</td><td>Descargar la plantilla, subirla a Drive y repartir roles</td><td>Plantilla en <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">08_analisis_xxx</code></td></tr><tr><td>Miércoles 11 de noviembre</td><td>Entregar la EV02</td><td>EV02 entregada</td></tr><tr><td>Jueves 12 – sábado 14</td><td>Definir preguntas, caracterizar variables y calcular medidas</td><td>Hojas <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">3_Estadisticos</code> y <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">4_Plan</code></td></tr><tr><td>Domingo 15 – lunes 16</td><td>Tablas y gráficos dinámicos, dashboard y plan</td><td>Libro y plan listos</td></tr><tr><td>Martes 17 de noviembre (Sesión 4)</td><td>Resolver dudas de la EV01 a la EV03</td><td>Observaciones</td></tr><tr><td>Miércoles 18 de noviembre</td><td>Entregar en Zajuna (mejor un día antes)</td><td>EV03 entregada</td></tr></tbody></table></div><div class="callout tech"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div><div class="callout-content"><strong>Consejo:</strong> no dejen la entrega para el último minuto. Si el enlace falla o falta un gráfico, necesitarán tiempo para corregirlo.</div></div></section><section id="sec-19" class="doc-section"><h2 class="sec-h2">19. Lista de chequeo anti-rechazo</h2><p>Marca cada casilla antes de subir tu evidencia a Zajuna:</p><div class="checklist-container"><div class="checklist-progress-row"><strong style="font-size:14px;color:var(--texto-main);">Puntos de Control de Calidad:</strong><span id="checkCounter" style="font-size:12px;font-weight:800;color:var(--sena-verde-dark);background:var(--sena-verde-bg);padding:4px 10px;border-radius:20px;border:1px solid var(--sena-verde-border);">0 de 12 Verificados</span></div><div class="checklist-item" onclick="toggleCheck(this)"><div class="check-custom">✓</div><div><div class="checklist-text">La plantilla original está en <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">03_Datos_crudos</code> sin modificar</div><span class="checklist-tip">Y la copia de trabajo está en <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">08_analisis_xxx</code> como analisis_clientes.xlsx.</span></div></div><div class="checklist-item" onclick="toggleCheck(this)"><div class="check-custom">✓</div><div><div class="checklist-text">Las medidas de resumen están calculadas</div><span class="checklist-tip">Las celdas amarillas de 3_Estadisticos coinciden con el resultado esperado.</span></div></div><div class="checklist-item" onclick="toggleCheck(this)"><div class="check-custom">✓</div><div><div class="checklist-text">Cada variable tiene su tipo</div><span class="checklist-tip">Cualitativa (nominal u ordinal), cuantitativa discreta o continua.</span></div></div><div class="checklist-item" onclick="toggleCheck(this)"><div class="check-custom">✓</div><div><div class="checklist-text">El método está justificado</div><span class="checklist-tip">Una frase por pregunta: «Unidades es discreta, por eso…».</span></div></div><div class="checklist-item" onclick="toggleCheck(this)"><div class="check-custom">✓</div><div><div class="checklist-text">Hay tablas dinámicas</div><span class="checklist-tip">Con el filtro Incluir = Sí y totales de 17 ventas y 814 unidades.</span></div></div><div class="checklist-item" onclick="toggleCheck(this)"><div class="check-custom">✓</div><div><div class="checklist-text">Hay gráficos dinámicos</div><span class="checklist-tip">Con título que dice la conclusión, conectados al dashboard.</span></div></div><div class="checklist-item" onclick="toggleCheck(this)"><div class="check-custom">✓</div><div><div class="checklist-text">El dashboard está completo</div><span class="checklist-tip">Título, indicadores, gráficos y segmentación conectada.</span></div></div><div class="checklist-item" onclick="toggleCheck(this)"><div class="check-custom">✓</div><div><div class="checklist-text">Los atípicos están explicados</div><span class="checklist-tip">Con la decisión que tomó el equipo.</span></div></div><div class="checklist-item" onclick="toggleCheck(this)"><div class="check-custom">✓</div><div><div class="checklist-text">El plan tiene máximo 5 páginas</div><span class="checklist-tip">Con las seis secciones y en PDF.</span></div></div><div class="checklist-item" onclick="toggleCheck(this)"><div class="check-custom">✓</div><div><div class="checklist-text">La carpeta está compartida con el instructor</div><span class="checklist-tip">Permiso Comentador a instructorjuliantrujilo@gmail.com.</span></div></div><div class="checklist-item" onclick="toggleCheck(this)"><div class="check-custom">✓</div><div><div class="checklist-text">El enlace abre sin iniciar sesión</div><span class="checklist-tip">Probado desde una ventana de incógnito.</span></div></div><div class="checklist-item" onclick="toggleCheck(this)"><div class="check-custom">✓</div><div><div class="checklist-text">El PDF se llama EV03_NombreEmpresa.pdf</div><span class="checklist-tip">Con los nombres de todos los integrantes en la portada.</span></div></div></div></section><section id="sec-20" class="doc-section"><h2 class="sec-h2">20. Glosario</h2><div class="table-card"><table class="doc-table"><thead><tr><th>Término</th><th>Significado</th></tr></thead><tbody><tr><td>Analizar</td><td>Hacerle preguntas a los datos y responderlas con un método.</td></tr><tr><td>Variable</td><td>Cada columna de la tabla: una característica que cambia de una fila a otra.</td></tr><tr><td>Cualitativa</td><td>Variable que es una categoría o un nombre (Ciudad).</td></tr><tr><td>Cuantitativa discreta</td><td>Número que resulta de contar (Unidades).</td></tr><tr><td>Cuantitativa continua</td><td>Número que resulta de medir y admite decimales (peso).</td></tr><tr><td>Media</td><td>Suma de los valores dividida entre la cantidad.</td></tr><tr><td>Mediana</td><td>El valor del medio de los datos ordenados.</td></tr><tr><td>Moda</td><td>El valor que más se repite.</td></tr><tr><td>Desviación estándar</td><td>Qué tan separados están los datos de la media.</td></tr><tr><td>Atípico</td><td>Valor muy distinto del resto, que puede ser real o un error.</td></tr><tr><td>Tabla de Excel</td><td>Rango con formato de tabla (Ctrl+T) y nombre propio, como tblVentas.</td></tr><tr><td>Tabla dinámica</td><td>Herramienta de Excel que agrupa y resume datos arrastrando campos.</td></tr><tr><td>Gráfico dinámico</td><td>Gráfico conectado a una tabla dinámica: cambia cuando ella cambia.</td></tr><tr><td>Segmentación de datos</td><td>Botones para filtrar tablas y gráficos dinámicos con un clic.</td></tr><tr><td>Dashboard</td><td>Pantalla única con indicadores y gráficos que responden las preguntas.</td></tr><tr><td>Plan de gestión y análisis</td><td>Documento que describe procedimientos, caracterización, manejo y control, método y hallazgos.</td></tr></tbody></table></div></section><section id="sec-21" class="doc-section"><h2 class="sec-h2">21. Referencias</h2><ul style="margin:0 0 14px 22px;line-height:1.8;"><li>Guía de aprendizaje 5 — Competencia 220501114, actividad GA5-220501114-AA1 (disponible en el Hub).</li><li>Instrumento de evaluación IE-GA5-220501114-AA1-EV03 — Gestión para el análisis de datos.</li><li>Presentación de la Sesión 3, plantilla <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">Plantilla_EV03_Analisis.xlsx</code> y ejemplo resuelto <code style="background:#f1f5f9;padding:1px 6px;border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:.9em">Ejemplo_EV03_Dashboard.xlsx</code> (disponibles en el Hub).</li><li>Ley 1581 de 2012 — Protección de datos personales en Colombia.</li><li>Microsoft. <em>Ayuda de Excel</em>: Crear una tabla dinámica, Crear un gráfico dinámico y Usar segmentaciones de datos.</li></ul><p><em>Manual didáctico para los aprendices de la Ficha 3466323 y 3466324 — Gestión del Desarrollo Administrativo e Innovación. Instructor: Julián Andrés Trujillo Morales.</em></p></section>
+    </main>
+  </div>
+  <script>
+    function copiarAlPortapapeles(id, btn) {
+      const el = document.getElementById(id); if (!el) return;
+      navigator.clipboard.writeText(el.innerText || el.textContent).then(() => {
+        const o = btn.innerHTML; btn.innerHTML = '¡Copiado con éxito! ✓';
+        btn.style.background = 'var(--sena-verde)'; btn.style.borderColor = 'var(--sena-verde)'; btn.style.color = '#fff';
+        setTimeout(() => { btn.innerHTML = o; btn.style.background = ''; btn.style.borderColor = ''; btn.style.color = ''; }, 2200);
+      }).catch(() => alert('Selecciona y copia el texto manualmente.'));
+    }
+    function toggleCheck(item) {
+      item.classList.toggle('checked');
+      const total = document.querySelectorAll('.checklist-item').length, ok = document.querySelectorAll('.checklist-item.checked').length;
+      const c = document.getElementById('checkCounter');
+      if (c) { c.innerText = ok + ' de ' + total + ' Verificados';
+        if (ok === total) { c.style.background = 'var(--sena-verde)'; c.style.color = '#fff'; c.innerText = '¡100% listo para subir a Zajuna!'; }
+        else { c.style.background = 'var(--sena-verde-bg)'; c.style.color = 'var(--sena-verde-dark)'; } }
+    }
+    window.addEventListener('DOMContentLoaded', () => {
+      const secs = document.querySelectorAll('section[id^="sec-"]'), links = document.querySelectorAll('.doc-nav-link');
+      window.addEventListener('scroll', () => {
+        let cur = ''; secs.forEach(s => { if (window.pageYOffset >= s.offsetTop - 120) cur = s.id; });
+        links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + cur));
+      });
+    });
+  </script>
+</body>
+</html>

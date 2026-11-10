@@ -16,7 +16,7 @@ Este manual está escrito para que puedas **hacer la evidencia sin dudas**, paso
 
 | Pregunta | Respuesta |
 |---|---|
-| ¿Qué entrego? | Una carpeta de Drive con la subcarpeta **sistematizado_xxx** (la plantilla de Excel ya trabajada), el archivo de control **06_Registro_de_depuracion.xlsx** y, en Zajuna, un **PDF de entrega** (portada, introducción y enlace). |
+| ¿Qué entrego? | Una carpeta de Drive con la subcarpeta **07_sistematizado_xxx** (la plantilla de Excel ya trabajada), el archivo de control **06_Registro_de_depuracion.xlsx** y, en Zajuna, un **PDF de entrega** (portada, introducción y enlace). |
 | ¿Con qué datos trabajo? | Con la **plantilla de Excel** de la sesión: 24 clientes de una empresa ficticia (Lácteos del Valle S.A.S.). **Todos los grupos usan los mismos datos**, porque muchas empresas no publican los datos de sus clientes. |
 | ¿Quién la hace? | Un **equipo de 4 aprendices** o, si lo prefieres, **de forma individual**. Entregan un solo archivo de trabajo por grupo. |
 | ¿Cuándo se entrega? | Antes del **miércoles, 11 de noviembre de 2026, 11:59 p. m.** |
@@ -94,7 +94,7 @@ Piensa en una **biblioteca**: no basta con tener los libros. Hay que clasificarl
 |---|---|---|---|
 | **Qué haces** | Reúnes información legal y autorizada | Limpias, ordenas y segmentas lo que reuniste | Calculas, comparas y graficas |
 | **Ejemplo** | Descargas el CSV de clientes | Quitas repetidos, unificas formatos y separas clientes de productos | Calculas ventas por ciudad y haces un gráfico |
-| **Producto** | Carpeta + matriz | Carpeta sistematizado_xxx + registro de depuración | Plan de análisis, tabla dinámica, dashboard |
+| **Producto** | Carpeta + matriz | Carpeta 07_sistematizado_xxx + registro de depuración | Plan de análisis, tabla dinámica, dashboard |
 
 #### Por qué sistematizar (según la guía)
 | Beneficio | Qué significa | Ejemplo con la empresa |
@@ -171,7 +171,7 @@ Descarga `Plantilla_EV02_Depuracion.xlsx` desde el Hub (carpeta **Sesión 2**). 
 La plantilla **original** nunca se trabaja: se guarda tal cual en `03_Datos_crudos` como prueba de cómo llegaron los datos. El equipo trabaja en **una copia**.
 
 1. **Guarda el original:** el coordinador descarga la plantilla y la sube, **sin editarla**, a la carpeta `03_Datos_crudos` de Drive del equipo (la misma de la EV01).
-2. **Haz una copia:** en Drive, clic derecho sobre la plantilla ▸ *Hacer una copia*. Crea la subcarpeta `sistematizado_xxx` (clic derecho ▸ *Nueva carpeta*), mueve la copia allí y cámbiale el nombre a `sistematizado_clientes.xlsx`.
+2. **Haz una copia:** en Drive, clic derecho sobre la plantilla ▸ *Hacer una copia*. Crea la subcarpeta `07_sistematizado_xxx` (clic derecho ▸ *Nueva carpeta*), mueve la copia allí y cámbiale el nombre a `sistematizado_clientes.xlsx`.
 3. **Todos trabajan en esa copia.** No hagan una copia por integrante: así el registro y los datos no se contradicen. Para editar **al mismo tiempo**, ábranla con *Hojas de cálculo de Google* (clic derecho ▸ *Abrir con*). Si prefieren Excel de escritorio, trabajen **por turnos**: una persona descarga, edita, vuelve a subir y avisa al equipo.
 4. **Repartan el trabajo.** Por ejemplo: una persona normaliza texto y teléfonos, otra ciudades y fechas, otra duplicados y vacíos, otra atípicos y registro. Cada quien anota lo que hace en `7_Registro`.
 
@@ -414,7 +414,7 @@ La guía dice cómo se sistematiza. Lo convertimos en cuatro pasos:
 | **Coordinador** | Reparte el trabajo, vigila el cronograma y hace la entrega en Zajuna |
 | **Responsable de depuración** | Aplica los arreglos de Excel a los datos |
 | **Responsable de segmentación** | Escribe la hoja de criterios y separa los datos en tablas |
-| **Responsable del registro de control** | Mantiene el registro de depuración y la carpeta `sistematizado_xxx` |
+| **Responsable del registro de control** | Mantiene el registro de depuración y la carpeta `07_sistematizado_xxx` |
 
 > [!tech] **Si trabajas solo:** un aprendiz puede cumplir los cuatro roles. Lo importante es que el registro refleje todo lo que hiciste.
 
@@ -446,7 +446,7 @@ Es el segundo producto que pide la evidencia: un archivo donde anotas **cada cos
 
 > [!naranja] **Los problemas y las decisiones del ejemplo son ilustrativos.** Tu registro debe reflejar lo que **tu equipo** encontró y decidió. Si un archivo no tiene duplicados, anótalo: «no se encontraron duplicados».
 
-### 6.5. La carpeta sistematizado_xxx: dónde queda todo
+### 6.5. La carpeta 07_sistematizado_xxx: dónde queda todo
 La guía pide guardar la información sistematizada en una subcarpeta. Así queda dentro de la carpeta que ya tienes de la EV01:
 
 ```text title="📁 Carpeta del equipo después de la EV02" btn="Copiar árbol"
@@ -460,14 +460,16 @@ EV01_Recoleccion_[Empresa]_Equipo[N]/        (la misma carpeta de la EV01)
 ├── 04_Matriz_de_recoleccion.xlsx
 ├── 05_Soportes_legales/
 ├── 06_Registro_de_depuracion.xlsx    (NUEVO · archivo de control)
-└── sistematizado_[xxx]/              (NUEVO · datos depurados)
+└── 07_sistematizado_[xxx]/              (NUEVO · datos depurados)
     └── sistematizado_clientes.xlsx   (la COPIA de la plantilla, ya trabajada)
 ```
+
+> [!tech] **¿Por qué el 07?** La carpeta lleva número para que quede en orden después de lo de la EV01 (00 a 05) y del registro de la EV02 (06). En la EV03 sigue `08_analisis_xxx`. Conserva la palabra «sistematizado_» después del número, como pide la guía.
 
 | Elemento | Qué va dentro | Detalle |
 |---|---|---|
 | `03_Datos_crudos/Plantilla_EV02_Depuracion.xlsx` | La **plantilla original**, tal como se descargó | No se abre para trabajar: es la prueba de cómo llegaron los datos |
-| `sistematizado_[xxx]/` | La subcarpeta de los datos depurados | **xxx** es solo un marcador: la carpeta debe empezar por «sistematizado_» y terminar con una palabra corta que diga de qué son los datos. Para esta sesión: `sistematizado_LacteosDelValle` (sin espacios ni tildes) |
+| `07_sistematizado_[xxx]/` | La subcarpeta de los datos depurados | **xxx** es solo un marcador: la carpeta debe empezar por «07_sistematizado_» y terminar con una palabra corta que diga de qué son los datos. Para esta sesión: `07_sistematizado_LacteosDelValle` (sin espacios ni tildes) |
 | `sistematizado_clientes.xlsx` | La **copia** de la plantilla con todo el trabajo hecho | Un solo archivo por grupo |
 | `06_Registro_de_depuracion.xlsx` | El archivo de control | Va en la carpeta raíz, junto a la matriz de recolección de la EV01 |
 
@@ -479,7 +481,7 @@ La guía pide el registro como **archivo aparte**. Cuando el registro esté comp
 
 > [!naranja] Haz la copia al **final**, cuando el registro ya esté completo. Si la haces antes y sigues editando la hoja de la plantilla, el archivo de la raíz queda desactualizado.
 
-> [!tech] **No muevas ni borres nada de la EV01.** Trabaja en la misma carpeta de Drive y agrega lo nuevo. Quien abra tu carpeta debe poder comparar en un minuto lo crudo (`03_Datos_crudos`) con lo depurado (`sistematizado_xxx`) y leer en el registro qué cambió.
+> [!tech] **No muevas ni borres nada de la EV01.** Trabaja en la misma carpeta de Drive y agrega lo nuevo. Quien abra tu carpeta debe poder comparar en un minuto lo crudo (`03_Datos_crudos`) con lo depurado (`07_sistematizado_xxx`) y leer en el registro qué cambió.
 
 ---
 
@@ -492,7 +494,7 @@ Ya tienes los conceptos y las herramientas. Lee ahora lo que pide la guía y fí
 | *«Seleccionando un programa adecuado, versátil y amigable (Excel, Access, Power BI)»* | Escoges la herramienta. En esta sesión trabajamos con **Excel**. | La plantilla de Excel del equipo |
 | *«Realice una depuración de los datos»* | Aplicas los arreglos: duplicados, vacíos, formatos, valores distintos y atípicos. | 24 filas → 19 clientes |
 | *«Según los criterios de segmentación normalizados como políticas organizacionales»* | Defines reglas para cada campo y las aplicas. | La hoja `4_Criterios` |
-| *«Guarde la información sistematizada en una subcarpeta: sistematizado_xxx»* | Los datos depurados van en una subcarpeta con ese nombre. | `sistematizado_LacteosDelValle` |
+| *«Guarde la información sistematizada en una subcarpeta: sistematizado_xxx»* | Los datos depurados van en una subcarpeta con ese nombre. | `07_sistematizado_LacteosDelValle` |
 | *«Datos de cliente (…) · Datos producto (…)»* | Son ejemplos de segmentos: cada uno con sus campos. | Hojas `5_Clientes` y `6_Producto` |
 | *«Instrumento de control y seguimiento»* | Un registro de lo que se hizo, consultable por todos. | `06_Registro_de_depuracion.xlsx` |
 | **Producto:** carpeta en la nube + archivo de control | Carpeta clasificada en subcarpetas (máx. **10 GB**) y archivo de registro (máx. **1 GB**). | Drive y un Excel |
@@ -510,7 +512,7 @@ Estos son los nueve pasos del equipo, en orden. Sigue el orden para no repetir t
 **Cómo sabes que quedó bien:** cada integrante sabe qué parte hace y dónde anota lo que hace.
 
 ### Paso 2: Guarden el original y trabajen en una copia
-**Qué debes hacer:** subir la plantilla original a `03_Datos_crudos` sin editarla y hacer una copia en `sistematizado_xxx` llamada `sistematizado_clientes.xlsx` (sección 4.2).
+**Qué debes hacer:** subir la plantilla original a `03_Datos_crudos` sin editarla y hacer una copia en `07_sistematizado_xxx` llamada `sistematizado_clientes.xlsx` (sección 4.2).
 **Cómo sabes que quedó bien:** hay un archivo original intacto y una copia de trabajo.
 
 ### Paso 3: Escriban la hoja de criterios
@@ -530,7 +532,7 @@ Estos son los nueve pasos del equipo, en orden. Sigue el orden para no repetir t
 **Cómo sabes que quedó bien:** los números del registro coinciden con los de las tablas (24 → 19).
 
 ### Paso 7: Guarden todo en la carpeta de Drive
-**Qué debes hacer:** dejar la copia en `sistematizado_xxx` y sacar el registro como `06_Registro_de_depuracion.xlsx` en la carpeta raíz (sección 6.5).
+**Qué debes hacer:** dejar la copia en `07_sistematizado_xxx` y sacar el registro como `06_Registro_de_depuracion.xlsx` en la carpeta raíz (sección 6.5).
 **Cómo sabes que quedó bien:** la carpeta tiene la estructura de la sección 6.5.
 
 ### Paso 8: Revisen con el checklist y sincronicen
@@ -549,7 +551,7 @@ Estos son los nueve pasos del equipo, en orden. Sigue el orden para no repetir t
 | Paso | Qué hizo el equipo del ejemplo |
 |---|---|
 | 1. Datos de partida | Plantilla original guardada en `03_Datos_crudos`: hoja `1_Crudo` con 24 filas y 10 columnas de clientes y ventas |
-| 2. Copia de trabajo | Hicieron una copia en `sistematizado_xxx` (`sistematizado_clientes.xlsx`) y trabajaron en `2_Trabajo`. El original no se tocó |
+| 2. Copia de trabajo | Hicieron una copia en `07_sistematizado_xxx` (`sistematizado_clientes.xlsx`) y trabajaron en `2_Trabajo`. El original no se tocó |
 | 3. Criterios | Revisaron la hoja `4_Criterios` con los campos de cliente y de producto (la ciudad es de ambos) |
 | 4. Formatos | `NOMPROPIO(ESPACIOS())` en nombres y apellidos; teléfonos a 10 dígitos; fechas a año-mes-día |
 | 5. Duplicados | Quitaron 5 filas repetidas. Quedaron 19 clientes |
@@ -602,7 +604,7 @@ Enlace: [pegar enlace]
 Compartida con instructorjuliantrujilo@gmail.com (permiso Comentador)
 
 QUÉ HAY DE NUEVO EN LA CARPETA
-- sistematizado_[xxx]/: la copia de la plantilla ya trabajada (sistematizado_clientes.xlsx)
+- 07_sistematizado_[xxx]/: la copia de la plantilla ya trabajada (sistematizado_clientes.xlsx)
 - 06_Registro_de_depuracion.xlsx: el archivo de control
 - 03_Datos_crudos/Plantilla_EV02_Depuracion.xlsx: la plantilla original sin cambios
 ```
@@ -619,7 +621,7 @@ El instrumento de evaluación **IE-GA5-220501114-AA1-EV02** tiene cuatro grupos 
 | **Aplica los protocolos de sistematización sugeridos** | Trabajaste sobre copia, anotaste cada cambio y llevaste el registro. Hoja de criterios incluida. |
 | **Sistematiza según los protocolos normativos y legales** | Los datos de la plantilla son ficticios y no contienen datos personales reales. Trabajas sobre copia y no divulgas datos de personas. |
 | **Evidencia la sistematización según los requerimientos de la organización** | La hoja `4_Criterios` define cómo debe quedar cada campo (la política de datos de la organización) y los datos están segmentados y estructurados. |
-| **Entrega en el formato sugerido** | Carpeta con subcarpeta `sistematizado_xxx` y archivo de registro; PDF con portada y enlace. |
+| **Entrega en el formato sugerido** | Carpeta con subcarpeta `07_sistematizado_xxx` y archivo de registro; PDF con portada y enlace. |
 | **Usa la web y la nube** para almacenar en carpetas y subcarpetas | Todo en Drive, con la estructura de la EV01 más lo nuevo. |
 | **Entrega en el plazo esperado** | Antes del miércoles, 11 de noviembre de 2026, 11:59 p. m. |
 
@@ -687,7 +689,7 @@ Marca cada casilla antes de subir tu evidencia a Zajuna:
 - [ ] Los datos están segmentados y en tablas — Una tabla por segmento con formato de tabla de Excel.
 - [ ] El registro está completo — Una fila por cada problema con acción, herramienta, filas antes y después.
 - [ ] Los números coinciden — Las filas del registro coinciden con las de las tablas (24 → 19).
-- [ ] La subcarpeta `sistematizado_xxx` está en la carpeta de la EV01 — Con la copia de la plantilla como sistematizado_clientes.xlsx.
+- [ ] La subcarpeta `07_sistematizado_xxx` está en la carpeta de la EV01 — Con la copia de la plantilla como sistematizado_clientes.xlsx.
 - [ ] `06_Registro_de_depuracion.xlsx` está en la carpeta raíz — Copia final de la hoja 7_Registro.
 - [ ] La carpeta está compartida con el instructor — Permiso Comentador a instructorjuliantrujilo@gmail.com.
 - [ ] El enlace abre sin iniciar sesión — Probado desde una ventana de incógnito.
