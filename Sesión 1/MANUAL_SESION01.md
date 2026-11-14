@@ -322,13 +322,13 @@ Sigue estos ocho pasos **en orden**. En cada uno encontrarás qué hacer, cómo 
 **Qué debes hacer:** escoger **una empresa**: real con información pública suficiente, o un caso ficticio que el equipo construya.
 
 **Cómo hacerlo:** cada integrante propone una empresa y la evalúan con estas cinco preguntas. Elijan la que responda **sí** a todas:
-1. ¿Es una empresa **real** (existe en el RUES o tiene sitio web oficial)?
-2. ¿Publica **información suficiente** (sitio web, informes, políticas, indicadores)?
-3. ¿Tiene **al menos un sistema de gestión identificable** (certificado, política)?
-4. ¿La información es de **uso autorizado** (pública o con permiso)?
+1. ¿Es una empresa **real** (existe en el RUES o tiene sitio web oficial) o un **caso ficticio** que el equipo describe con claridad (nombre, sector, ciudad y qué produce o vende)?
+2. ¿Hay **información suficiente** (publicada por la empresa, descargada de internet o elaborada como ejemplo y declarada como tal)?
+3. ¿Tiene **al menos un sistema de gestión identificable** (certificado, política o documento equivalente)?
+4. ¿La información es de **uso autorizado** (pública, con permiso o de ejemplo) y no contiene datos personales reales?
 5. ¿Podemos conseguir **al menos un conjunto de datos tabular** (Excel o CSV)?
 
-**Ejemplo:** una empresa mediana de alimentos que publica su informe de sostenibilidad y su certificado ISO 9001 es una buena opción. Una microempresa sin página web no lo es, porque no tendrían información para recolectar.
+**Ejemplo:** una empresa mediana de alimentos que publica su informe de sostenibilidad y su certificado ISO 9001 es una buena opción. Una microempresa sin página web no lo es, porque no tendrían información para recolectar. **También es válido un caso ficticio**, como «Lácteos del Valle S.A.S.» del ejemplo resuelto: describan la empresa y marquen sus documentos como «de ejemplo» en la matriz y en el LEEME.
 
 > [!naranja] **Si eligen la empresa donde trabaja alguno de ustedes,** consigan **autorización por escrito** y no incluyan datos personales ni confidenciales. Guarden la autorización en `05_Soportes_legales`.
 
@@ -661,7 +661,7 @@ La evidencia se valora con la lista de verificación **IE-GA5-220501114-AA1-EV01
 ## 8. Errores frecuentes y cómo evitarlos
 | Error | Por qué es un problema | Cómo evitarlo |
 |---|---|---|
-| Elegir una empresa de la que **no hay información pública** | Se quedan sin documentos ni datos que recolectar | Aplicar las cinco preguntas del paso 2 antes de decidir |
+| Elegir una empresa **sin información disponible** (ni pública, ni de internet, ni de ejemplo declarada) | Se quedan sin documentos ni datos que recolectar | Aplicar las cinco preguntas del paso 2 antes de decidir |
 | Carpetas con nombres como «Nueva carpeta (3)» o archivos «Documento final final» | Nadie encuentra nada y no se ve la jerarquía | Usar el árbol y la convención de nombres |
 | Incluir **datos personales** (cédulas, correos, teléfonos) | Incumple la Ley 1581 de 2012 y el criterio 1 | Aplicar el semáforo: lo que es rojo no entra |
 | Entregar un enlace que **pide iniciar sesión** | El evaluador no puede abrirlo y la entrega se rechaza | Probar el enlace en ventana de incógnito |
