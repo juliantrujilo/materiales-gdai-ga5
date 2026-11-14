@@ -12,7 +12,7 @@
 ## 1. Antes de empezar: qué vas a hacer
 Este manual está escrito para que puedas **hacer la evidencia sin dudas**, paso a paso. Léelo con tu equipo y úsalo como lista de tareas.
 
-> [!verde] **La EV01 en una frase:** elijan una **empresa real**, comprueben **qué sistemas de gestión tiene**, recolecten su información **de forma legal y autorizada**, guárdenla **organizada en una carpeta de Google Drive** y entreguen en Zajuna un **PDF con la portada y el enlace** antes del miércoles, 4 de noviembre de 2026, 11:59 p. m.
+> [!verde] **La EV01 en una frase:** elijan una **empresa** (real o un caso de estudio propio), comprueben **qué sistemas de gestión tiene**, recolecten su información **de forma legal y autorizada**, guárdenla **organizada en una carpeta de Google Drive** y entreguen en Zajuna un **PDF con la portada y el enlace** antes del miércoles, 4 de noviembre de 2026, 11:59 p. m.
 
 | Pregunta | Respuesta |
 |---|---|
@@ -49,7 +49,7 @@ Esto es lo que dice la guía de aprendizaje para la EV01. A la derecha lo traduc
 | La guía dice… | En palabras sencillas | Ejemplo |
 |---|---|---|
 | *«Un equipo de 4 aprendices»* | Trabajan juntos y entregan **una sola carpeta**. Se reparten roles. | Coordinador, investigador de sistemas, responsable de datos y responsable de almacenamiento. |
-| *«Una empresa real o con información libre desde la web»* | No puede ser inventada: debe existir y tener información pública (o una autorización escrita). | Una empresa que publica en su web su política de calidad, informe de gestión y certificaciones. |
+| *«Una empresa real o con información libre desde la web»* | Puede ser una empresa real con información pública (o autorizada por escrito) o un caso de estudio inventado por el equipo. Los documentos pueden bajarse de internet o elaborarse como ejemplo, siempre declarándolo. | Una empresa que publica en su web su política de calidad, informe de gestión y certificaciones. |
 | *«Determinen qué sistemas de gestión tiene»* | Averiguar con qué «reglas internas» organiza temas como calidad, ambiente o seguridad. **Se comprueba, no se supone.** | En su web aparece el certificado ISO 9001 → tiene un sistema de gestión de calidad. |
 | *«De cada sistema, obtengan la información relevante para los procesos»* | Para cada sistema encontrado, reunir los documentos y datos que muestran cómo funciona. | Sistema de calidad → política de calidad, mapa de procesos e indicadores de satisfacción. |
 | *«Almacenen en una carpeta con subcarpetas según la jerarquía»* | Ordenar los archivos en carpetas con lógica (por sistema o por proceso). | `02_Sistemas_de_gestion/01_Calidad/` |
@@ -319,7 +319,7 @@ Sigue estos ocho pasos **en orden**. En cada uno encontrarás qué hacer, cómo 
 **Cómo sabes que quedó bien:** existe un archivo con los nombres de los integrantes y su rol.
 
 ### Paso 2: Elijan la empresa
-**Qué debes hacer:** escoger **una empresa real** con información pública suficiente.
+**Qué debes hacer:** escoger **una empresa**: real con información pública suficiente, o un caso ficticio que el equipo construya.
 
 **Cómo hacerlo:** cada integrante propone una empresa y la evalúan con estas cinco preguntas. Elijan la que responda **sí** a todas:
 1. ¿Es una empresa **real** (existe en el RUES o tiene sitio web oficial)?
@@ -516,7 +516,7 @@ CONTENIDO DE LA CARPETA
 **Cómo sabes que quedó bien:** el enlace abre en incógnito sin iniciar sesión y la carpeta pesa menos de 10 GB.
 
 ## 5. Ejemplo resuelto: una EV01 de principio a fin
-> [!naranja] **Aviso:** la empresa **«Lácteos del Valle S.A.S.» es ficticia** y se usa solo para mostrar el recorrido completo. Tu equipo debe trabajar con una **empresa real**.
+> [!naranja] **Aviso:** la empresa **«Lácteos del Valle S.A.S.» es ficticia** y se usa solo para mostrar el recorrido completo. Tu equipo puede trabajar con una empresa real o con una empresa ficticia propia.
 
 | Paso | Qué hizo el equipo del ejemplo |
 |---|---|
@@ -674,7 +674,7 @@ La evidencia se valora con la lista de verificación **IE-GA5-220501114-AA1-EV01
 ## 9. Preguntas frecuentes
 **¿Puedo usar la empresa donde trabajo?** Sí, con autorización escrita de la empresa y sin incluir datos personales ni información confidencial.
 
-**¿Puedo usar datos inventados?** No. La guía exige una empresa real o con información de acceso libre en la web.
+**¿Puedo usar datos inventados?** Sí. La documentación puede ser real, descargada de internet o ficticia (elaborada por el equipo), siempre que la declaren en la matriz y en el LEEME como «documento de ejemplo» y no incluyan datos personales reales.
 
 **La empresa no publica datos en tablas, ¿qué hago?** Usa datos abiertos (datos.gov.co, DANE, SECOP II), indicadores publicados en informes o una encuesta propia con consentimiento informado.
 

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual de la Guía 2 — Apertura | SENA GDAI GA2</title>
+
+  <!-- Tipografías Google Fonts Institucionales de Alta Gama -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@600;700;800;900&family=Syne:wght@700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --sena-verde: #39a900;
+      --sena-verde-dark: #236b00;
+      --sena-verde-bg: #f0fdf4;
+      --sena-verde-border: #bbf7d0;
+      --sena-naranja: #ff6b00;
+      --sena-naranja-dark: #c2410c;
+      --sena-naranja-bg: #fff7ed;
+      --sena-naranja-border: #fed7aa;
+      --azul-tech: #0284c7;
+      --azul-tech-dark: #0369a1;
+      --azul-bg: #eff6ff;
+      --azul-border: #bfdbfe;
+      --purpura-pro: #7c3aed;
+      --purpura-bg: #faf5ff;
+      --purpura-border: #e9d5ff;
+
+      --bg-page: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-subtle: #f1f5f9;
+      --borde-light: #e2e8f0;
+      --texto-main: #0f172a;
+      --texto-muted: #334155;
+      --texto-sub: #64748b;
+      --texto-dimmer: #94a3b8;
+
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-card: 0 8px 24px rgba(15,23,42,0.06);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-page);
+      color: var(--texto-main);
+      line-height: 1.7;
+    }
+
+    /* Topbar Fijo */
+    .doc-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--borde-light);
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sena-badge {
+      background: linear-gradient(135deg, var(--sena-verde), var(--sena-verde-dark));
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      padding: 5px 12px;
+      border-radius: 8px;
+      letter-spacing: 0.5px;
+    }
+    .topbar-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--texto-main);
+    }
+    .topbar-sub {
+      font-size: 11.5px;
+      color: var(--texto-sub);
+    }
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-topbar {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 7px 14px;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-topbar.portal {
+      background: #f1f5f9;
+      color: var(--texto-muted);
+      border: 1px solid var(--borde-light);
+    }
+    .btn-topbar.portal:hover {
+      background: #e2e8f0;
+      color: var(--texto-main);
+    }
+    .btn-topbar.pres {
+      background: linear-gradient(135deg, var(--sena-verde), var(--sena-verde-dark));
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(57,169,0,0.25);
+    }
+    .btn-topbar.pres:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(57,169,0,0.35);
+    }
+    .btn-topbar.print {
+      background: #ffffff;
+      color: var(--azul-tech);
+      border: 1px solid var(--azul-border);
+    }
+    .btn-topbar.print:hover {
+      background: var(--azul-bg);
+    }
+
+    /* Layout Doc: Sidebar + Contenido */
+    .doc-layout {
+      display: flex;
+      max-width: 1440px;
+      margin: 0 auto;
+      min-height: calc(100vh - 65px);
+    }
+
+    /* Sidebar Índice de Navegación */
+    .doc-sidebar {
+      width: 300px;
+      flex-shrink: 0;
+      background: #ffffff;
+      border-right: 1px solid var(--borde-light);
+      position: sticky;
+      top: 61px;
+      height: calc(100vh - 61px);
+      overflow-y: auto;
+      padding: 24px 16px;
+    }
+    .sidebar-heading {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--texto-sub);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      padding-left: 8px;
+    }
+    .doc-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .doc-nav-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--texto-muted);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      line-height: 1.35;
+    }
+    .doc-nav-link:hover {
+      background: #f8fafc;
+      color: var(--sena-verde-dark);
+      padding-left: 15px;
+    }
+    .doc-nav-link.active {
+      background: var(--sena-verde-bg);
+      color: var(--sena-verde-dark);
+      border-left: 3px solid var(--sena-verde);
+      font-weight: 700;
+    }
+    .doc-nav-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--texto-dimmer);
+      width: 18px;
+      text-align: right;
+    }
+
+    /* Contenedor del Artículo */
+    .doc-main {
+      flex: 1;
+      min-width: 0;
+      padding: 40px 48px 80px;
+      max-width: 960px;
+    }
+
+    @media (max-width: 992px) {
+      .doc-sidebar { display: none; }
+      .doc-main { padding: 24px 20px; }
+    }
+
+    /* Tipografía y Elementos del Manual */
+    .doc-header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--sena-verde-bg);
+      border: 1px solid var(--sena-verde-border);
+      padding: 5px 14px;
+      border-radius: 30px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--sena-verde-dark);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+    .doc-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 3.5vw, 40px);
+      font-weight: 800;
+      color: var(--texto-main);
+      line-height: 1.2;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+    .doc-subtitle {
+      font-size: 16px;
+      color: var(--texto-muted);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    /* Meta Caja */
+    .meta-box-panel {
+      background: #ffffff;
+      border: 1px solid var(--borde-light);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow-sm);
+    }
+    .meta-item-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--texto-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+    .meta-item-val {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--texto-main);
+    }
+
+    /* Secciones de Contenido */
+    .doc-section {
+      margin-bottom: 56px;
+      scroll-margin-top: 80px;
+    }
+    .sec-h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--texto-main);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sec-h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--texto-main);
+      margin: 24px 0 12px;
+    }
+    p { margin-bottom: 16px; font-size: 14.5px; color: var(--texto-muted); }
+
+    /* Callouts / Alertas Didácticas */
+    .callout {
+      border-radius: var(--radius-md);
+      padding: 18px 22px;
+      margin: 20px 0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      border: 1px solid;
+    }
+    .callout-icon { flex-shrink: 0; margin-top: 2px; }
+    .callout-content { font-size: 13.5px; line-height: 1.6; }
+    .callout-content strong { color: var(--texto-main); }
+    .callout.verde {
+      background: var(--sena-verde-bg);
+      border-color: var(--sena-verde-border);
+      color: #14532d;
+    }
+    .callout.naranja {
+      background: var(--sena-naranja-bg);
+      border-color: var(--sena-naranja-border);
+      color: #7c2d12;
+    }
+    .callout.tech {
+      background: var(--azul-bg);
+      border-color: var(--azul-border);
+      color: #0c4a6e;
+    }
+
+    /* Cajas de Plantillas Copiables con Botón */
+    .copy-box-container {
+      background: #ffffff;
+      border: 1.5px solid var(--borde-light);
+      border-radius: var(--radius-md);
+      margin: 20px 0;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .copy-box-header {
+      background: #f8fafc;
+      border-bottom: 1px solid var(--borde-light);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .copy-box-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--texto-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-copy {
+      background: #ffffff;
+      border: 1px solid var(--borde-light);
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--sena-verde-dark);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .btn-copy:hover {
+      background: var(--sena-verde);
+      border-color: var(--sena-verde);
+      color: #ffffff;
+    }
+    .copy-box-body {
+      padding: 16px 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #334155;
+      background: #ffffff;
+      white-space: pre-wrap;
+      line-height: 1.6;
+      max-height: 380px;
+      overflow-y: auto;
+    }
+
+    /* Tablas Estructuradas Responsivas */
+    .table-card {
+      background: #ffffff;
+      border: 1px solid var(--borde-light);
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 20px 0;
+      box-shadow: var(--shadow-sm);
+      width: 100%;
+    }
+    .doc-table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+    }
+    .doc-table th {
+      background: #f8fafc;
+      padding: 12px 16px;
+      font-weight: 700;
+      color: var(--texto-main);
+      border-bottom: 2px solid var(--borde-light);
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+    .doc-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--borde-light);
+      color: var(--texto-muted);
+      vertical-align: middle;
+    }
+    .doc-table tr:hover { background: #f8fafc; }
+    .badge-pk {
+      background: #fef08a;
+      color: #854d0e;
+      font-weight: 800;
+      font-size: 10.5px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid #fde047;
+    }
+    .badge-fk {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-weight: 800;
+      font-size: 10.5px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid #bae6fd;
+    }
+
+    /* Lista de Chequeo Interactiva */
+    .checklist-container {
+      background: #ffffff;
+      border: 1.5px solid var(--borde-light);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin: 24px 0;
+      box-shadow: var(--shadow-sm);
+    }
+    .checklist-progress-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    .checklist-item:hover { background: #f8fafc; }
+    .check-custom {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: all 0.2s ease;
+    }
+    .checklist-item.checked .check-custom {
+      background: var(--sena-verde);
+      border-color: var(--sena-verde);
+      color: #fff;
+    }
+    .checklist-item.checked .checklist-text {
+      text-decoration: line-through;
+      color: var(--texto-dimmer);
+    }
+    .checklist-text {
+      font-size: 13.5px;
+      color: var(--texto-main);
+      line-height: 1.5;
+    }
+    .checklist-tip {
+      font-size: 11px;
+      color: var(--texto-sub);
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* Estilos de Impresión */
+    @media print {
+      .doc-topbar, .doc-sidebar, .btn-copy, .btn-topbar { display: none !important; }
+      .doc-main { max-width: 100% !important; padding: 0 !important; }
+      body { background: #fff !important; color: #000 !important; }
+      .copy-box-container, .table-card, .checklist-container { box-shadow: none !important; border-color: #ccc !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="doc-topbar">
+    <div class="topbar-left"><div class="sena-badge">SENA</div><div><div class="topbar-title">GDAI · Guía 2 | Manual de la Guía 2</div><div class="topbar-sub">Herramientas informáticas y ofimática: qué se pide y cómo se entrega</div></div></div>
+    <div class="topbar-actions">
+      <a href="../../explorar.html" class="btn-topbar portal"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Volver al Hub</a>
+      <a href="./PRESENTACION_APERTURA_GUIA2.html" target="_blank" class="btn-topbar pres"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><polygon points="5 3 19 12 5 21 5 3"/></svg> Ver Presentación ↗</a>
+      <button type="button" class="btn-topbar print" onclick="window.print()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg> Imprimir / Guardar PDF</button>
+    </div>
+  </header>
+  <div class="doc-layout">
+    <aside class="doc-sidebar"><div class="sidebar-heading">Índice del Manual</div><ul class="doc-nav-list"><li><a href="#sec-1" class="doc-nav-link active"><span class="doc-nav-num">01</span> Antes de empezar: qué vas a hacer</a></li><li><a href="#sec-2" class="doc-nav-link"><span class="doc-nav-num">02</span> Dónde encaja esta guía</a></li><li><a href="#sec-3" class="doc-nav-link"><span class="doc-nav-num">03</span> Cronograma de las 6 sesiones</a></li><li><a href="#sec-4" class="doc-nav-link"><span class="doc-nav-num">04</span> EV01: video expositivo</a></li><li><a href="#sec-5" class="doc-nav-link"><span class="doc-nav-num">05</span> EV02: normas técnicas y protocolos informáticos</a></li><li><a href="#sec-6" class="doc-nav-link"><span class="doc-nav-num">06</span> Cómo se entregan las evidencias</a></li><li><a href="#sec-7" class="doc-nav-link"><span class="doc-nav-num">07</span> Preguntas frecuentes</a></li><li><a href="#sec-8" class="doc-nav-link"><span class="doc-nav-num">08</span> Lista de chequeo anti-rechazo</a></li><li><a href="#sec-9" class="doc-nav-link"><span class="doc-nav-num">09</span> Referencias</a></li></ul></aside>
+    <main class="doc-main">
+      <header style="margin-bottom:32px;">
+        <div class="doc-header-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Material Didáctico del Aprendiz — Guía 2</div>
+        <h1 class="doc-title">Manual de la Guía 2: Herramientas Informáticas</h1>
+        <p class="doc-subtitle">Qué se pide en cada evidencia, cómo se evalúa y cómo se entrega: <strong>GA2-220501121-AA1-EV01</strong> y <strong>EV02</strong>.</p>
+        <div class="meta-box-panel"><div><div class="meta-item-label">Programa</div><div class="meta-item-val">GDAI (Fichas 3466323 y 3466324)</div></div><div><div class="meta-item-label">Fase del Proyecto</div><div class="meta-item-val">Análisis (AP1)</div></div><div><div class="meta-item-label">Competencia</div><div class="meta-item-val">220501121 — Herramientas informáticas</div></div><div><div class="meta-item-label">Entregas</div><div class="meta-item-val" style="color:var(--sena-naranja-dark);">F23: EV01 5 ago · EV02 26 ago | F24: EV01 11 ago · EV02 18 ago</div></div></div>
+      </header>
+      <section id="sec-1" class="doc-section"><h2 class="sec-h2">1. Antes de empezar: qué vas a hacer</h2><p>Este manual te explica la <strong>Guía 2</strong> completa: de qué se trata, qué evidencias entregas, cuándo y cómo te evalúan. Léelo una vez antes de empezar y vuelve a él cuando prepares cada evidencia.</p><div class="callout verde"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div><div class="callout-content"><strong>La Guía 2 en una frase:</strong> aprendes <strong>qué herramientas informáticas usan las organizaciones y en qué se diferencian</strong>, y entregas <strong>dos evidencias</strong>: un <strong>video expositivo</strong> (EV01) y un <strong>informe de normas técnicas y protocolos informáticos</strong> (EV02).</div></div><div class="table-card"><table class="doc-table"><thead><tr><th>Pregunta</th><th>Respuesta</th></tr></thead><tbody><tr><td>¿Qué competencia trabajo?</td><td><strong>220501121 — Operar herramientas informáticas y digitales de acuerdo con protocolos y manuales técnicos.</strong></td></tr><tr><td>¿Qué resultado de aprendizaje se evalúa?</td><td><strong>220501121-01 — Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización.</strong></td></tr><tr><td>¿Cuánto dura?</td><td><strong>48 horas</strong> (actividad GA2-220501121-AA1), con <strong>6 sesiones</strong> sincrónicas de 1 hora por Teams.</td></tr><tr><td>¿Qué entrego?</td><td><strong>EV01:</strong> PDF con tus datos y el enlace de un video de máximo 3 minutos. <strong>EV02:</strong> informe en PDF (infograma, matriz en Excel o cuadro comparativo).</td></tr><tr><td>¿Dónde entrego?</td><td>En <strong>Zajuna</strong>, en el espacio de cada evidencia.</td></tr><tr><td>¿Material de apoyo?</td><td>Componente formativo <strong>«Los sistemas y los paquetes ofimáticos»</strong>, las presentaciones y manuales de cada sesión en el Hub.</td></tr></tbody></table></div></section><section id="sec-2" class="doc-section"><h2 class="sec-h2">2. Dónde encaja esta guía</h2><p>La competencia <strong>220501121</strong> se compone de cuatro resultados de aprendizaje. Esta guía evalúa el primero:</p><div class="table-card"><table class="doc-table"><thead><tr><th>RAP</th><th>Qué se logra</th><th>¿En esta guía?</th></tr></thead><tbody><tr><td><strong>220501121-01</strong></td><td>Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización</td><td><strong>Sí</strong></td></tr><tr><td>220501121-02</td><td>Utilizar herramientas TIC en actividades administrativas de acuerdo con políticas de uso y procedimientos técnicos</td><td>En guías posteriores</td></tr><tr><td>220501121-03</td><td>Administrar bases de datos de la unidad administrativa de acuerdo con necesidades de la organización</td><td>En guías posteriores</td></tr><tr><td>220501121-04</td><td>Proponer acciones de mejora de la información procesada</td><td>En guías posteriores</td></tr></tbody></table></div><p>Los <strong>criterios de evaluación</strong> de las dos evidencias son los mismos:</p><ul style="margin:0 0 14px 22px;line-height:1.8;"><li>Diferencia procesos y estructuras de los sistemas y medios de información de acuerdo con principios y teorías.</li><li>Clasifica herramientas periféricas de los sistemas de información teniendo en cuenta los requerimientos de la unidad administrativa.</li><li>Integra normas técnicas y protocolos informáticos en las actividades de la unidad administrativa, de acuerdo con las políticas de seguridad y salud en el ambiente laboral.</li></ul></section><section id="sec-3" class="doc-section"><h2 class="sec-h2">3. Cronograma de las 6 sesiones</h2><p>Cada ficha tiene su propio calendario. Las sesiones 1 y 2 dan la base teórica; la 3 y la 6 son de socialización de evidencias.</p><div class="table-card"><table class="doc-table"><thead><tr><th>Sesión</th><th>Tema</th><th>Ficha 3466323 (martes)</th><th>Ficha 3466324 (lunes)</th></tr></thead><tbody><tr><td>1</td><td>Inducción · sistemas de información, teoría general de sistemas, software y hardware</td><td>Mié 15 jul</td><td>Mié 15 jul</td></tr><tr><td>2</td><td>Redes de información, dispositivos inteligentes y automatización</td><td>Mar 21 jul</td><td>Lun 27 jul</td></tr><tr><td>3</td><td><strong>Socialización del video expositivo (EV01)</strong></td><td>Mar 28 jul</td><td>Lun 3 ago</td></tr><tr><td>4</td><td>Seguridad de la información y protocolos informáticos</td><td>Mar 4 ago</td><td>Lun 10 ago</td></tr><tr><td>5</td><td>Normas SST en ambientes laborales y protocolos</td><td>Mar 11 ago</td><td>Mar 18 ago</td></tr><tr><td>6</td><td><strong>Socialización del informe de normas técnicas y protocolos (EV02)</strong> y cierre</td><td>Mar 18 ago</td><td>Mar 18 ago</td></tr></tbody></table></div><div class="callout naranja"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg></div><div class="callout-content"><strong>Regla de entrega:</strong> cada evidencia se entrega en Zajuna <strong>8 días calendario después de la sesión en la que se socializa</strong>, a las <strong>11:59 p. m.</strong> Para la ficha 3466323: <strong>EV01 el miércoles 5 de agosto</strong> y <strong>EV02 el miércoles 26 de agosto</strong> de 2026. Para la ficha 3466324: <strong>EV01 el martes 11 de agosto</strong> y <strong>EV02 el martes 18 de agosto</strong> de 2026.</div></div></section><section id="sec-4" class="doc-section"><h2 class="sec-h2">4. EV01: video expositivo</h2><p><strong>Nombre oficial:</strong> GA2-220501121-AA1-EV01. Video expositivo sobre el uso y diferencias en la aplicación de herramientas informáticas.</p><h3 class="sec-h3">4.1. La guía explicada frase por frase</h3><div class="table-card"><table class="doc-table"><thead><tr><th>La guía dice…</th><th>En palabras sencillas</th></tr></thead><tbody><tr><td><em>«Se estudiarán los diferentes tipos de software y los equipos ideales para ser operados»</em></td><td>Debes conocer qué programas y equipos usan las empresas para trabajar.</td></tr><tr><td><em>«Énfasis en texto, hoja de cálculo y presentación de informes»</em></td><td>Los ejemplos principales son el procesador de texto, la hoja de cálculo y las presentaciones.</td></tr><tr><td><em>«Elaborar un guion para ser expuesto en un video»</em></td><td>Antes de grabar, escribe qué vas a decir: cómo, para qué y de qué forma se usan las herramientas.</td></tr><tr><td><em>«Deben quedar claras las diferencias entre las herramientas»</em></td><td>No basta con nombrarlas: explica <strong>en qué se diferencia una de otra</strong>.</td></tr><tr><td><em>«Subir el video a YouTube o Vimeo, con permisos para quien tenga el enlace»</em></td><td>El enlace tiene que abrir <strong>sin iniciar sesión</strong>.</td></tr><tr><td><em>«Documento con nombre y apellidos, programa, fecha y URL del video»</em></td><td>Subes a Zajuna un <strong>PDF</strong> con tus datos y el enlace.</td></tr></tbody></table></div><h3 class="sec-h3">4.2. Paso a paso</h3><ol style="margin:0 0 14px 22px;line-height:1.8;"><li><strong>Investiga</strong> cómo usan herramientas informáticas empresas de <strong>diferentes sectores económicos</strong> (comercio, salud, educación, industria…).</li><li><strong>Escribe el guion</strong> corto: qué herramienta, para qué se usa, cómo se usa y en qué se diferencia de las demás.</li><li><strong>Graba el video</strong> de <strong>máximo 3 minutos</strong>. Puedes usar el celular o herramientas como Powtoon, Canva o Camtasia. Agrega un <strong>fondo musical adecuado</strong>.</li><li><strong>Súbelo a YouTube o Vimeo</strong> y configura el acceso para que lo vea cualquiera que tenga el enlace.</li><li><strong>Arma el PDF:</strong> nombre y apellidos completos, nombre del programa, fecha de realización y el enlace del video.</li><li><strong>Entrégalo en Zajuna</strong>, en el espacio de la EV01, antes de la fecha límite.</li></ol><h3 class="sec-h3">4.3. Cómo se evalúa (instrumento IE-GA2-220501121-AA1-EV01)</h3><div class="table-card"><table class="doc-table"><thead><tr><th>Indicador</th><th>Peso</th></tr></thead><tbody><tr><td><strong>1. Video (25 %):</strong> la extensión está dentro del tiempo estipulado</td><td>10 %</td></tr><tr><td>El video se sube con libre acceso a YouTube o Vimeo</td><td>10 %</td></tr><tr><td>El video tiene fondo musical adecuado</td><td>5 %</td></tr><tr><td><strong>2. Argumento y contenido (75 %):</strong> expone claramente las diferencias entre las herramientas informáticas</td><td>25 %</td></tr><tr><td>Expone claramente la utilidad de las herramientas informáticas en las empresas</td><td>25 %</td></tr><tr><td>Se evidencia la presentación de empresas de diferentes sectores económicos</td><td>15 %</td></tr><tr><td>Queda claro qué equipos ofimáticos son los más operados en las empresas</td><td>10 %</td></tr></tbody></table></div><h3 class="sec-h3">4.4. Errores frecuentes</h3><div class="table-card"><table class="doc-table"><thead><tr><th>Error</th><th>Cómo evitarlo</th></tr></thead><tbody><tr><td>El video pasa de 3 minutos</td><td>Cronometra el guion antes de grabar</td></tr><tr><td>El enlace pide iniciar sesión</td><td>Pruébalo en una ventana de incógnito</td></tr><tr><td>Solo se nombran las herramientas, sin compararlas</td><td>Dedica un bloque del guion a las <strong>diferencias</strong></td></tr><tr><td>Todos los ejemplos son de una sola empresa o sector</td><td>Usa al menos empresas de <strong>dos o tres sectores</strong></td></tr><tr><td>Se olvida el fondo musical</td><td>Agrégalo en el editor; es parte del indicador</td></tr></tbody></table></div></section><section id="sec-5" class="doc-section"><h2 class="sec-h2">5. EV02: normas técnicas y protocolos informáticos</h2><p><strong>Nombre oficial:</strong> GA2-220501121-AA1-EV02. Normas técnicas y protocolos informáticos.</p><h3 class="sec-h3">5.1. La guía explicada frase por frase</h3><div class="table-card"><table class="doc-table"><thead><tr><th>La guía dice…</th><th>En palabras sencillas</th></tr></thead><tbody><tr><td><em>«El protocolo informático es un conjunto formal de estándares y normas»</em></td><td>Son las reglas que dicen <strong>cómo</strong> se comunican y se controlan los dispositivos y sistemas.</td></tr><tr><td><em>«El SG-SST es un sistema de gestión normativo y obligatorio en Colombia»</em></td><td>La seguridad y salud en el trabajo es obligatoria y se gestiona con sistemas informáticos.</td></tr><tr><td><em>«Informe tipo infograma, matriz en Excel o cuadro comparativo»</em></td><td>Tú eliges el formato; lo importante es el contenido.</td></tr><tr><td><em>«Cinco software utilizados en una empresa real»</em></td><td>Debes escoger una empresa real y encontrar <strong>cinco</strong> programas que use.</td></tr><tr><td><em>«Empresa real consultable en la web, o una con información autorizada»</em></td><td>Puede ser una empresa con información pública o una a la que tengas acceso autorizado.</td></tr><tr><td><em>«Identificando el protocolo informático y la norma técnica»</em></td><td>Para cada software, indica el <strong>protocolo</strong> y la <strong>norma</strong> que aplica.</td></tr><tr><td><em>«Discriminar su participación en el SG-SST. Ejemplo: Word y la Política de SG-SST»</em></td><td>Muestra cómo cada software se usa en la gestión de seguridad y salud.</td></tr></tbody></table></div><h3 class="sec-h3">5.2. Paso a paso</h3><ol style="margin:0 0 14px 22px;line-height:1.8;"><li><strong>Elige la empresa</strong> y confirma que tiene información pública o autorizada.</li><li><strong>Identifica cinco software</strong> que usa (por ejemplo, procesador de texto, hoja de cálculo, correo, un sistema de gestión, un software de seguridad).</li><li>Para cada uno, <strong>explica su uso y aplicación</strong> dentro de la organización.</li><li>Indica el <strong>protocolo informático</strong> y la <strong>norma técnica</strong> de cada caso.</li><li>Muestra su <strong>participación en el SG-SST</strong> con un ejemplo concreto y adjunta los <strong>registros o archivos diligenciados</strong>.</li><li><strong>Elige el formato</strong> (infograma, matriz en Excel o cuadro comparativo), expórtalo a <strong>PDF</strong> y entrégalo en Zajuna.</li></ol><h3 class="sec-h3">5.3. Cómo se evalúa (instrumento IE-GA2-220501121-AA1-EV02)</h3><div class="table-card"><table class="doc-table"><thead><tr><th>Indicador</th><th>Peso</th></tr></thead><tbody><tr><td>Se presenta el informe en el formato solicitado</td><td>10 %</td></tr><tr><td>Se identifican plenamente los software solicitados</td><td>10 %</td></tr><tr><td>Demuestra conocimiento real y certero sobre los sistemas de gestión</td><td>10 %</td></tr><tr><td>Evidencia claridad en los protocolos de los aplicativos seleccionados</td><td>15 %</td></tr><tr><td>Identifica procesos del SG-SST en la empresa</td><td>15 %</td></tr><tr><td>Las aplicaciones presentadas hacen parte de los procesos de gestión y del SG-SST</td><td>10 %</td></tr><tr><td>Se presentan los registros o archivos diligenciados por cada aplicación seleccionada</td><td>15 %</td></tr><tr><td>Presenta evidencia clara del proceso de protocolos utilizados por cada aplicación</td><td>15 %</td></tr></tbody></table></div><h3 class="sec-h3">5.4. Errores frecuentes</h3><div class="table-card"><table class="doc-table"><thead><tr><th>Error</th><th>Cómo evitarlo</th></tr></thead><tbody><tr><td>Presentar menos o más de cinco software</td><td>Cuenta cinco exactos</td></tr><tr><td>Nombrar el software sin decir su protocolo ni norma</td><td>Usa una columna para cada dato</td></tr><tr><td>No mostrar la relación con el SG-SST</td><td>Escribe un ejemplo concreto por cada software</td></tr><tr><td>Sin registros o archivos diligenciados</td><td>Adjunta capturas o archivos de ejemplo de cada uno</td></tr><tr><td>Informe en un formato que no es PDF</td><td>Expórtalo a PDF antes de subirlo</td></tr></tbody></table></div></section><section id="sec-6" class="doc-section"><h2 class="sec-h2">6. Cómo se entregan las evidencias</h2><ul style="margin:0 0 14px 22px;line-height:1.8;"><li><strong>Formato:</strong> PDF en las dos evidencias.</li><li><strong>Lugar:</strong> el espacio de cada evidencia en Zajuna (<em>GA2-220501121-AA1-EV01</em> y <em>GA2-220501121-AA1-EV02</em>).</li><li><strong>Hora:</strong> hasta las 11:59 p. m. de la fecha límite de tu ficha.</li><li><strong>Entrega anticipada:</strong> si puedes, entrega un día antes: así tienes margen si algo falla.</li></ul></section><section id="sec-7" class="doc-section"><h2 class="sec-h2">7. Preguntas frecuentes</h2><p><strong>¿La evidencia es en equipo o individual?</strong> <strong>Individual.</strong> Cada aprendiz graba su video (EV01) y elabora su informe (EV02) y los entrega en Zajuna.</p><p><strong>¿Puedo usar mi celular para grabar el video?</strong> Sí. La guía lo permite expresamente.</p><p><strong>¿Qué pasa si el video pasa de 3 minutos?</strong> Pierdes el indicador de extensión (10 %). Edítalo y recórtalo.</p><p><strong>¿Puedo elegir cualquier empresa en la EV02?</strong> Debe ser real: consultable en la web o con información autorizada.</p><p><strong>¿Dónde veo las grabaciones?</strong> En el Hub, en la tarjeta de cada sesión de la Guía 2.</p></section><section id="sec-8" class="doc-section"><h2 class="sec-h2">8. Lista de chequeo anti-rechazo</h2><div class="checklist-container"><div class="checklist-progress-row"><strong style="font-size:14px;color:var(--texto-main);">Puntos de Control de Calidad:</strong><span id="checkCounter" style="font-size:12px;font-weight:800;color:var(--sena-verde-dark);background:var(--sena-verde-bg);padding:4px 10px;border-radius:20px;border:1px solid var(--sena-verde-border);">0 de 7 Verificados</span></div><div class="checklist-item" onclick="toggleCheck(this)"><div class="check-custom">✓</div><div><div class="checklist-text">EV01: el video dura máximo 3 minutos y tiene fondo musical.</div></div></div><div class="checklist-item" onclick="toggleCheck(this)"><div class="check-custom">✓</div><div><div class="checklist-text">EV01: el enlace de YouTube o Vimeo abre sin iniciar sesión.</div></div></div><div class="checklist-item" onclick="toggleCheck(this)"><div class="check-custom">✓</div><div><div class="checklist-text">EV01: el PDF tiene nombre y apellidos, programa, fecha y el enlace del video.</div></div></div><div class="checklist-item" onclick="toggleCheck(this)"><div class="check-custom">✓</div><div><div class="checklist-text">EV02: son exactamente cinco software de una empresa real.</div></div></div><div class="checklist-item" onclick="toggleCheck(this)"><div class="check-custom">✓</div><div><div class="checklist-text">EV02: cada software tiene uso, protocolo, norma y relación con el SG-SST.</div></div></div><div class="checklist-item" onclick="toggleCheck(this)"><div class="check-custom">✓</div><div><div class="checklist-text">EV02: hay registros o archivos diligenciados por cada aplicación.</div></div></div><div class="checklist-item" onclick="toggleCheck(this)"><div class="check-custom">✓</div><div><div class="checklist-text">Las dos evidencias están en PDF y subidas antes de las 11:59 p. m.</div></div></div></div></section><section id="sec-9" class="doc-section"><h2 class="sec-h2">9. Referencias</h2><ul style="margin:0 0 14px 22px;line-height:1.8;"><li>Guía de aprendizaje 2 (sección 3.1: competencia 220501121).</li><li>Instrumentos de evaluación IE-GA2-220501121-AA1-EV01 e IE-GA2-220501121-AA1-EV02.</li><li>Componente formativo «Los sistemas y los paquetes ofimáticos».</li></ul></section>
+    </main>
+  </div>
+  <script>
+    function copiarAlPortapapeles(id, btn) {
+      const el = document.getElementById(id); if (!el) return;
+      navigator.clipboard.writeText(el.innerText || el.textContent).then(() => {
+        const o = btn.innerHTML; btn.innerHTML = '¡Copiado con éxito! ✓';
+        btn.style.background = 'var(--sena-verde)'; btn.style.borderColor = 'var(--sena-verde)'; btn.style.color = '#fff';
+        setTimeout(() => { btn.innerHTML = o; btn.style.background = ''; btn.style.borderColor = ''; btn.style.color = ''; }, 2200);
+      }).catch(() => alert('Selecciona y copia el texto manualmente.'));
+    }
+    function toggleCheck(item) {
+      item.classList.toggle('checked');
+      const total = document.querySelectorAll('.checklist-item').length, ok = document.querySelectorAll('.checklist-item.checked').length;
+      const c = document.getElementById('checkCounter');
+      if (c) { c.innerText = ok + ' de ' + total + ' Verificados';
+        if (ok === total) { c.style.background = 'var(--sena-verde)'; c.style.color = '#fff'; c.innerText = '¡100% listo para subir a Zajuna!'; }
+        else { c.style.background = 'var(--sena-verde-bg)'; c.style.color = 'var(--sena-verde-dark)'; } }
+    }
+    window.addEventListener('DOMContentLoaded', () => {
+      const secs = document.querySelectorAll('section[id^="sec-"]'), links = document.querySelectorAll('.doc-nav-link');
+      window.addEventListener('scroll', () => {
+        let cur = ''; secs.forEach(s => { if (window.pageYOffset >= s.offsetTop - 120) cur = s.id; });
+        links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + cur));
+      });
+    });
+  </script>
+</body>
+</html>

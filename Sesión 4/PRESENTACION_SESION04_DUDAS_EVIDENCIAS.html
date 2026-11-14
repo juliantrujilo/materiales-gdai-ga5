@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 4 — Sesión de Dudas: EV01, EV02 y EV03 | SENA GDAI GA5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Paleta SENA Institucional Premium Claras */
+  --sena-verde: #39a900;
+  --sena-verde-dark: #236b00;
+  --sena-verde-soft: #44c702;
+  --sena-verde-bg: rgba(57, 169, 0, 0.08);
+  --sena-verde-border: rgba(57, 169, 0, 0.28);
+  
+  --sena-naranja: #ff6b00;
+  --sena-naranja-dark: #c2410c;
+  --sena-naranja-bg: rgba(255, 107, 0, 0.08);
+  --sena-naranja-border: rgba(255, 107, 0, 0.28);
+
+  --azul-tech: #0284c7;
+  --azul-tech-dark: #0369a1;
+  --azul-bg: rgba(2, 132, 199, 0.08);
+  --azul-border: rgba(2, 132, 199, 0.28);
+
+  --purpura: #7c3aed;
+  --purpura-bg: rgba(124, 58, 237, 0.08);
+
+  /* Fondos y Superficies Claras */
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --borde-light: #e2e8f0;
+  --borde-focus: #cbd5e1;
+  
+  --texto-main: #0f172a;
+  --texto-muted: #475569;
+  --texto-sub: #64748b;
+  
+  --shadow-card: 0 10px 30px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
+  --shadow-hover: 0 20px 40px rgba(57, 169, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
+  --radius-xl: 20px;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--texto-main);
+  background-color: var(--bg-main);
+  background-image: 
+    radial-gradient(circle at 5% 10%, rgba(57, 169, 0, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 95% 90%, rgba(255, 107, 0, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(2, 132, 199, 0.03) 0%, transparent 60%);
+  background-attachment: fixed;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ==========================================================
+   SIDEBAR LATERAL OBLIGATORIO (280px)
+   ========================================================== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 280px;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-right: 1px solid var(--borde-light);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 4px 0 24px rgba(15, 23, 42, 0.04);
+}
+
+.sidebar.collapsed {
+  transform: translateX(-100%);
+}
+
+.sidebar-header {
+  padding: 18px 16px;
+  border-bottom: 1px solid var(--borde-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-logo {
+  background: var(--sena-verde);
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px -2px rgba(57, 169, 0, 0.4);
+}
+
+.sidebar-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.sidebar-sub {
+  font-size: 10px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.sidebar-toggle-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #64748b;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sidebar-toggle-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-color: #e2e8f0;
+}
+
+/* Botón Flotante Reactivo */
+.floating-sidebar-toggle {
+  position: fixed;
+  top: 18px;
+  left: 20px;
+  z-index: 999;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #1e293b;
+  height: 38px;
+  padding: 0 14px 0 10px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  display: none;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.floating-sidebar-toggle:hover {
+  background: #ffffff;
+  color: var(--sena-verde-dark);
+  border-color: var(--sena-verde);
+  box-shadow: 0 8px 22px rgba(57, 169, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+.sidebar.collapsed ~ .floating-sidebar-toggle,
+.floating-sidebar-toggle.visible {
+  display: inline-flex !important;
+  animation: fadeInToggle 0.25s ease-out forwards;
+}
+
+@keyframes fadeInToggle {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.sidebar-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 10px;
+}
+
+.sidebar-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.nav-group {
+  margin-bottom: 18px;
+}
+
+.nav-group-title {
+  font-size: 9.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #94a3b8;
+  padding: 0 10px 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  color: #475569;
+  text-decoration: none;
+  font-size: 11.8px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  margin-bottom: 2px;
+  position: relative;
+}
+
+.nav-link:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.nav-link.active {
+  background: rgba(57, 169, 0, 0.1);
+  color: var(--sena-verde-dark);
+  font-weight: 700;
+}
+
+.nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3.5px;
+  background: var(--sena-verde);
+  border-radius: 0 4px 4px 0;
+}
+
+.nav-link-num {
+  font-size: 10px;
+  font-weight: 700;
+  color: #94a3b8;
+  min-width: 15px;
+}
+
+.nav-link.active .nav-link-num {
+  color: var(--sena-verde);
+}
+
+.nav-link-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.nav-link:hover .nav-link-icon {
+  color: #0f172a;
+}
+
+.nav-link.active .nav-link-icon {
+  color: var(--sena-verde-dark);
+}
+
+.nav-link-text {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-footer {
+  padding: 12px 14px;
+  border-top: 1px solid #e2e8f0;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sidebar-corte-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 107, 0, 0.08);
+  border: 1px solid rgba(255, 107, 0, 0.22);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--sena-naranja-dark);
+}
+
+.sidebar-link-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #334155;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.sidebar-link-btn:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+/* ==========================================================
+   CONTENIDO PRINCIPAL ADAPTABLE (.main-content)
+   ========================================================== */
+.main-content {
+  margin-left: 280px;
+  min-height: 100vh;
+  transition: margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.collapsed ~ .main-content {
+  margin-left: 0;
+}
+
+/* Barra Superior de Estado y Controles */
+.content-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--borde-light);
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topbar-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--texto-sub);
+  font-weight: 600;
+}
+
+.topbar-breadcrumbs .sep { color: #cbd5e1; }
+.topbar-breadcrumbs .current { color: var(--sena-verde-dark); font-weight: 700; }
+
+.topbar-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.topbar-tool-btn {
+  background: #ffffff;
+  border: 1px solid var(--borde-light);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--texto-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.topbar-tool-btn:hover {
+  background: #f8fafc;
+  color: var(--texto-main);
+  border-color: #cbd5e1;
+}
+
+/* Barra de Progreso Global */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--sena-verde), var(--sena-naranja));
+  width: 0%;
+  z-index: 2000;
+  transition: width 0.1s ease;
+}
+
+/* ==========================================================
+   ESTRUCTURA DE CADA SLIDE
+   ========================================================== */
+.slide {
+  min-height: 100vh;
+  padding: 40px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px dashed #e2e8f0;
+  position: relative;
+}
+
+.slide-inner {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.slide-num-indicator {
+  position: absolute;
+  top: 24px;
+  right: 48px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--texto-sub);
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--borde-light);
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Headers y Tipografía */
+.slide-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--sena-verde-bg);
+  border: 1px solid var(--sena-verde-border);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--sena-verde-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 14px;
+}
+
+.slide-header-badge.tech {
+  background: var(--azul-bg);
+  border-color: var(--azul-border);
+  color: var(--azul-tech);
+}
+
+.slide-header-badge.naranja {
+  background: var(--sena-naranja-bg);
+  border-color: var(--sena-naranja-border);
+  color: var(--sena-naranja-dark);
+}
+
+.slide-header-badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.sec-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(24px, 2.5vw, 34px);
+  font-weight: 800;
+  color: var(--texto-main);
+  line-height: 1.25;
+  margin-bottom: 10px;
+  letter-spacing: -0.5px;
+}
+
+.sec-desc {
+  font-size: 15px;
+  color: var(--texto-muted);
+  max-width: 860px;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.grad-verde {
+  background: linear-gradient(135deg, var(--sena-verde), var(--sena-verde-dark));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.grad-naranja {
+  background: linear-gradient(135deg, var(--sena-naranja), #ea580c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.grad-tech {
+  background: linear-gradient(135deg, var(--azul-tech), #1d4ed8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ==========================================================
+   COMPONENTES Y TARJETAS PREMIUM
+   ========================================================== */
+.card-premium {
+  background: linear-gradient(175deg, #ffffff 0%, #fbfcfe 65%, #f8fafc 100%);
+  border: 1px solid var(--borde-light);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-premium:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(57, 169, 0, 0.3);
+}
+
+.card-premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3.5px;
+  background: #cbd5e1;
+}
+
+.card-premium.top-verde::before { background: linear-gradient(90deg, var(--sena-verde), var(--sena-verde-dark)); }
+.card-premium.top-naranja::before { background: linear-gradient(90deg, var(--sena-naranja), #ea580c); }
+.card-premium.top-tech::before { background: linear-gradient(90deg, var(--azul-tech), #1d4ed8); }
+
+.card-header-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.card-icon-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  color: var(--texto-main);
+  flex-shrink: 0;
+}
+
+.card-icon-badge.verde { background: var(--sena-verde-bg); color: var(--sena-verde-dark); }
+.card-icon-badge.naranja { background: var(--sena-naranja-bg); color: var(--sena-naranja-dark); }
+.card-icon-badge.tech { background: var(--azul-bg); color: var(--azul-tech); }
+
+.card-pill-tag {
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 3px 9px;
+  border-radius: 14px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.card-pill-tag.verde { background: var(--sena-verde-bg); color: var(--sena-verde-dark); border: 1px solid var(--sena-verde-border); }
+.card-pill-tag.naranja { background: var(--sena-naranja-bg); color: var(--sena-naranja-dark); border: 1px solid var(--sena-naranja-border); }
+.card-pill-tag.tech { background: var(--azul-bg); color: var(--azul-tech); border: 1px solid var(--azul-border); }
+
+.card-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--texto-main);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+
+.card-text {
+  font-size: 13.5px;
+  color: var(--texto-muted);
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+
+.list-premium {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--texto-muted);
+}
+
+.list-premium li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.list-premium li svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* Grillas */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+
+/* Hero Portada */
+.hero-wrapper {
+  display: grid;
+  grid-template-columns: 1.25fr 0.95fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.hero-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(30px, 3.8vw, 46px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.8px;
+  color: var(--texto-main);
+  margin-bottom: 16px;
+}
+
+.hero-subtitle {
+  font-size: 16px;
+  color: var(--texto-muted);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.hero-card-widget {
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  padding: 30px;
+  border: 1px solid var(--borde-light);
+  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.06);
+}
+
+.hero-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.meta-box {
+  background: #f8fafc;
+  border: 1px solid var(--borde-light);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+
+.meta-box-title {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--texto-sub);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.meta-box-val {
+  font-family: 'Outfit', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--texto-main);
+  line-height: 1.2;
+}
+
+.meta-box-sub {
+  font-size: 11px;
+  color: var(--texto-sub);
+  margin-top: 4px;
+}
+
+/* Callout Box Institucional */
+.callout-box {
+  background: var(--sena-verde-bg);
+  border: 1.5px solid var(--sena-verde-border);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.callout-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid var(--sena-verde-border);
+  color: var(--sena-verde-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.callout-content h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--sena-verde-dark);
+  margin-bottom: 4px;
+}
+
+.callout-content p {
+  font-size: 13.5px;
+  color: var(--texto-main);
+  line-height: 1.5;
+}
+
+/* Tabla de Matriz de Sesiones */
+.table-wrapper {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--borde-light);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: var(--shadow-card);
+  width: 100%;
+}
+
+.matriz-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.matriz-table th {
+  background: #f8fafc;
+  padding: 12px 18px;
+  font-weight: 700;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--texto-sub);
+  border-bottom: 1px solid var(--borde-light);
+}
+
+.matriz-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--borde-light);
+  vertical-align: middle;
+}
+
+.matriz-table tr:hover {
+  background: #fbfcfe;
+}
+
+.sesion-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  background: #f1f5f9;
+  color: var(--texto-main);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--borde-light);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.evidencia-tag {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 600;
+  background: #f1f5f9;
+  border: 1px solid var(--borde-light);
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin: 2px;
+  color: var(--texto-muted);
+  white-space: nowrap;
+}
+
+.deadline-badge {
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.deadline-badge.corte1 {
+  color: var(--sena-naranja-dark);
+  background: var(--sena-naranja-bg);
+  border: 1px solid var(--sena-naranja-border);
+}
+
+.deadline-badge.corte2 {
+  color: var(--sena-verde-dark);
+  background: var(--sena-verde-bg);
+  border: 1px solid var(--sena-verde-border);
+}
+
+/* Botones Principales */
+.btn-action-pro {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+}
+
+.btn-action-pro.verde {
+  background: linear-gradient(135deg, var(--sena-verde), var(--sena-verde-dark));
+  color: #fff;
+  box-shadow: 0 4px 14px var(--sena-verde-bg);
+}
+
+.btn-action-pro.verde:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(57, 169, 0, 0.25);
+}
+
+.btn-action-pro.tech {
+  background: linear-gradient(135deg, var(--azul-tech), var(--azul-tech-dark));
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.25);
+}
+
+.btn-action-pro.tech:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(2, 132, 199, 0.35);
+}
+
+.btn-action-pro.neutral {
+  background: #ffffff;
+  color: var(--texto-main);
+  border: 1px solid var(--borde-light);
+}
+
+.btn-action-pro.neutral:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+/* Checklist Interactivo */
+.checklist-card {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--borde-light);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+}
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f5f9;
+  cursor: pointer;
+}
+
+.checklist-item:last-child { border-bottom: none; }
+
+.checklist-checkbox {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: 2px solid #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  background: #ffffff;
+}
+
+.checklist-item.checked .checklist-checkbox {
+  background: var(--sena-verde);
+  border-color: var(--sena-verde);
+  color: #ffffff;
+}
+
+.checklist-item.checked .checklist-text h5 {
+  text-decoration: line-through;
+  color: #94a3b8;
+}
+
+.checklist-text h5 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--texto-main);
+  margin-bottom: 3px;
+  transition: color 0.2s;
+}
+
+.checklist-text p {
+  font-size: 12.5px;
+  color: var(--texto-sub);
+  line-height: 1.4;
+}
+
+/* Toast de Notificación */
+.toast-notice {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 3000;
+}
+
+.toast-notice.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ==========================================================
+   BACKDROP Y RESPONSIVIDAD MULTIDISPOSITIVO (Móvil / Tablet)
+   ========================================================== */
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1099;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.sidebar-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    transform: translateX(-100%);
+    z-index: 1200;
+  }
+  .sidebar.mobile-open {
+    transform: translateX(0);
+    box-shadow: 10px 0 35px rgba(0, 0, 0, 0.25);
+  }
+  .main-content {
+    margin-left: 0 !important;
+  }
+  .floating-sidebar-toggle {
+    display: inline-flex !important;
+    z-index: 1050;
+  }
+  .hero-wrapper {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .slide {
+    padding: 60px 18px 40px;
+  }
+  .slide-inner {
+    max-width: 100%;
+  }
+  .slide-num-indicator {
+    top: 14px;
+    right: 18px;
+    font-size: 10.5px;
+    padding: 3px 8px;
+  }
+  .floating-sidebar-toggle {
+    top: 12px;
+    left: 14px;
+    height: 34px;
+    padding: 0 10px;
+    font-size: 11px;
+  }
+  .floating-sidebar-toggle span {
+    display: none;
+  }
+  .content-topbar {
+    padding: 8px 14px;
+    padding-left: 56px;
+    font-size: 11px;
+  }
+  .topbar-breadcrumbs {
+    font-size: 10.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .topbar-tools {
+    display: none;
+  }
+  .sec-title {
+    font-size: clamp(20px, 5.5vw, 26px);
+  }
+  .sec-desc {
+    font-size: 13.5px;
+    margin-bottom: 20px;
+  }
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .hero-cta-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cta-btn {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .matriz-table {
+    min-width: 580px;
+    font-size: 12px;
+  }
+  .matriz-table th,
+  .matriz-table td {
+    padding: 10px 12px;
+  }
+  .sesion-badge,
+  .evidencia-tag,
+  .deadline-badge {
+    font-size: 10.5px;
+    padding: 3px 7px;
+  }
+  .callout-content h4 {
+    font-size: 13.5px;
+  }
+  .callout-content p {
+    font-size: 12.5px;
+  }
+}
+
+/* ===== Extensiones GA5 (mismo sistema de diseño) ===== */
+.x-code-wrap{margin:14px 0;border-radius:12px;overflow:hidden;border:1px solid #1e293b;box-shadow:var(--shadow-card)}
+.x-code-head{display:flex;justify-content:space-between;align-items:center;background:#1e293b;color:#cbd5e1;padding:8px 14px;font-size:11.5px;font-weight:700;font-family:'Outfit',sans-serif}
+.x-code{background:#0f172a;color:#e2e8f0;padding:14px 18px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.7;overflow-x:auto;white-space:pre;margin:0}
+.x-copy{background:#39a900;color:#fff;border:0;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:800;cursor:pointer;font-family:'Outfit',sans-serif}
+.x-copy:hover{background:#44c702}.x-flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:18px 0}
+.x-flow .x-node{background:#fff;border:1px solid var(--borde-light);border-radius:14px;padding:14px;box-shadow:var(--shadow-card);position:relative}
+.x-flow .x-node h4{font-family:'Outfit',sans-serif;font-size:14px;margin:6px 0 4px}
+.x-flow .x-node p{font-size:11.8px;color:var(--texto-muted);line-height:1.5}
+.x-flow .x-node .x-tag{font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;border-radius:10px;display:inline-block}
+.x-tag.verde{background:var(--sena-verde-bg);color:var(--sena-verde-dark)}
+.x-tag.naranja{background:var(--sena-naranja-bg);color:var(--sena-naranja-dark)}
+.x-tag.tech{background:var(--azul-bg);color:var(--azul-tech-dark)}
+.x-tag.purpura{background:var(--purpura-bg);color:var(--purpura)}
+.x-steps{display:grid;gap:12px;margin:16px 0}
+.x-step{display:flex;gap:14px;background:#fff;border:1px solid var(--borde-light);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow-card)}
+.x-step-num{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:var(--sena-verde);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:800}
+.x-step h4{font-family:'Outfit',sans-serif;font-size:15px;margin-bottom:2px}
+.x-step p{font-size:12.8px;color:var(--texto-muted);line-height:1.55}
+.x-faq details{background:#fff;border:1px solid var(--borde-light);border-radius:12px;padding:12px 16px;margin-bottom:8px}
+.x-faq summary{cursor:pointer;font-weight:700;font-size:13.5px}
+.x-faq details p{font-size:13px;color:var(--texto-muted);margin-top:8px;line-height:1.6}
+.x-agenda{margin:14px 0}
+.x-agenda .bar{display:flex;height:12px;border-radius:8px;overflow:hidden;gap:3px;margin-bottom:6px}
+.x-agenda .bar span{background:var(--c);display:block}
+.x-agenda .bar-lbl{display:flex;gap:3px;font-size:10.5px;font-weight:800;color:var(--texto-sub);margin-bottom:16px}
+.x-agenda .bar-lbl span{text-align:left;overflow:hidden;white-space:nowrap}
+.x-agenda .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+@media (min-width:1280px){.x-agenda .cards{grid-template-columns:repeat(5,1fr)}.x-agenda .card{padding:16px 14px 14px}.x-agenda .card h4{font-size:14.5px}}
+.x-agenda .card{position:relative;background:#fff;border:1px solid var(--borde-light);border-top:4px solid var(--c);border-radius:16px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow-card);transition:transform .2s,box-shadow .2s}
+.x-agenda .card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(15,23,42,.10)}
+.x-agenda .card .top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.x-agenda .card .n{width:30px;height:30px;border-radius:50%;background:var(--c);color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center}
+.x-agenda .card .t{font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;color:var(--c);background:color-mix(in srgb,var(--c) 12%,#fff);padding:3px 10px;border-radius:20px}
+.x-agenda .card h4{font-family:'Syne',sans-serif;font-size:15.5px;font-weight:800;line-height:1.25;color:var(--texto-main);margin:4px 0 0}
+.x-agenda .card p{font-size:12.5px;line-height:1.55;color:var(--texto-muted);margin:0;flex:1}
+.x-agenda .card .m{font-size:10.5px;font-weight:800;color:var(--texto-sub);border-top:1px dashed var(--borde-light);padding-top:8px;display:flex;justify-content:space-between}
+.x-mini{font-size:11.5px;color:var(--texto-sub)}
+.x-pill{display:inline-block;font-size:10.5px;font-weight:800;padding:2px 9px;border-radius:10px;margin:0 4px 4px 0}
+@media (max-width:1024px){.x-flow{grid-template-columns:1fr 1fr}}
+
+.x-ctx{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.x-chip{font-size:11.5px;font-weight:700;line-height:1.45;padding:6px 12px;border-radius:10px;border:1px solid}
+.x-chip b{font-weight:800}
+.x-chip.comp{background:var(--sena-verde-bg);border-color:var(--sena-verde-border);color:var(--sena-verde-dark)}
+.x-chip.rap{background:color-mix(in srgb,var(--sena-naranja) 10%,#fff);border-color:color-mix(in srgb,var(--sena-naranja) 35%,#fff);color:#b34700}
+.x-aporte{flex-basis:100%;font-size:12.5px;color:var(--texto-muted);background:#fff;border:1px dashed var(--borde-light);border-radius:10px;padding:7px 12px;line-height:1.5}
+.x-aporte b{color:var(--texto-main)}
+.x-note{border-radius:14px;padding:16px 20px;margin:16px 0;border:1px solid;border-left-width:5px;font-size:13.5px;line-height:1.65;color:var(--texto-muted)}
+.x-note h5{font-family:'Outfit',sans-serif;font-size:11.5px;text-transform:uppercase;letter-spacing:.9px;font-weight:800;margin:0 0 6px}
+.x-note p{margin:0}
+.x-note strong{color:var(--texto-main)}
+.x-note.piensa{background:color-mix(in srgb,#7c3aed 7%,#fff);border-color:color-mix(in srgb,#7c3aed 28%,#fff);border-left-color:#7c3aed}.x-note.piensa h5{color:#7c3aed}
+.x-note.analogia{background:color-mix(in srgb,#f59e0b 9%,#fff);border-color:color-mix(in srgb,#f59e0b 32%,#fff);border-left-color:#f59e0b}.x-note.analogia h5{color:#b45309}
+.x-note.llevar{background:var(--sena-verde-bg);border-color:var(--sena-verde-border);border-left-color:var(--sena-verde)}.x-note.llevar h5{color:var(--sena-verde-dark)}
+.x-note details,.x-quiz details{margin-top:10px;background:#fff;border:1px solid var(--borde-light);border-radius:10px;padding:8px 14px}
+.x-note summary,.x-quiz summary{cursor:pointer;font-weight:700;font-size:12.5px;color:var(--sena-verde-dark)}
+.x-note details p,.x-quiz details p{margin:8px 0 0;font-size:13px;color:var(--texto-muted)}
+.x-chain{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap;margin:20px 0}
+.x-chain .st{flex:1 1 210px;background:#fff;border:2px solid var(--borde-light);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow-card)}
+.x-chain .st.comp{border-color:var(--sena-verde-border);background:linear-gradient(135deg,var(--sena-verde-bg),#fff)}
+.x-chain .st.rap{border-color:color-mix(in srgb,var(--sena-naranja) 35%,#fff);background:linear-gradient(135deg,color-mix(in srgb,var(--sena-naranja) 9%,#fff),#fff)}
+.x-chain .st.aa{border-color:color-mix(in srgb,#0284c7 30%,#fff);background:linear-gradient(135deg,color-mix(in srgb,#0284c7 8%,#fff),#fff)}
+.x-chain .lb{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--texto-sub);margin-bottom:6px}
+.x-chain .tt{font-family:'Syne',sans-serif;font-size:15.5px;font-weight:800;color:var(--texto-main);line-height:1.25;margin-bottom:6px}
+.x-chain .tx{font-size:12.5px;color:var(--texto-muted);line-height:1.5}
+.x-chain .ar{align-self:center;color:var(--sena-verde);font-size:22px;font-weight:800}
+.x-ev{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:18px 0}
+.x-ev .e{position:relative;background:#fff;border:1px solid var(--borde-light);border-top:4px solid var(--c);border-radius:14px;padding:14px 14px 12px;box-shadow:var(--shadow-card);display:flex;flex-direction:column;gap:6px}
+.x-ev .e.hoy{border:2px solid var(--c);box-shadow:0 8px 22px color-mix(in srgb,var(--c) 22%,transparent)}
+.x-ev .e .id{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--c)}
+.x-ev .e .nm{font-size:12.5px;font-weight:700;color:var(--texto-main);line-height:1.35;flex:1}
+.x-ev .e .mt{font-size:11px;color:var(--texto-sub);line-height:1.5;border-top:1px dashed var(--borde-light);padding-top:6px}
+.x-ev .e .tag{position:absolute;top:10px;right:10px;font-size:9.5px;font-weight:800;background:var(--c);color:#fff;padding:2px 8px;border-radius:10px}
+.x-quiz{display:grid;gap:10px;margin:16px 0}
+.x-quiz .q{background:#fff;border:1px solid var(--borde-light);border-radius:14px;padding:14px 18px;display:grid;grid-template-columns:36px 1fr;gap:12px;box-shadow:var(--shadow-card)}
+.x-quiz .q .n{width:30px;height:30px;border-radius:50%;background:var(--sena-verde);color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.x-quiz .q .t{font-size:13.5px;font-weight:600;color:var(--texto-main);line-height:1.5}
+@media (max-width:768px){.x-chain .ar{transform:rotate(90deg);width:100%;text-align:center}.x-chip{flex-basis:100%}}
+
+.x-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px;margin:16px 0}
+.x-form{background:#fff;border:1px solid var(--borde-light);border-top:5px solid var(--c);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow-card);display:flex;flex-direction:column;gap:10px;min-width:0}
+.x-form h4{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--c);margin:0}
+.x-form .cap{font-size:12.5px;color:var(--texto-muted);line-height:1.55;margin:0}
+.x-form .cap strong{color:var(--texto-main)}
+.x-form ul{margin:0;padding-left:18px;font-size:12.5px;color:var(--texto-muted);line-height:1.65}
+.x-form ul strong{color:var(--texto-main)}
+.x-form .x-code-wrap{margin:0}
+.x-form .x-code{font-size:11px;padding:10px 12px;white-space:pre-wrap;word-break:break-word}
+.x-mini-t{width:100%;border-collapse:collapse;font-size:11.5px}
+.x-mini-t th{background:color-mix(in srgb,var(--c) 14%,#fff);color:var(--texto-main);text-align:left;padding:6px 8px;font-weight:800;border-bottom:2px solid var(--c)}
+.x-mini-t td{padding:6px 8px;border-bottom:1px solid var(--borde-light);color:var(--texto-muted)}
+.x-quote{background:color-mix(in srgb,var(--c) 6%,#fff);border-left:4px solid var(--c);border-radius:10px;padding:12px 14px;font-style:italic;font-size:12.5px;color:var(--texto-muted);line-height:1.6}
+.x-tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;background:color-mix(in srgb,var(--c) 14%,#fff);color:var(--c);padding:2px 9px;border-radius:10px;align-self:flex-start}
+.x-ej{background:color-mix(in srgb,#0284c7 6%,#fff);border:1px dashed color-mix(in srgb,#0284c7 40%,#fff);border-radius:12px;padding:10px 14px;font-size:12px;color:var(--texto-muted);margin:10px 0}
+.x-ej b{color:#0369a1}
+
+.x-tree{background:#fff;border:1px solid var(--borde-light);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden}
+.x-tree-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;background:linear-gradient(135deg,var(--sena-verde-bg),#fff);border-bottom:1px solid var(--borde-light);font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;color:var(--texto-main)}
+.x-tree-head span{display:flex;align-items:center;gap:8px}
+.x-tree-body{padding:14px 16px 16px}
+.x-tr{display:flex;align-items:center;gap:10px;padding:6px 10px;border-radius:10px;transition:background .15s}
+.x-tr:hover{background:color-mix(in srgb,var(--c) 8%,#fff)}
+.x-tr .ic{width:30px;height:30px;border-radius:9px;background:color-mix(in srgb,var(--c) 14%,#fff);color:var(--c);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.x-tr .nm{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;color:var(--texto-main);word-break:break-all}
+.x-tr .ds{margin-left:auto;font-size:11px;font-weight:600;color:var(--c);background:color-mix(in srgb,var(--c) 10%,#fff);border:1px solid color-mix(in srgb,var(--c) 25%,#fff);padding:2px 10px;border-radius:20px;text-align:right}
+.x-tr.raiz{background:var(--sena-verde-bg);border:1px solid var(--sena-verde-border);margin-bottom:6px}
+.x-kids{margin-left:24px;padding-left:12px;border-left:2px solid var(--borde-light);display:flex;flex-direction:column;gap:2px}
+.x-kids .x-kids{margin-left:22px}
+.sr-only-copy{position:absolute;left:-9999px;top:0;white-space:pre}
+@media (max-width:640px){.x-tr{flex-wrap:wrap}.x-tr .ds{margin-left:40px;text-align:left}}
+
+.x-xl{background:#fff;border:1px solid #c6c6c6;border-radius:10px;overflow:hidden;box-shadow:var(--shadow-card);margin:16px 0}
+.x-xl-title{display:flex;align-items:center;gap:10px;background:#217346;color:#fff;padding:8px 14px;font-family:'Outfit',sans-serif;font-weight:700;font-size:12.5px}
+.x-xl-title .x-copy{margin-left:auto;background:#fff;color:#217346}
+.x-xl-title .x-copy:hover{background:#e9f3ee}
+.x-xl-fx{display:flex;align-items:center;gap:8px;background:#f3f3f3;border-bottom:1px solid #d4d4d4;padding:5px 10px;font-size:12px;color:#444}
+.x-xl-fx .nb{background:#fff;border:1px solid #c6c6c6;padding:1px 10px;font-weight:700;min-width:46px;text-align:center}
+.x-xl-fx i{color:#217346;font-weight:800;font-family:serif}
+.x-xl-fx .fv{background:#fff;border:1px solid #c6c6c6;padding:1px 10px;flex:1;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.x-xl-scroll{overflow:auto;max-width:100%}
+.x-xl table{border-collapse:collapse;font-family:'Plus Jakarta Sans',Arial,sans-serif;font-size:11.5px;min-width:1700px}
+.x-xl th.col{background:#e6e6e6;color:#444;font-weight:600;border:1px solid #c6c6c6;padding:3px 6px;text-align:center;font-size:11px}
+.x-xl th.corner,.x-xl td.rn{position:sticky;left:0;z-index:2}
+.x-xl td.rn{background:#e6e6e6;color:#444;border:1px solid #c6c6c6;text-align:center;width:34px;font-size:11px}
+.x-xl td.c{border:1px solid #d4d4d4;padding:5px 9px;white-space:nowrap;color:#222;background:#fff}
+.x-xl tr.hd td.c{background:#217346;color:#fff;font-weight:700;border-color:#1a5c38}
+.x-xl tr.band td.c{background:#eef6f1}
+.x-xl td.sel{outline:2px solid #217346;outline-offset:-2px}
+.x-xl .t1,.x-xl .t2,.x-xl .t3,.x-xl .ok,.x-xl .no{border-radius:10px;padding:1px 8px;font-weight:700;font-size:11px}
+.x-xl .t1{background:#dcfce7;color:#166534}.x-xl .t2{background:#dbeafe;color:#1d4ed8}.x-xl .t3{background:#ffedd5;color:#c2410c}
+.x-xl .ok{background:#dcfce7;color:#166534}.x-xl .no{background:#fee2e2;color:#b91c1c}
+.x-xl tr.descartada td.c{background:#fff5f5;color:#7f1d1d}
+.x-xl-tabs{display:flex;gap:2px;background:#f3f3f3;border-top:1px solid #c6c6c6;padding:0 10px;font-size:11.5px;align-items:flex-end}
+.x-xl-tabs span{padding:4px 16px;background:#fff;font-weight:700;color:#217346;border-bottom:3px solid #217346;border-left:1px solid #c6c6c6;border-right:1px solid #c6c6c6}
+.x-xl-tabs em{margin-left:auto;font-style:normal;color:#6b7280;padding:4px 0}
+
+.x-qgrid{display:grid;gap:14px;margin:16px 0;align-items:start}
+.x-qgrid.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.x-qgrid.c4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.x-qgrid .qc{background:#fff;border:1px solid var(--borde-light);border-top:4px solid var(--sena-verde);border-radius:16px;padding:16px 16px 14px;box-shadow:var(--shadow-card);display:flex;flex-direction:column;gap:10px;transition:transform .2s,box-shadow .2s}
+.x-qgrid .qc:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(15,23,42,.10)}
+.x-qgrid .qh{display:flex;align-items:center;gap:10px}
+.x-qgrid .qn{width:32px;height:32px;border-radius:50%;background:var(--sena-verde);color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center}
+.x-qgrid .ql{font-size:10.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--texto-sub)}
+.x-qgrid .qt{margin:0;font-size:13.5px;font-weight:600;line-height:1.55;color:var(--texto-main);min-height:62px}
+.x-qgrid details{margin:0}
+.x-qgrid summary{list-style:none;cursor:pointer;text-align:center;font-weight:800;font-size:12.5px;color:var(--sena-verde-dark);background:var(--sena-verde-bg);border:1px solid var(--sena-verde-border);border-radius:10px;padding:8px 12px;transition:background .15s}
+.x-qgrid summary::-webkit-details-marker{display:none}
+.x-qgrid summary:hover{background:color-mix(in srgb,var(--sena-verde) 18%,#fff)}
+.x-qgrid details[open] summary{background:var(--sena-verde);color:#fff}
+.x-qgrid .qa{margin-top:10px;font-size:12.5px;line-height:1.6;color:var(--texto-muted);background:color-mix(in srgb,var(--sena-verde) 6%,#fff);border-left:4px solid var(--sena-verde);border-radius:8px;padding:10px 12px}
+.x-qgrid .qa strong{color:var(--texto-main)}
+@media (max-width:1100px){.x-qgrid.c3,.x-qgrid.c4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:700px){.x-qgrid.c3,.x-qgrid.c4{grid-template-columns:1fr}}
+
+.x-doc{border:1px solid #dadce0;border-radius:12px;overflow:hidden;box-shadow:var(--shadow-card);margin:18px 0;background:#f8f9fa}
+.x-doc-top{display:flex;align-items:center;gap:12px;background:#fff;padding:10px 16px;border-bottom:1px solid #e3e5e8}
+.x-doc-ico{width:26px;height:34px;background:#4285f4;border-radius:3px;position:relative;flex-shrink:0}
+.x-doc-ico:before{content:"";position:absolute;right:0;top:0;border:7px solid transparent;border-top-color:#a8c7fa;border-right-color:#a8c7fa}
+.x-doc-ico:after{content:"";position:absolute;left:6px;right:6px;top:15px;height:2px;background:#fff;box-shadow:0 5px 0 #fff,0 10px 0 #fff}
+.x-doc-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;color:#1f1f1f;line-height:1.1}
+.x-doc-menu{display:flex;gap:14px;font-size:12px;color:#444;margin-top:3px;flex-wrap:wrap}
+.x-doc-top .x-copy{margin-left:auto;background:#1a73e8;color:#fff;border-radius:18px;padding:7px 16px;font-weight:700}
+.x-doc-top .x-copy:hover{background:#1765cc}
+.x-doc-tb{display:flex;align-items:center;gap:6px;background:#edf2fa;padding:5px 14px;font-size:12px;color:#444;border-bottom:1px solid #dadce0;flex-wrap:wrap}
+.x-doc-tb span{padding:2px 8px;border-radius:4px}
+.x-doc-tb .sel{background:#fff;border:1px solid #dadce0;border-radius:4px}
+.x-doc-tb .sep{width:1px;height:16px;background:#c7c7c7;padding:0;border-radius:0;margin:0 4px}
+.x-doc-canvas{background:#f1f3f4;padding:18px 12px 22px;overflow-x:auto}
+.x-doc-page{position:relative;margin-top:30px !important}
+.x-doc-page:first-child{margin-top:24px !important}
+.x-doc-page:before{content:attr(data-lbl);position:absolute;top:-22px;left:0;font-size:11px;font-weight:700;color:#5f6368;font-family:'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:.5px}
+.x-doc-page p{margin:0 0 10px}
+.x-doc-page{background:#fff;width:100%;max-width:720px;margin:0 auto;padding:46px 56px 52px;box-shadow:0 1px 3px rgba(60,64,67,.3),0 4px 8px 3px rgba(60,64,67,.15);font-family:Arial,Helvetica,sans-serif;color:#202124;font-size:13.5px;line-height:1.55;text-align:left}
+.x-doc-page .c{text-align:center}
+.x-doc-page .ent{font-size:12.5px;font-weight:700;letter-spacing:.4px}
+.x-doc-page .sub{font-size:12.5px;color:#3c4043}
+.x-doc-page .ev{font-size:20px;font-weight:700;margin:26px 0 2px;color:#1b5e20}
+.x-doc-page .evs{font-size:13.5px;color:#3c4043;margin-bottom:20px}
+.x-doc-page .emp{font-size:17px;font-weight:700;margin:6px 0 22px}
+.x-doc-page h6{font-size:14px;font-weight:700;color:#1b5e20;margin:20px 0 6px;padding-bottom:3px;border-bottom:1px solid #cfd8dc;font-family:Arial,Helvetica,sans-serif;text-transform:none;letter-spacing:0}
+.x-doc-page table{border-collapse:collapse;width:100%;margin:6px 0 14px;font-size:12.5px}
+.x-doc-page th{background:#e8f5e9;border:1px solid #b0bec5;padding:6px 8px;text-align:left}
+.x-doc-page td{border:1px solid #b0bec5;padding:6px 8px}
+.x-doc-page .ph{background:#fff4c2;border-radius:2px;padding:0 3px}
+.x-doc-page a{color:#1155cc;text-decoration:underline}
+.x-doc-page ul{margin:4px 0 0 22px;padding:0}
+.x-doc-page .meta{margin-top:6px}
+.x-doc-page .brk{border-top:1px dashed #c4c7c5;margin:22px -20px 0;text-align:center;font-size:10px;color:#9aa0a6;line-height:0}
+.x-doc-hint{background:#fff;padding:9px 16px;font-size:12px;color:#5f6368;border-top:1px solid #e3e5e8}
+.x-doc-hint .ph{background:#fff4c2;padding:0 4px;border-radius:2px}
+@media(max-width:700px){.x-doc-page{padding:28px 20px}}
+
+.x-xl.compact table{min-width:0;width:100%}
+.x-xl.compact td.c,.x-xl.compact th.col{white-space:normal}
+.x-xl td.bad{background:#fee2e2 !important;color:#991b1b}
+.x-xl td.warn{background:#fef3c7 !important;color:#92400e}
+.x-xl td.good{background:#dcfce7 !important;color:#166534;font-weight:600}
+.x-xl td.blank{background:#fff1f2 !important;color:#b91c1c;font-style:italic}
+.x-xl tr.dup td.c{background:#ede9fe !important;color:#5b21b6}
+.x-xl tr.out td.c{text-decoration:line-through;color:#9ca3af;background:#f9fafb !important}
+.x-flecha{text-align:center;font-weight:800;color:var(--sena-verde-dark);margin:2px 0 -6px;font-size:13px;letter-spacing:.3px}
+.x-flecha b{display:inline-block;background:var(--sena-verde-bg);border:1px solid var(--sena-verde-border);border-radius:14px;padding:3px 14px}
+.x-xl-note{padding:8px 14px;font-size:12px;color:#444;background:#fafafa;border-top:1px solid #e0e0e0;line-height:1.55}
+.x-xl-note b{color:#217346}
+.x-leyenda{display:flex;flex-wrap:wrap;gap:10px;font-size:11.5px;margin:6px 0 2px;color:var(--texto-muted)}
+.x-leyenda span{display:inline-flex;align-items:center;gap:6px}
+.x-leyenda i{width:14px;height:14px;border-radius:3px;display:inline-block;border:1px solid rgba(0,0,0,.12)}
+
+.x-par-t{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;margin:22px 0 4px;color:var(--texto-main)}
+.x-par-s{font-size:12.5px;color:var(--texto-muted);margin:0 0 10px}
+.x-pares{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:12px;margin:8px 0 14px}
+.x-par{background:#fff;border:1px solid var(--borde-light);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow-card)}
+.x-par .fn{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.x-par .es,.x-par .en{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;border-radius:8px;padding:4px 9px;white-space:nowrap}
+.x-par .es{background:#dcfce7;color:#166534;border:1px solid #bbf7d0}
+.x-par .en{background:#dbeafe;color:#1d4ed8;border:1px solid #bfdbfe}
+.x-par .ar{color:var(--texto-sub);font-weight:800}
+.x-par .ds{font-size:12px;color:var(--texto-muted);line-height:1.5;margin:8px 0 0}
+.x-par-lg{display:flex;gap:14px;font-size:11px;font-weight:800;margin:4px 0 6px}
+.x-par-lg span:first-child{color:#166534}.x-par-lg span:last-child{color:#1d4ed8}
+
+.x-prob{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:14px;margin:16px 0}
+.x-prob .pc{background:#fff;border:1px solid var(--borde-light);border-top:5px solid var(--c);border-radius:16px;padding:14px 16px;box-shadow:var(--shadow-card);display:flex;flex-direction:column;gap:9px}
+.x-prob .ph{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.x-prob h4{font-family:'Syne',sans-serif;font-size:14.5px;font-weight:800;color:var(--c);margin:0;line-height:1.25}
+.x-prob .dim{font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--c);background:color-mix(in srgb,var(--c) 12%,#fff);border:1px solid color-mix(in srgb,var(--c) 30%,#fff);border-radius:12px;padding:2px 9px;white-space:nowrap}
+.x-prob .lb{font-size:10.5px;font-weight:800;color:var(--texto-sub);text-transform:uppercase;letter-spacing:.8px}
+.x-prob .ch{display:flex;flex-wrap:wrap;gap:6px}
+.x-prob .m,.x-prob .f{font-size:12px;line-height:1.35;border-radius:8px;padding:4px 9px}
+.x-prob .m{background:#f1f5f9;color:#334155;border:1px solid #e2e8f0;font-weight:600}
+.x-prob .f{background:#dcfce7;color:#166534;border:1px solid #bbf7d0;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11.5px}
+.x-prob-lg{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;margin:4px 0 0;color:var(--texto-muted)}
+.x-prob-lg .m,.x-prob-lg .f{font-size:11px;border-radius:8px;padding:2px 8px}
+.x-prob-lg .m{background:#f1f5f9;border:1px solid #e2e8f0}.x-prob-lg .f{background:#dcfce7;border:1px solid #bbf7d0;font-family:'JetBrains Mono',monospace}
+
+.x-fichas{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin:16px 0}
+.x-ficha{background:#fff;border:1px solid var(--borde-light);border-left:5px solid var(--c);border-radius:14px;box-shadow:var(--shadow-card);padding:14px 16px;display:flex;flex-direction:column;gap:9px}
+.x-ficha .fh{display:flex;gap:10px;align-items:flex-start}
+.x-ficha .n{flex:0 0 26px;height:26px;border-radius:50%;background:var(--c);color:#fff;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center}
+.x-ficha .ft{font-family:'Syne',sans-serif;font-size:13.5px;font-weight:800;color:var(--texto-main);line-height:1.4;overflow-wrap:anywhere}
+.x-ficha .ft em{font-style:italic;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700}
+.x-ficha .ft code{font-size:12px}
+.x-ficha .fl{border-top:1px dashed var(--borde-light);padding-top:8px}
+.x-ficha .fl b{display:block;font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--c);margin-bottom:3px}
+.x-ficha .fl p{margin:0;font-size:12.5px;line-height:1.55;color:var(--texto-muted)}
+.x-ficha .fl p strong{color:var(--texto-main)}
+.x-ficha .fl.solo{border-top:none;padding-top:0}
+.x-ficha .fl.solo p{font-size:13px}
+.x-ficha .fl.ej{background:color-mix(in srgb,var(--c) 8%,#fff);border:1px solid color-mix(in srgb,var(--c) 22%,#fff);border-radius:10px;padding:8px 11px}
+.x-fichas.anchas{grid-template-columns:repeat(auto-fit,minmax(420px,1fr))}
+@media(max-width:560px){.x-fichas,.x-fichas.anchas{grid-template-columns:1fr}}
+
+.x-dash{background:#0f172a;border-radius:16px;padding:16px;margin:16px 0;box-shadow:var(--shadow-card);color:#e2e8f0;font-family:'Plus Jakarta Sans',sans-serif}
+.x-dash .dt{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.x-dash .dt b{font-family:'Syne',sans-serif;font-size:15px;color:#fff}
+.x-dash .dt span{font-size:11px;color:#94a3b8}
+.x-dash .sl{display:flex;gap:6px;flex-wrap:wrap}
+.x-dash .sl i{font-style:normal;font-size:11px;font-weight:700;border-radius:8px;padding:3px 10px;background:#1e293b;border:1px solid #334155;color:#cbd5e1}
+.x-dash .sl i.on{background:#39a900;border-color:#39a900;color:#fff}
+.x-dash .kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+.x-dash .k{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:10px 14px}
+.x-dash .k small{display:block;font-size:10px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:#94a3b8}
+.x-dash .k strong{font-family:'Syne',sans-serif;font-size:24px;color:#fff;line-height:1.2}
+.x-dash .k em{display:block;font-style:normal;font-size:11px;color:#86efac}
+.x-dash .gr{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px}
+.x-dash .g{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:12px 14px}
+.x-dash .g h5{margin:0 0 10px;font-size:12.5px;color:#f1f5f9;font-weight:800}
+.x-dash .br{display:grid;grid-template-columns:78px 1fr 40px;gap:8px;align-items:center;margin:6px 0;font-size:11.5px}
+.x-dash .br .t{height:14px;background:#0f172a;border-radius:7px;overflow:hidden}
+.x-dash .br .t i{display:block;height:100%;border-radius:7px;background:var(--c,#39a900)}
+.x-dash .br b{text-align:right;color:#fff}
+.x-dash .nt{margin-top:10px;font-size:11px;color:#fde68a}
+
+.x-chat{background:#f1f5f9;border:1px solid var(--borde-light);border-radius:16px;padding:14px 16px;margin:16px 0;display:flex;flex-direction:column;gap:10px}
+.x-chat .m{max-width:88%;padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.55;box-shadow:0 1px 2px rgba(15,23,42,.08)}
+.x-chat .m b.q{display:block;font-size:10.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:3px}
+.x-chat .a{align-self:flex-start;background:#fff;border-top-left-radius:4px}
+.x-chat .a b.q{color:#ea580c}
+.x-chat .b{align-self:flex-end;background:#dcfce7;border-top-right-radius:4px}
+.x-chat .b b.q{color:#166534}
+.x-linea{position:relative;margin:18px 0 8px;padding-left:34px}
+.x-linea:before{content:"";position:absolute;left:13px;top:6px;bottom:6px;width:3px;background:linear-gradient(var(--sena-verde),#0284c7);border-radius:2px}
+.x-linea .it{position:relative;margin-bottom:16px}
+.x-linea .it .n{position:absolute;left:-34px;top:0;width:28px;height:28px;border-radius:50%;background:var(--c,#39a900);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px #fff}
+.x-linea .it h4{margin:0 0 3px;font-family:'Syne',sans-serif;font-size:15px;color:var(--c,#39a900)}
+.x-linea .it p{margin:0 0 6px;font-size:13.5px;line-height:1.6;color:var(--texto-muted)}
+.x-linea .it .ej{display:inline-block;background:color-mix(in srgb,var(--c,#39a900) 9%,#fff);border:1px solid color-mix(in srgb,var(--c,#39a900) 25%,#fff);border-radius:10px;padding:6px 11px;font-size:12.5px;color:var(--texto-main)}
+.x-form-mock{background:#fff;border:1px solid #cbd5e1;border-radius:14px;box-shadow:var(--shadow-card);overflow:hidden;margin:16px 0}
+.x-form-mock .fh{background:#217346;color:#fff;padding:8px 14px;font-family:'Syne',sans-serif;font-weight:800;font-size:13px}
+.x-form-mock .fr{display:grid;grid-template-columns:170px 1fr auto;gap:10px;align-items:center;padding:9px 14px;border-bottom:1px solid #eef2f7;font-size:13px}
+.x-form-mock .fr:last-child{border-bottom:none}
+.x-form-mock .fr .l{font-weight:700;color:#334155}
+.x-form-mock .fr .v{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:4px 10px;color:#0f172a}
+.x-form-mock .fr .t{font-size:11px;font-weight:800;border-radius:12px;padding:3px 10px;white-space:nowrap;color:var(--c);background:color-mix(in srgb,var(--c) 12%,#fff);border:1px solid color-mix(in srgb,var(--c) 30%,#fff)}
+.x-bars{background:#fff;border:1px solid var(--borde-light);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow-card);margin:14px 0}
+.x-bars h5{margin:0 0 22px;font-size:13px;font-weight:800;color:var(--texto-main)}
+.x-bars .pl{position:relative;display:flex;align-items:flex-end;gap:5px;height:170px;border-bottom:2px solid #cbd5e1;padding-top:6px}
+.x-bars .pl .b{flex:1;background:#94a3b8;border-radius:5px 5px 0 0;position:relative;min-width:8px}
+.x-bars .pl .b.out{background:#dc2626}
+.x-bars .pl .b span{position:absolute;top:-17px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:800;color:#334155;white-space:nowrap}
+.x-bars .ln{position:absolute;left:0;right:0;border-top:2px dashed var(--c);z-index:2}
+.x-bars .ln em{position:absolute;right:0;top:-19px;font-style:normal;font-size:10.5px;font-weight:800;color:var(--c);background:#fff;padding:0 6px;border-radius:6px}
+.x-pv{display:grid;grid-template-columns:200px 1fr;gap:0;background:#fff;border:1px solid #c6c6c6;border-radius:12px;overflow:hidden;box-shadow:var(--shadow-card);margin:16px 0}
+.x-pv .fl{background:#f3f3f3;border-right:1px solid #d4d4d4;padding:10px 12px;font-size:12.5px}
+.x-pv .fl h6{margin:0 0 8px;font-size:12px;color:#217346;font-weight:800}
+.x-pv .fl label{display:flex;align-items:center;gap:7px;margin:5px 0;color:#334155;font-weight:600}
+.x-pv .fl label i{width:13px;height:13px;border:1.5px solid #94a3b8;border-radius:3px;display:inline-block;background:#fff}
+.x-pv .fl label i.on{background:#217346;border-color:#217346}
+.x-pv .ar{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px}
+.x-pv .ar .z{border:1px solid #d4d4d4;border-radius:8px;background:#fafafa;min-height:70px;padding:6px 8px}
+.x-pv .ar .z b{display:block;font-size:10.5px;font-weight:800;color:#64748b;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
+.x-pv .ar .z span{display:inline-block;background:#fff;border:1px solid #217346;color:#166534;border-radius:6px;padding:2px 9px;font-size:12px;font-weight:700;margin:2px 3px 2px 0}
+.x-gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px;margin:16px 0}
+.x-gal .g{background:#fff;border:1px solid var(--borde-light);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow-card)}
+.x-gal .g h5{margin:0 0 2px;font-family:'Syne',sans-serif;font-size:14px;color:var(--c)}
+.x-gal .g small{display:block;font-size:11.5px;color:var(--texto-muted);margin-bottom:8px;line-height:1.45}
+.x-gal .g .p{display:flex;align-items:flex-end;gap:6px;height:80px;border-bottom:2px solid #cbd5e1;padding:0 4px}
+.x-gal .g .p i{flex:1;background:var(--c);border-radius:4px 4px 0 0;display:block}
+.x-gal .g .pie{width:84px;height:84px;border-radius:50%;margin:0 auto;border:3px solid #fff;box-shadow:0 0 0 1px #cbd5e1}
+.x-gal .g svg{width:100%;height:84px;display:block}
+.x-gal .g .q{margin-top:8px;font-size:12px;color:var(--texto-main);background:color-mix(in srgb,var(--c) 8%,#fff);border-radius:8px;padding:5px 9px}
+.x-esc{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px;margin:16px 0}
+.x-esc .e{background:#fff;border:1px solid var(--borde-light);border-radius:14px;padding:13px 15px;box-shadow:var(--shadow-card)}
+.x-esc .e h5{margin:0 0 5px;font-size:12px;font-weight:800;letter-spacing:.4px;color:var(--c);text-transform:uppercase}
+.x-esc .e p{margin:0 0 7px;font-size:13px;line-height:1.55;color:var(--texto-muted)}
+.x-esc .e .r{font-size:12.5px;background:color-mix(in srgb,var(--c) 9%,#fff);border-radius:9px;padding:6px 10px;color:var(--texto-main)}
+.x-cafe{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin:14px 0}
+.x-cafe .c{background:#fff;border:1px solid var(--borde-light);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow-card)}
+.x-cafe .c h5{margin:0 0 8px;font-size:13px;font-weight:800}
+.x-cafe .f{display:grid;grid-template-columns:86px 1fr 92px;gap:8px;align-items:center;margin:5px 0;font-size:12px}
+.x-cafe .f .t{height:13px;background:#e2e8f0;border-radius:7px;overflow:hidden}
+.x-cafe .f .t i{display:block;height:100%;background:var(--c,#94a3b8);border-radius:7px}
+.x-cafe .f b{text-align:right}
+
+.x-tres{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:16px 0}
+.x-tres .e{background:#fff;border:2px solid var(--c);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow-card)}
+.x-tres .e .id{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--c)}
+.x-tres .e .nm{font-weight:700;font-size:13.5px;margin:2px 0 8px}
+.x-tres .e p{font-size:12.5px;color:var(--texto-muted);line-height:1.55;margin:0 0 6px}
+.x-tres .e .est{display:inline-block;font-size:10.5px;font-weight:800;border-radius:10px;padding:3px 9px;background:color-mix(in srgb,var(--c) 14%,#fff);color:var(--c)}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-brand"><div class="sidebar-logo"><svg width="24" height="24" viewBox="0 0 64 62" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+          <g transform="translate(-377 -19)">
+            <path d="M409.164 19C412.922 19 415.992 22.09 415.992 25.8778 415.992 29.6656 412.932 32.7556 409.164 32.7556 405.397 32.7556 402.336 29.6656 402.336 25.8778 402.336 22.09 405.407 19 409.164 19"/>
+            <path d="M384.305 41.1884 384.305 41.2183C384.285 41.3379 384.275 41.4177 384.275 41.4675 384.275 41.8264 384.474 42.0855 384.873 42.265 385.282 42.4344 385.9 42.5241 386.747 42.5241 387.395 42.5241 387.893 42.4543 388.262 42.3148 388.631 42.1752 388.81 41.9759 388.81 41.7267 388.81 41.3479 388.082 41.0489 386.647 40.8096 386.478 40.7797 386.348 40.7598 386.268 40.7498 386.179 40.7299 386.039 40.71 385.86 40.6801 383.567 40.3013 382.092 39.8926 381.434 39.454 381.115 39.2347 380.876 38.9855 380.706 38.6965 380.547 38.4074 380.467 38.0785 380.467 37.7096 380.467 36.8125 380.995 36.1248 382.052 35.6563 383.109 35.1878 384.654 34.9486 386.677 34.9486 388.7 34.9486 390.166 35.1678 391.133 35.6064 392.1 36.045 392.578 36.7228 392.578 37.6399L392.578 37.7495 388.78 37.7495 388.78 37.7096C388.78 37.3907 388.591 37.1614 388.202 36.992 387.813 36.8325 387.255 36.7428 386.508 36.7428 385.929 36.7428 385.481 36.8026 385.182 36.9122 384.863 37.0318 384.713 37.1913 384.713 37.4006 384.713 37.7794 385.541 38.1084 387.195 38.3675 387.514 38.4174 387.764 38.4572 387.943 38.4871 389.119 38.6865 389.966 38.8559 390.465 38.9955 390.963 39.135 391.392 39.3045 391.761 39.4939 392.159 39.7132 392.478 39.9923 392.698 40.3312 392.917 40.6701 393.027 41.0389 393.027 41.4476 393.027 42.3746 392.448 43.0823 391.302 43.5907 390.156 44.0891 388.501 44.3383 386.348 44.3383 384.195 44.3383 382.67 44.099 381.723 43.6206 380.766 43.1421 380.298 42.3746 380.298 41.308L380.298 41.1685 384.305 41.1685ZM394.711 44.1987 394.711 35.0881 405.546 35.0881 405.546 37.0518 398.778 37.0518 398.778 38.5071 405.028 38.5071 405.028 40.4508 398.778 40.4508 398.778 42.2151 405.795 42.2151 405.795 44.2087 394.711 44.2087ZM407.5 44.1987 407.5 35.0881 412.643 35.0881 418.155 41.2084 418.155 35.0881 422.063 35.0881 422.063 44.1987 416.72 44.1987 411.387 38.0585 411.387 44.1987 407.49 44.1987ZM432.569 40.5604 430.625 37.2511 428.572 40.5604 432.579 40.5604ZM426.369 44.1987 422.292 44.1987 428.592 35.0881 433.107 35.0881 439.118 44.1987 434.592 44.1987 433.675 42.554 427.366 42.554 426.389 44.1987Z"/>
+            <path d="M389.309 76.3351 385.67 72.9161 396.735 53.6881C397.333 52.6415 396.585 51.3257 395.379 51.3257L377.267 51.3257 377.267 46.5113 406.413 46.5113 389.309 76.3351Z"/>
+            <path d="M428.701 76.3351 432.34 72.9161 421.275 53.6881C420.677 52.6415 421.425 51.3257 422.631 51.3257L440.743 51.3257 440.743 46.5113 411.597 46.5113 428.701 76.3351Z"/>
+            <path d="M408.965 51.5949C408.965 51.5949 409.005 51.5251 409.005 51.5251L425.432 78.7174 421.066 80.99 410.48 63.2373C409.852 62.1907 408.347 62.1907 407.729 63.2373 404.2 69.1981 397.213 80.99 397.213 80.99L392.947 78.8768C392.947 78.8768 408.088 53.09 408.965 51.5949"/>
+          </g>
+        </svg></div>
+      <div><div class="sidebar-title">GDAI · F23 y F24</div><div class="sidebar-sub">Sesión 4 · Dudas</div></div></div>
+    <button class="sidebar-toggle-btn" onclick="toggleSidebar()" title="Colapsar Menú Lateral">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="9" x2="9" y1="3" y2="21"/><path d="m14 9-3 3 3 3"/></svg>
+    </button>
+  </div>
+  <div class="sidebar-scroll"><div class="nav-group"><div class="nav-group-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Bloque 1: Encuadre</span></div><a href="#slide-1" class="nav-link active" data-slide="1"><span class="nav-link-num">01</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span><span class="nav-link-text">Portada y Sesión de Dudas</span></a><a href="#slide-2" class="nav-link" data-slide="2"><span class="nav-link-num">02</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span><span class="nav-link-text">Objetivos de Hoy</span></a><a href="#slide-3" class="nav-link" data-slide="3"><span class="nav-link-num">03</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg></span><span class="nav-link-text">Las Tres Evidencias</span></a><a href="#slide-4" class="nav-link" data-slide="4"><span class="nav-link-num">04</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span><span class="nav-link-text">Qué Pide Cada Una</span></a><a href="#slide-5" class="nav-link" data-slide="5"><span class="nav-link-num">05</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><span class="nav-link-text">Agenda de la Sesión</span></a></div><div class="nav-group"><div class="nav-group-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg><span>Bloque 2: EV01 Recolección</span></div><a href="#slide-6" class="nav-link" data-slide="6"><span class="nav-link-num">06</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg></span><span class="nav-link-text">EV01 · Qué pide</span></a><a href="#slide-7" class="nav-link" data-slide="7"><span class="nav-link-num">07</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span><span class="nav-link-text">EV01 · Empresa y documentos</span></a><a href="#slide-8" class="nav-link" data-slide="8"><span class="nav-link-num">08</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg></span><span class="nav-link-text">EV01 · Qué entregas</span></a><a href="#slide-9" class="nav-link" data-slide="9"><span class="nav-link-num">09</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><span class="nav-link-text">EV01 · Cómo se evalúa</span></a></div><div class="nav-group"><div class="nav-group-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg><span>Bloque 3: EV02 Sistematización</span></div><a href="#slide-10" class="nav-link" data-slide="10"><span class="nav-link-num">10</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg></span><span class="nav-link-text">EV02 · Qué pide</span></a><a href="#slide-11" class="nav-link" data-slide="11"><span class="nav-link-num">11</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg></span><span class="nav-link-text">EV02 · Qué entregas</span></a><a href="#slide-12" class="nav-link" data-slide="12"><span class="nav-link-num">12</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><span class="nav-link-text">EV02 · Cómo se evalúa</span></a></div><div class="nav-group"><div class="nav-group-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Bloque 4: EV03 Análisis</span></div><a href="#slide-13" class="nav-link" data-slide="13"><span class="nav-link-num">13</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg></span><span class="nav-link-text">EV03 · Qué pide</span></a><a href="#slide-14" class="nav-link" data-slide="14"><span class="nav-link-num">14</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg></span><span class="nav-link-text">EV03 · Qué entregas</span></a><a href="#slide-15" class="nav-link" data-slide="15"><span class="nav-link-num">15</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><span class="nav-link-text">EV03 · Cómo se evalúa</span></a><a href="#slide-16" class="nav-link" data-slide="16"><span class="nav-link-num">16</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg></span><span class="nav-link-text">EV03 · Última revisión</span></a></div><div class="nav-group"><div class="nav-group-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg><span>Bloque 5: Conexión y Dudas</span></div><a href="#slide-17" class="nav-link" data-slide="17"><span class="nav-link-num">17</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span><span class="nav-link-text">Cómo se Conectan</span></a><a href="#slide-18" class="nav-link" data-slide="18"><span class="nav-link-num">18</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span><span class="nav-link-text">Preguntas Frecuentes</span></a><a href="#slide-19" class="nav-link" data-slide="19"><span class="nav-link-num">19</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span><span class="nav-link-text">Cómo Preguntar</span></a><a href="#slide-20" class="nav-link" data-slide="20"><span class="nav-link-num">20</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg></span><span class="nav-link-text">Cierre</span></a></div></div>
+  <div class="sidebar-footer"><div class="sidebar-corte-badge"><span>EV01–EV03</span><span>Sesión de dudas</span><span>Comp. 220501114 · RAP 220501114-01</span></div><a href="../docs/Guia_aprendizaje_5.pdf" target=_blank class="sidebar-link-btn" style=""><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg> Guía 5 (PDF) ↗</a><a href="../explorar.html"  class="sidebar-link-btn" style="background:#f1f5f9;border-color:#e2e8f0;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Volver al Hub</a></div>
+</aside>
+<button class="floating-sidebar-toggle" id="floatingToggle" onclick="toggleSidebar()">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="9" x2="9" y1="3" y2="21"/><path d="m11 9 3 3-3 3"/></svg>
+  <span>Menú (20 Slides)</span>
+</button>
+<div class="main-content" id="mainContent">
+
+  <section class="slide" id="slide-1" data-slide="1" data-title="01. Portada &amp; Sesión de Dudas">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 01 / 20</div>
+    <div class="slide-inner"><div class="hero-wrapper"><div>
+      <div class="slide-header-badge"><span class="dot"></span> SESIÓN 4 · SESIÓN DE DUDAS</div>
+      <h1 class="hero-title">Sesión de <span class="grad-verde">Dudas</span>: <span class="grad-naranja">EV01, EV02 y EV03</span></h1>
+      <p class="hero-subtitle">Repasamos <strong>qué pide cada evidencia</strong>, qué se entrega, cómo se evalúa y cómo se conectan entre sí. Con eso resolvemos tus dudas y llegas a la entrega de la <strong>GA5-220501114-AA1-EV03</strong>, que vence mañana, con todo claro.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a href="#slide-5" class="btn-action-pro verde"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" ><polygon points="5 3 19 12 5 21 5 3"/></svg> Ver agenda de la sesión</a>
+        <a href="../Sesión 3/PRESENTACION_SESION03_ANALISIS_DATOS.html" target="_blank" class="btn-action-pro tech"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg> Repasar la Sesión 3 ↗</a>
+      </div>
+    </div>
+    <div class="hero-card-widget">
+      <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--texto-main);margin-bottom:18px;display:flex;align-items:center;justify-content:space-between">
+        <span>DATOS DE LA SESIÓN 4</span>
+        <span style="font-size:10.5px;color:var(--sena-verde-dark);background:var(--sena-verde-bg);padding:3px 10px;border-radius:12px;border:1px solid var(--sena-verde-border);font-weight:800">SESIÓN DE DUDAS</span></div>
+      <div class="hero-meta-grid">
+        <div class="meta-box"><div class="meta-box-title">Evidencias</div><div class="meta-box-val">EV01–EV03</div><div class="meta-box-sub">Asesoría y retroalimentación</div></div>
+        <div class="meta-box"><div class="meta-box-title">Duración</div><div class="meta-box-val">60 min</div><div class="meta-box-sub">F23 7:30 · F24 8:30 p. m.</div></div>
+        <div class="meta-box"><div class="meta-box-title">Sesión</div><div class="meta-box-val">17 / Nov / 2026</div><div class="meta-box-sub">Martes · Teams</div></div>
+        <div class="meta-box"><div class="meta-box-title">Entrega EV03</div><div class="meta-box-val" style="color:var(--sena-naranja-dark)">18 / Nov / 2026</div><div class="meta-box-sub">Miércoles 11:59 p. m.</div></div>
+      </div>
+      <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--borde-light);font-size:12.5px;color:var(--texto-muted);display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:8px"><div class="card-icon-badge verde" style="width:26px;height:26px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><span><strong>Instructor:</strong> Julián Andrés Trujillo</span></div>
+        <span style="font-size:11px;color:var(--texto-sub)">Fichas 3466323 · 3466324</span></div>
+    </div></div></div>
+  </section>
+
+  <section class="slide" id="slide-2" data-slide="2" data-title="02. Objetivos de Hoy">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 02 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge naranja"><span class="dot"></span> PUNTO DE PARTIDA</div>
+      <h2 class="sec-title">¿Qué vas a lograr hoy?</h2>
+      <p class="sec-desc">Hoy no hay tema nuevo: ordenamos lo trabajado en las sesiones 1 a 3 y resolvemos tus dudas antes de la entrega de la EV03.</p>
+      
+      <div class="grid-3"><div class="card-premium top-verde"><div>
+  <div class="card-header-flex"><div class="card-icon-badge verde"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><span class="card-pill-tag verde">Objetivos</span></div>
+  <h3 class="card-title">Al terminar la sesión podrás…</h3><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Explicar con tus palabras <strong>qué pide cada evidencia</strong> (EV01, EV02 y EV03)</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Saber <strong>qué archivos entregas, dónde y cuándo</strong></span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Revisar tu trabajo con el <strong>instrumento de evaluación</strong> de cada una</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Saber <strong>cómo se conectan</strong>: lo que haces en una alimenta a la siguiente</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Llegar a la entrega de la <strong>GA5-220501114-AA1-EV03</strong> con tus dudas resueltas</span></li></ul>
+</div></div><div class="card-premium top-naranja"><div>
+  <div class="card-header-flex"><div class="card-icon-badge naranja"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><span class="card-pill-tag naranja">Metodología</span></div>
+  <h3 class="card-title">Cómo vamos a trabajar</h3><p class="card-text">Esta sesión es distinta: no hay tema nuevo.</p><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Repasamos <strong>una evidencia a la vez</strong>: qué pide, qué entregas y cómo se evalúa</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Cada bloque cierra con las <strong>dudas más comunes</strong></span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Al final, <strong>tus preguntas</strong> en vivo: muestra tu pantalla si quieres</span></li></ul>
+</div></div><div class="card-premium top-tech"><div>
+  <div class="card-header-flex"><div class="card-icon-badge tech"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></div><span class="card-pill-tag tech">Por qué importa</span></div>
+  <h3 class="card-title">Qué tiene que ver con el RAP 1</h3><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>El RAP 1 se logra con las <strong>cinco evidencias juntas</strong></span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Una evidencia mal entendida arrastra a las siguientes</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>La GA5-220501114-AA1-EV03 vence <strong>mañana</strong>: es el momento de revisar y corregir</span></li></ul>
+</div></div></div><div class="x-note piensa"><h5>🤔 Antes de seguir, piensa</h5><p>Sin mirar la guía: ¿puedes decir en una frase qué entregaste en la EV01, qué en la EV02 y qué vas a entregar en la EV03?</p><details><summary>Ver pista</summary><p>EV01: la carpeta con la información recolectada. EV02: esa información depurada y documentada. EV03: el análisis (plan, tabla dinámica, gráfico dinámico y dashboard). Si dudas en alguna, esta sesión es para ti.</p></details></div>
+      
+    </div>
+  </section>
+
+  <section class="slide" id="slide-3" data-slide="3" data-title="03. Las Tres Evidencias">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 03 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge tech"><span class="dot"></span> MAPA DEL CAMINO</div>
+      <h2 class="sec-title">Las tres evidencias de un vistazo</h2>
+      <p class="sec-desc">Una historia con tres entregas encadenadas: el caso de la empresa que elegiste en la EV01.</p>
+      
+      <div class="x-tres"><div class="e" style="--c:#39a900"><div class="id">EV01</div><div class="nm">Recolección de información de modelos de gestión de la organización</div><p><strong>¿Qué datos recolecto y de dónde?</strong></p><p>Cerró el miércoles, 4 de noviembre de 2026</p><span class="est">Cerrada</span></div><div class="e" style="--c:#0284c7"><div class="id">EV02</div><div class="nm">Sistematización de datos recopilados</div><p><strong>¿Cómo dejo esos datos limpios y ordenados?</strong></p><p>Cerró el miércoles, 11 de noviembre de 2026</p><span class="est">Cerrada</span></div><div class="e" style="--c:#ea580c"><div class="id">EV03</div><div class="nm">Gestión para el análisis de datos depurados</div><p><strong>¿Qué me dicen esos datos?</strong></p><p>Vence el miércoles, 18 de noviembre de 2026, 11:59 p. m.</p><span class="est">Vence mañana</span></div></div><div class="x-note analogia"><h5>💡 Para entenderlo con algo cotidiano</h5><p>Las tres evidencias son <strong>una sola receta en tres pasos</strong>: en la EV01 <strong>compraste los ingredientes</strong>, en la EV02 los <strong>lavaste y cortaste</strong> y en la EV03 los <strong>cocinas y sirves</strong>. Si un ingrediente llega malo, el plato final se resiente: por eso conviene entender cada paso.</p></div><div class="callout-box"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg></div>
+<div class="callout-content"><h4>Lo que viene después</h4><p>La <strong>EV04</strong> (base de datos final, Sesión 5) y la <strong>EV05</strong> (cuestionario, Sesión 6) se apoyan en estas tres. Hoy nos concentramos en <strong>EV01, EV02 y EV03</strong>.</p></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Cada evidencia responde <strong>una pregunta distinta</strong>: qué recolecto, cómo lo dejo limpio y qué me dicen los datos.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-4" data-slide="4" data-title="04. Qué Pide Cada Una">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 04 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge naranja"><span class="dot"></span> COMPARACIÓN</div>
+      <h2 class="sec-title">Qué pide cada evidencia, lado a lado</h2>
+      <p class="sec-desc">Antes de entrar en detalle, esta tabla resume lo esencial. La usaremos como mapa durante toda la sesión.</p>
+      
+      <div class="x-fichas"><div class="x-ficha" style="--c:#39a900"><div class="fh"><div class="ft">EV01 · Recolección</div></div><div class="fl"><b>Qué pide en una frase</b><p>Elegir una empresa, comprobar sus sistemas de gestión y recolectar su información de forma legal.</p></div><div class="fl"><b>Qué entregas</b><p>Carpeta de Drive organizada, matriz de recolección y LEEME.</p></div><div class="fl"><b>Dónde y con qué nombre</b><p>PDF <code>EV01_NombreEmpresa.pdf</code> con portada, introducción y enlace.</p></div><div class="fl"><b>Quién la hace</b><p>Equipo de 4 aprendices.</p></div></div><div class="x-ficha" style="--c:#0284c7"><div class="fh"><div class="ft">EV02 · Sistematización</div></div><div class="fl"><b>Qué pide en una frase</b><p>Pasar los datos recolectados a tablas limpias, segmentadas y documentadas.</p></div><div class="fl"><b>Qué entregas</b><p>Subcarpeta <code>sistematizado_xxx</code> y registro de depuración.</p></div><div class="fl"><b>Dónde y con qué nombre</b><p>PDF <code>EV02_NombreEmpresa.pdf</code> con portada, introducción y enlace.</p></div><div class="fl"><b>Quién la hace</b><p>Equipo de 4 o individual, según el espacio en Zajuna.</p></div></div><div class="x-ficha" style="--c:#ea580c"><div class="fh"><div class="ft">EV03 · Análisis</div></div><div class="fl"><b>Qué pide en una frase</b><p>Planear el análisis, elegir método y gráficos y construir tabla y gráfico dinámico con un dashboard.</p></div><div class="fl"><b>Qué entregas</b><p>Plan de gestión y análisis (PDF, máx. 5 pág.) y libro de Excel en <code>analisis_xxx</code>.</p></div><div class="fl"><b>Dónde y con qué nombre</b><p>PDF <code>EV03_NombreEmpresa.pdf</code> con el plan y el enlace a la carpeta.</p></div><div class="fl"><b>Quién la hace</b><p>Equipo de 4 aprendices.</p></div></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Las tres se entregan con un <strong>PDF en Zajuna</strong> y una <strong>carpeta en Drive compartida con el instructor</strong>.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-5" data-slide="5" data-title="05. Agenda de la Sesión">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 05 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge tech"><span class="dot"></span> RUTA DE LOS 60 MINUTOS</div>
+      <h2 class="sec-title">Agenda de la Sesión 4</h2>
+      <p class="sec-desc">Una evidencia a la vez: qué pide, qué se entrega y cómo se evalúa. Al final, tus preguntas.</p>
+      
+      <div class="x-agenda"><div class="bar"><span style="--c:#39a900;flex:5"></span><span style="--c:#0284c7;flex:14"></span><span style="--c:#ea580c;flex:12"></span><span style="--c:#7c3aed;flex:17"></span><span style="--c:#2d8400;flex:12"></span></div><div class="bar-lbl"><span style="flex:5">5 min</span><span style="flex:14">14 min</span><span style="flex:12">12 min</span><span style="flex:17">17 min</span><span style="flex:12">12 min</span></div><div class="cards"><div class="card" style="--c:#39a900"><div class="top"><span class="n">1</span><span class="t">00–05 min</span></div><h4>Apertura y mapa de las tres evidencias</h4><p>Qué hay que lograr hoy y qué pide cada evidencia, lado a lado.</p><div class="m"><span>5 min</span><span>Slides 1–5</span></div></div><div class="card" style="--c:#0284c7"><div class="top"><span class="n">2</span><span class="t">05–19 min</span></div><h4>EV01 · Recolección</h4><p>Qué pide la guía, qué documentación se acepta, qué se entrega y cómo se evalúa.</p><div class="m"><span>14 min</span><span>Slides 6–9</span></div></div><div class="card" style="--c:#ea580c"><div class="top"><span class="n">3</span><span class="t">19–31 min</span></div><h4>EV02 · Sistematización</h4><p>Qué pide la guía, qué se agrega a la carpeta y cómo se evalúa.</p><div class="m"><span>12 min</span><span>Slides 10–12</span></div></div><div class="card" style="--c:#7c3aed"><div class="top"><span class="n">4</span><span class="t">31–48 min</span></div><h4>EV03 · Análisis (vence mañana)</h4><p>Qué pide la guía, qué se entrega, cómo se evalúa y la lista de última revisión.</p><div class="m"><span>17 min</span><span>Slides 13–16</span></div></div><div class="card" style="--c:#2d8400"><div class="top"><span class="n">5</span><span class="t">48–60 min</span></div><h4>Conexión, dudas y cierre</h4><p>Cómo se enlazan las evidencias, dudas frecuentes y tus preguntas en vivo.</p><div class="m"><span>12 min</span><span>Slides 17–20</span></div></div></div></div><div class="callout-box"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></div>
+<div class="callout-content"><h4>Pregunta para arrancar</h4><p>Si te piden explicar en un minuto <strong>qué entregaste en cada evidencia</strong>, ¿qué dirías? Hoy lo dejamos claro y resolvemos lo que falte.</p></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Primero el <strong>panorama de las tres evidencias</strong>, después el detalle de cada una y al final <strong>tus dudas</strong>. Anótalas mientras avanzamos.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-6" data-slide="6" data-title="06. EV01 · Qué pide">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 06 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge verde"><span class="dot"></span> EVIDENCIA 1 · RECOLECCIÓN</div>
+      <h2 class="sec-title">EV01: la guía explicada frase por frase</h2>
+      <p class="sec-desc">GA5-220501114-AA1-EV01 · Recolección de información de modelos de gestión de la organización. Esto es lo que dice la guía y lo que significa en la práctica.</p>
+      
+      <div class="x-fichas anchas"><div class="x-ficha" style="--c:#39a900"><div class="fh"><span class="n">1</span><div class="ft">«Un equipo de 4 aprendices»</div></div><div class="fl solo"><p>Trabajan juntos y entregan <strong>una sola carpeta</strong>. Se reparten roles: coordinador, investigador de sistemas, responsable de datos y responsable de almacenamiento.</p></div></div><div class="x-ficha" style="--c:#0284c7"><div class="fh"><span class="n">2</span><div class="ft">«Empresa real o con información libre desde la web»</div></div><div class="fl solo"><p>La empresa debe existir o tener información que cualquiera pueda consultar en internet. En el siguiente slide aclaramos <strong>qué pasa con los documentos</strong>.</p></div></div><div class="x-ficha" style="--c:#ea580c"><div class="fh"><span class="n">3</span><div class="ft">«Determinen qué sistemas de gestión tiene»</div></div><div class="fl solo"><p>Averiguar con qué «reglas internas» organiza temas como calidad, ambiente o seguridad. <strong>Se comprueba, no se supone.</strong></p></div></div><div class="x-ficha" style="--c:#7c3aed"><div class="fh"><span class="n">4</span><div class="ft">«Obtengan la información relevante de cada sistema»</div></div><div class="fl solo"><p>Para cada sistema encontrado, reunir los documentos y datos que muestran cómo funciona.</p></div></div><div class="x-ficha" style="--c:#dc2626"><div class="fh"><span class="n">5</span><div class="ft">«Almacenen en una carpeta con subcarpetas»</div></div><div class="fl solo"><p>Ordenar los archivos con lógica: por sistema de gestión o por proceso.</p></div></div><div class="x-ficha" style="--c:#0d9488"><div class="fh"><span class="n">6</span><div class="ft">«Almacenen en sitio seguro, en equipo o nube»</div></div><div class="fl solo"><p>Guardar en Drive con permisos controlados y una copia de respaldo.</p></div></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>La EV01 es <strong>recolectar con orden y con permiso</strong>: no se trata de juntar muchos archivos, sino los correctos y bien guardados.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-7" data-slide="7" data-title="07. EV01 · Empresa y documentos">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 07 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge naranja"><span class="dot"></span> ACLARACIÓN IMPORTANTE</div>
+      <h2 class="sec-title">EV01: ¿la documentación de la empresa tiene que ser real?</h2>
+      <p class="sec-desc">No necesariamente. La guía pide una empresa real o con información libre en la web, pero los documentos pueden obtenerse de varias maneras.</p>
+      
+      <div class="grid-3"><div class="card-premium top-verde"><div>
+  <div class="card-header-flex"><div class="card-icon-badge verde"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div><span class="card-pill-tag verde">Vía 1</span></div>
+  <h3 class="card-title">Empresa real con información pública</h3><p class="card-text">La más sencilla si la empresa publica en su web.</p><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Descargas sus políticas, certificados e informes <strong>de su propio sitio web</strong></span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Citas la <strong>dirección (URL)</strong> en la columna Fuente de la matriz</span></li></ul>
+</div></div><div class="card-premium top-tech"><div>
+  <div class="card-header-flex"><div class="card-icon-badge tech"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg></div><span class="card-pill-tag tech">Vía 2</span></div>
+  <h3 class="card-title">Documentos descargados de internet</h3><p class="card-text">Útil cuando la empresa no publica casi nada.</p><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Puedes <strong>bajar de internet</strong> políticas, manuales o informes modelo de ese sector</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Anotas de dónde salieron y bajo qué licencia</span></li></ul>
+</div></div><div class="card-premium top-naranja"><div>
+  <div class="card-header-flex"><div class="card-icon-badge naranja"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg></div><span class="card-pill-tag naranja">Vía 3</span></div>
+  <h3 class="card-title">Documentación ficticia elaborada por el equipo</h3><p class="card-text">También es válida si queda claro que es un ejemplo.</p><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Pueden <strong>redactar documentos de ejemplo</strong> para la empresa (una política, un organigrama)</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Escriben en la matriz y en el LEEME que son <strong>documentos de ejemplo</strong></span></li></ul>
+</div></div></div><div class="callout-box"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+<div class="callout-content"><h4>Lo que sí debe cumplirse siempre</h4><p>Los datos deben ser <strong>coherentes</strong> y estar <strong>bien documentados</strong>: de dónde vienen (o que son de ejemplo), quién los guardó y si tienen autorización. <strong>No incluyas datos personales reales</strong> (cédulas, teléfonos o correos de personas) sin autorización: eso incumple la Ley 1581 de 2012.</p></div></div><div class="x-note piensa"><h5>🤔 Antes de seguir, piensa</h5><p>Mi equipo no encuentra información de la empresa que eligió. ¿Está perdida la EV01?</p><details><summary>Ver pista</summary><p>No. Pueden usar documentos descargados de internet o elaborar documentación de ejemplo, siempre dejando escrito de dónde salió cada archivo. Lo que se evalúa es el orden, la fuente y la autorización.</p></details></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>La documentación puede ser <strong>real, bajada de internet o ficticia</strong>, siempre que esté <strong>declarada en la matriz</strong> y no tenga datos personales reales.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-8" data-slide="8" data-title="08. EV01 · Qué entregas">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 08 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge verde"><span class="dot"></span> EVIDENCIA 1 · ENTREGA</div>
+      <h2 class="sec-title">EV01: qué entregas y cómo queda la carpeta</h2>
+      <p class="sec-desc">La carpeta funciona como el archivador de una oficina: quien llega por primera vez debe encontrar todo sin preguntar.</p>
+      
+      <div class="x-tree"><div class="x-tree-head"><span>Carpeta de la EV01</span></div><div class="x-tree-body">
+<div class="x-tr raiz" style="--c:#39a900"><span class="ic">📁</span><span class="nm">EV01_Recoleccion_[Empresa]_Equipo[N]/</span><span class="ds">carpeta raíz: la que compartes</span></div>
+<div class="x-kids">
+<div class="x-tr" style="--c:#64748b"><span class="ic">📄</span><span class="nm">00_LEEME.txt</span><span class="ds">portada: empresa, integrantes y contenido</span></div>
+<div class="x-tr" style="--c:#64748b"><span class="ic">📁</span><span class="nm">00_Gestion_del_equipo/</span><span class="ds">roles y cronograma</span></div>
+<div class="x-tr" style="--c:#64748b"><span class="ic">📁</span><span class="nm">01_Empresa_y_contexto/</span><span class="ds">ficha, organigrama, mapa de procesos</span></div>
+<div class="x-tr" style="--c:#0284c7"><span class="ic">📁</span><span class="nm">02_Sistemas_de_gestion/</span><span class="ds">una subcarpeta por sistema que SÍ encontraron</span></div>
+<div class="x-tr" style="--c:#ea580c"><span class="ic">📁</span><span class="nm">03_Datos_crudos/</span><span class="ds">datos tal como se descargaron (CSV o Excel)</span></div>
+<div class="x-tr" style="--c:#16a34a"><span class="ic">📄</span><span class="nm">04_Matriz_de_recoleccion.xlsx</span><span class="ds">una fila por cada archivo</span></div>
+<div class="x-tr" style="--c:#7c3aed"><span class="ic">📁</span><span class="nm">05_Soportes_legales/</span><span class="ds">licencias y autorizaciones</span></div>
+</div></div></div><div class="callout-box"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg></div>
+<div class="callout-content"><h4>El PDF que subes a Zajuna</h4><p>Se llama <code>EV01_NombreEmpresa.pdf</code> y tiene tres partes: <strong>portada</strong> (ficha, empresa y los 4 integrantes), <strong>introducción</strong> y el <strong>enlace de la carpeta</strong> de Drive. El enlace debe abrir sin iniciar sesión (pruébalo en una ventana de incógnito) y la carpeta se comparte con el instructor con permiso <em>Comentador</em>.</p></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Si un archivo está en la carpeta, <strong>tiene que estar en la matriz</strong>. Y los datos crudos no se modifican: eso es la EV02.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-9" data-slide="9" data-title="09. EV01 · Cómo se evalúa">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 09 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge verde"><span class="dot"></span> EVIDENCIA 1 · EVALUACIÓN</div>
+      <h2 class="sec-title">EV01: cómo se evalúa y qué suele fallar</h2>
+      <p class="sec-desc">El instrumento IE-GA5-220501114-AA1-EV01 revisa estos indicadores. Así los dejas a la vista:</p>
+      
+      <div class="x-fichas anchas"><div class="x-ficha" style="--c:#39a900"><div class="fh"><div class="ft"><strong>1. En la organización</strong> · identifica los sistemas de gestión y la información requerida</div></div><div class="fl solo"><p>Una subcarpeta por sistema en <code>02_Sistemas_de_gestion</code>, con la prueba de cómo lo comprobaron.</p></div></div><div class="x-ficha" style="--c:#0284c7"><div class="fh"><span class="n">2</span><div class="ft">Almacena la información en una carpeta de acuerdo con las políticas de protección</div></div><div class="fl solo"><p>Carpeta en Drive con permisos controlados, copia de respaldo y soportes en <code>05_Soportes_legales</code>.</p></div></div><div class="x-ficha" style="--c:#ea580c"><div class="fh"><span class="n">3</span><div class="ft">Selecciona información de interés y la trata con las debidas autorizaciones</div></div><div class="fl solo"><p>Columnas <strong>Autorizado</strong> y <strong>Licencia</strong> de la matriz; los archivos descartados quedan anotados.</p></div></div><div class="x-ficha" style="--c:#7c3aed"><div class="fh"><div class="ft"><strong>2. Técnicas de recolección</strong> · independencia y plan para recolectar</div></div><div class="fl solo"><p>Roles y cronograma en <code>00_Gestion_del_equipo</code>; la matriz muestra quién recolectó qué.</p></div></div><div class="x-ficha" style="--c:#dc2626"><div class="fh"><span class="n">5</span><div class="ft">Caracteriza y estructura la información; sigue los protocolos normativos y legales</div></div><div class="fl solo"><p>Matriz con tipo de dato y formato, nombres de archivo con convención y sin datos personales.</p></div></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Errores frecuentes: carpetas con nombres como «Nueva carpeta (3)», enlace que pide iniciar sesión, archivos fuera de la matriz y <strong>datos personales reales</strong>.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-10" data-slide="10" data-title="10. EV02 · Qué pide">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 10 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge tech"><span class="dot"></span> EVIDENCIA 2 · SISTEMATIZACIÓN</div>
+      <h2 class="sec-title">EV02: la guía explicada frase por frase</h2>
+      <p class="sec-desc">GA5-220501114-AA1-EV02 · Sistematización de datos recopilados. Parte de los datos que recolectaste y los deja listos para analizar.</p>
+      
+      <div class="x-fichas anchas"><div class="x-ficha" style="--c:#39a900"><div class="fh"><span class="n">1</span><div class="ft">«A partir de los datos recolectados en la evidencia anterior»</div></div><div class="fl solo"><p>No empiezas de cero: usas <strong>los datos de la EV01</strong> (los que guardaste en <code>03_Datos_crudos</code>).</p></div></div><div class="x-ficha" style="--c:#0284c7"><div class="fh"><span class="n">2</span><div class="ft">«Seleccionando un programa versátil y amigable (Excel, Access, Power BI)»</div></div><div class="fl solo"><p>Elegir la herramienta con la que se trabaja. En el curso usamos <strong>Excel</strong>.</p></div></div><div class="x-ficha" style="--c:#ea580c"><div class="fh"><span class="n">3</span><div class="ft">«Realice una depuración según criterios de segmentación normalizados»</div></div><div class="fl solo"><p>Corregir problemas (espacios, fechas, ciudades escritas distinto, duplicados, vacíos y atípicos) y <strong>separar los datos en tablas</strong> con reglas escritas en una hoja de criterios.</p></div></div><div class="x-ficha" style="--c:#7c3aed"><div class="fh"><span class="n">4</span><div class="ft">«Guarde la información sistematizada en una subcarpeta: sistematizado_xxx»</div></div><div class="fl solo"><p>Una subcarpeta con los datos ya limpios, por ejemplo <code>sistematizado_clientes.xlsx</code>.</p></div></div><div class="x-ficha" style="--c:#dc2626"><div class="fh"><span class="n">5</span><div class="ft">«Archivo tipo registro para el control de depuración»</div></div><div class="fl solo"><p>Un libro de Excel, el <strong>registro de depuración</strong>, donde anotas cada cambio: qué, dónde, por qué y quién.</p></div></div><div class="x-ficha" style="--c:#0d9488"><div class="fh"><span class="n">6</span><div class="ft">«Sistematizar es clasificar, caracterizar y estructurar» (no analizar)</div></div><div class="fl solo"><p>En la EV02 <strong>no se calculan promedios ni gráficos</strong>: eso es de la EV03.</p></div></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>La EV02 es <strong>limpiar, ordenar y documentar</strong>. Si ya calculaste promedios, te adelantaste a la EV03.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-11" data-slide="11" data-title="11. EV02 · Qué entregas">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 11 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge tech"><span class="dot"></span> EVIDENCIA 2 · ENTREGA</div>
+      <h2 class="sec-title">EV02: qué entregas y dónde queda cada cosa</h2>
+      <p class="sec-desc">No es una carpeta nueva: es la de la EV01 con dos agregados.</p>
+      
+      <div class="x-tree"><div class="x-tree-head"><span>La misma carpeta, con lo que se agrega en la EV02</span></div><div class="x-tree-body">
+<div class="x-tr raiz" style="--c:#39a900"><span class="ic">📁</span><span class="nm">EV01_Recoleccion_[Empresa]_Equipo[N]/</span><span class="ds">la misma carpeta de la EV01</span></div>
+<div class="x-kids">
+<div class="x-tr" style="--c:#64748b"><span class="ic">📁</span><span class="nm">00_… 01_… 02_… 05_…</span><span class="ds">sin cambios</span></div>
+<div class="x-tr" style="--c:#ea580c"><span class="ic">📁</span><span class="nm">03_Datos_crudos/</span><span class="ds">el original, sin tocar (aquí guardas la plantilla original)</span></div>
+<div class="x-tr" style="--c:#16a34a"><span class="ic">📄</span><span class="nm">06_Registro_de_depuracion.xlsx</span><span class="ds">NUEVO · el control: una fila por cada acción</span></div>
+<div class="x-tr" style="--c:#0284c7"><span class="ic">📁</span><span class="nm">sistematizado_[xxx]/</span><span class="ds">NUEVO · los datos depurados</span></div>
+<div class="x-kids"><div class="x-tr" style="--c:#0284c7"><span class="ic">📄</span><span class="nm">sistematizado_clientes.xlsx</span><span class="ds">tablas de clientes y de producto, hoja de criterios</span></div></div>
+</div></div></div><div class="callout-box"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg></div>
+<div class="callout-content"><h4>El PDF que subes a Zajuna</h4><p>Se llama <code>EV02_NombreEmpresa.pdf</code>: <strong>portada</strong>, <strong>introducción</strong> y el <strong>enlace de la carpeta</strong>. Es la <strong>misma carpeta de la EV01</strong>, ahora con la subcarpeta <code>sistematizado_xxx</code> y el registro de depuración en la raíz.</p></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p><strong>Original y copia:</strong> el archivo original se guarda en <code>03_Datos_crudos</code> y se trabaja en una copia.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-12" data-slide="12" data-title="12. EV02 · Cómo se evalúa">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 12 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge tech"><span class="dot"></span> EVIDENCIA 2 · EVALUACIÓN</div>
+      <h2 class="sec-title">EV02: cómo se evalúa y qué suele fallar</h2>
+      <p class="sec-desc">El instrumento IE-GA5-220501114-AA1-EV02 revisa cuatro grupos de indicadores:</p>
+      
+      <div class="x-fichas anchas"><div class="x-ficha" style="--c:#39a900"><div class="fh"><div class="ft"><strong>1. Protocolos de sistematización</strong> · aplica los protocolos sugeridos</div></div><div class="fl solo"><p>Hoja de criterios con las reglas de cada campo y el protocolo de trabajo del equipo.</p></div></div><div class="x-ficha" style="--c:#0284c7"><div class="fh"><div class="ft"><strong>2. La organización</strong> · sistematiza según los protocolos normativos y legales</div></div><div class="fl solo"><p>Datos sin información personal sensible, con los vacíos marcados como <code>SIN DATO</code> o <code>POR VERIFICAR</code>, nunca inventados.</p></div></div><div class="x-ficha" style="--c:#ea580c"><div class="fh"><span class="n">3</span><div class="ft">Evidencia la sistematización de acuerdo con los requerimientos organizacionales</div></div><div class="fl solo"><p>Registro de depuración: una fila por cada acción (qué, dónde, por qué y quién).</p></div></div><div class="x-ficha" style="--c:#7c3aed"><div class="fh"><div class="ft"><strong>3. Entrega de la evidencia</strong> · formato sugerido y uso de la nube</div></div><div class="fl solo"><p>Subcarpeta <code>sistematizado_xxx</code> y registro en Drive, dentro de la carpeta de la EV01.</p></div></div><div class="x-ficha" style="--c:#dc2626"><div class="fh"><div class="ft"><strong>4. Tiempo de entrega</strong> · entrega en el plazo</div></div><div class="fl solo"><p>PDF subido a Zajuna antes del miércoles, 11 de noviembre de 2026.</p></div></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Errores frecuentes: trabajar sobre la plantilla original, quitar duplicados <strong>antes</strong> de normalizar, inventar datos para llenar vacíos y borrar atípicos sin anotarlos.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-13" data-slide="13" data-title="13. EV03 · Qué pide">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 13 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge naranja"><span class="dot"></span> EVIDENCIA 3 · ANÁLISIS</div>
+      <h2 class="sec-title">EV03: la guía explicada frase por frase</h2>
+      <p class="sec-desc">GA5-220501114-AA1-EV03 · Gestión para el análisis de datos depurados. Es la que vence mañana, así que la miramos con más detalle.</p>
+      
+      <div class="x-fichas anchas"><div class="x-ficha" style="--c:#39a900"><div class="fh"><span class="n">1</span><div class="ft">«Elaboren un plan de gestión para el análisis de datos, documentando los procedimientos, la caracterización de datos, el manejo y control»</div></div><div class="fl solo"><p>Un <strong>documento (PDF, máximo 5 páginas)</strong> que cuenta cómo trabajaron los datos, qué significa cada columna y cómo se protegen y controlan.</p></div></div><div class="x-ficha" style="--c:#0284c7"><div class="fh"><span class="n">2</span><div class="ft">«Seleccionen el método estadístico más acertado según el tipo de dato (discreto, continuo, cuantitativo o cualitativo)»</div></div><div class="fl solo"><p>Para cada variable, decir de qué <strong>tipo</strong> es y qué <strong>medida</strong> corresponde: contar, sumar, promedio, mediana o moda.</p></div></div><div class="x-ficha" style="--c:#ea580c"><div class="fh"><span class="n">3</span><div class="ft">«Seleccionen las herramientas gráficas más acertadas»</div></div><div class="fl solo"><p>Elegir el <strong>gráfico</strong> adecuado para cada pregunta (barras para comparar, circular para partes de un todo, líneas para el tiempo).</p></div></div><div class="x-ficha" style="--c:#7c3aed"><div class="fh"><span class="n">4</span><div class="ft">«Elaboren una tabla y un gráfico dinámico, relacionado con un dashboard»</div></div><div class="fl solo"><p>En Excel: una <strong>tabla dinámica</strong>, un <strong>gráfico dinámico</strong> y un <strong>dashboard</strong> que junta lo importante en una sola hoja.</p></div></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>La EV03 son <strong>dos productos</strong>: el plan en PDF y el libro de Excel con la tabla, el gráfico y el dashboard.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-14" data-slide="14" data-title="14. EV03 · Qué entregas">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 14 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge naranja"><span class="dot"></span> EVIDENCIA 3 · ENTREGA</div>
+      <h2 class="sec-title">EV03: qué entregas y dónde queda cada cosa</h2>
+      <p class="sec-desc">Otra vez es la misma carpeta, ahora con la subcarpeta del análisis.</p>
+      
+      <div class="x-tree"><div class="x-tree-head"><span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg> Carpeta del equipo después de la EV03</span><button type="button" class="x-copy" onclick="copiarBloque(&quot;codeTree3&quot;, this)">Copiar árbol</button></div><div class="x-tree-body"><div class="x-tr raiz" style="--c:#39a900"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg></span><span class="nm">EV01_Recoleccion_[Empresa]_Equipo[N]/</span><span class="ds">la misma carpeta de la EV01</span></div><div class="x-kids"><div class="x-tr" style="--c:#64748b"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg></span><span class="nm">00_… 01_… 02_… 03_… 04_… 05_…</span><span class="ds">sin cambios</span></div><div class="x-tr" style="--c:#16a34a"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg></span><span class="nm">06_Registro_de_depuracion.xlsx</span><span class="ds">de la EV02</span></div><div class="x-tr" style="--c:#0284c7"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg></span><span class="nm">sistematizado_[xxx]/</span><span class="ds">de la EV02: los datos depurados</span></div><div class="x-tr" style="--c:#16a34a;box-shadow:0 0 0 2px #bbf7d0"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg></span><span class="nm">analisis_[xxx]/</span><span class="ds">NUEVO · el análisis de la EV03</span></div><div class="x-kids"><div class="x-tr" style="--c:#16a34a;box-shadow:0 0 0 2px #bbf7d0"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg></span><span class="nm">analisis_clientes.xlsx</span><span class="ds">tabla dinámica, gráfico dinámico y dashboard</span></div></div></div></div><pre class="sr-only-copy" id="codeTree3">EV01_Recoleccion_[Empresa]_Equipo[N]/        (la misma carpeta de la EV01)
+├── 00_LEEME.txt  ·  00_Gestion_del_equipo/  ·  01_Empresa_y_contexto/
+├── 02_Sistemas_de_gestion/
+├── 03_Datos_crudos/                  (sin cambios)
+├── 04_Matriz_de_recoleccion.xlsx
+├── 05_Soportes_legales/
+├── 06_Registro_de_depuracion.xlsx    (EV02)
+├── sistematizado_[xxx]/              (EV02)
+│   └── sistematizado_clientes.xlsx
+└── analisis_[xxx]/                   (NUEVO · EV03)
+    └── analisis_clientes.xlsx        (tabla dinámica, gráfico dinámico y dashboard)</pre></div><div class="callout-box"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg></div>
+<div class="callout-content"><h4>El PDF que subes a Zajuna</h4><p>Se llama <code>EV03_NombreEmpresa.pdf</code> y contiene el <strong>plan de gestión y análisis</strong> (máximo 5 páginas) y el <strong>enlace a la carpeta</strong> donde está el libro de Excel. Fecha límite: <strong>miércoles, 18 de noviembre de 2026, 11:59 p. m.</strong></p></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>En Drive: la carpeta de siempre más <code>analisis_xxx</code>. En Zajuna: <strong>solo el PDF</strong> con el plan y el enlace.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-15" data-slide="15" data-title="15. EV03 · Cómo se evalúa">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 15 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge naranja"><span class="dot"></span> EVIDENCIA 3 · EVALUACIÓN</div>
+      <h2 class="sec-title">EV03: cómo se evalúa</h2>
+      <p class="sec-desc">El instrumento IE-GA5-220501114-AA1-EV03 tiene tres grupos de indicadores. Así los dejas evidenciados:</p>
+      
+      <div class="x-fichas anchas"><div class="x-ficha" style="--c:#39a900"><div class="fh"><div class="ft"><strong>1.1 Utiliza información relevante</strong> para la organización</div></div><div class="fl solo"><p>La introducción del plan dice qué pregunta de negocio se responde y por qué esos datos importan.</p></div></div><div class="x-ficha" style="--c:#0284c7"><div class="fh"><div class="ft"><strong>1.2 Son claros los campos</strong></div></div><div class="fl solo"><p>Tabla de caracterización: nombre, tipo, ejemplo y regla de calidad de cada columna.</p></div></div><div class="x-ficha" style="--c:#ea580c"><div class="fh"><div class="ft"><strong>1.3 Información libre de sesgo</strong> e independiente</div></div><div class="fl solo"><p>Datos depurados en la EV02 y un <strong>criterio escrito</strong> de qué entra y qué no (columna <code>Incluir</code>). Los atípicos se explican.</p></div></div><div class="x-ficha" style="--c:#7c3aed"><div class="fh"><div class="ft"><strong>1.4 La segmentación es adecuada</strong></div></div><div class="fl solo"><p>Clientes y producto separados; cada tabla dinámica usa el segmento que corresponde a su pregunta.</p></div></div><div class="x-ficha" style="--c:#dc2626"><div class="fh"><div class="ft"><strong>2.1 Evidencia en el formato sugerido</strong></div></div><div class="fl solo"><p>Plan en PDF (máx. 5 páginas) y Excel con tabla dinámica, gráfico dinámico y dashboard.</p></div></div><div class="x-ficha" style="--c:#0d9488"><div class="fh"><div class="ft"><strong>2.2 Usa la web y la nube</strong> en carpetas y subcarpetas</div></div><div class="fl solo"><p>Todo en Drive, en la carpeta de la EV01 más <code>analisis_xxx</code>.</p></div></div><div class="x-ficha" style="--c:#39a900"><div class="fh"><div class="ft"><strong>3.1 Normativa:</strong> permisos y protocolos</div></div><div class="fl solo"><p>Carpeta compartida con el instructor (Comentador), sin datos personales reales y con el manejo y control descrito en el plan.</p></div></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Los siete indicadores se ven en <strong>dos archivos</strong>: el plan (PDF) y el libro de Excel. Si algo no aparece en ninguno, no se puede evaluar.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-16" data-slide="16" data-title="16. EV03 · Última revisión">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 16 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge naranja"><span class="dot"></span> ANTES DE ENTREGAR</div>
+      <h2 class="sec-title">EV03: lista de última revisión</h2>
+      <p class="sec-desc">La EV03 vence mañana. Estos son los puntos que más se olvidan:</p>
+      
+      <div class="x-steps"><div class="x-step"><div class="x-step-num">1</div><div><h4>Hoy (después de la sesión)</h4><p>Anota cada duda que quede y revisa con el checklist qué te falta.</p></div></div><div class="x-step"><div class="x-step-num">2</div><div><h4>Antes de la entrega</h4><p>Comprueba el enlace en incógnito, los permisos y el nombre del PDF.</p></div></div><div class="x-step"><div class="x-step-num">3</div><div><h4>miércoles, 18 de noviembre de 2026, antes de las 11:59 p. m.</h4><p>Sube <code>EV03_NombreEmpresa.pdf</code> al espacio de la EV03 en Zajuna. Entrega con tiempo: si el enlace falla, necesitarás margen.</p></div></div></div><div class="checklist-card"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+<h4 style="font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:var(--texto-main);">Checklist de Alistamiento</h4>
+<span id="checklistCounter" style="font-size:11px;font-weight:800;color:var(--sena-verde-dark);background:var(--sena-verde-bg);padding:3px 9px;border-radius:12px;border:1px solid var(--sena-verde-border)">0 / 8 Completados</span></div>
+<div class="checklist-item" onclick="toggleChecklistItem(this)"><div class="checklist-checkbox">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+<div class="checklist-text"><h5>El plan está en PDF y tiene máximo 5 páginas</h5><p>Si pasa de 5, recorta.</p></div></div><div class="checklist-item" onclick="toggleChecklistItem(this)"><div class="checklist-checkbox">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+<div class="checklist-text"><h5>Tiene las cuatro partes de la guía</h5><p>Procedimientos, caracterización de datos, manejo y control, y método y gráficos.</p></div></div><div class="checklist-item" onclick="toggleChecklistItem(this)"><div class="checklist-checkbox">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+<div class="checklist-text"><h5>Cada variable tiene su tipo y su medida</h5><p>Cualitativa, cuantitativa discreta o continua.</p></div></div><div class="checklist-item" onclick="toggleChecklistItem(this)"><div class="checklist-checkbox">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+<div class="checklist-text"><h5>Hay tabla dinámica, gráfico dinámico y dashboard</h5><p>En el libro de Excel, conectados entre sí.</p></div></div><div class="checklist-item" onclick="toggleChecklistItem(this)"><div class="checklist-checkbox">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+<div class="checklist-text"><h5>Los datos con POR VERIFICAR no entran al análisis</h5><p>Y está escrito en el plan.</p></div></div><div class="checklist-item" onclick="toggleChecklistItem(this)"><div class="checklist-checkbox">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+<div class="checklist-text"><h5>La carpeta está compartida con el instructor</h5><p>Permiso Comentador a instructorjuliantrujilo@gmail.com.</p></div></div><div class="checklist-item" onclick="toggleChecklistItem(this)"><div class="checklist-checkbox">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+<div class="checklist-text"><h5>El enlace abre sin iniciar sesión</h5><p>Pruébalo en una ventana de incógnito.</p></div></div><div class="checklist-item" onclick="toggleChecklistItem(this)"><div class="checklist-checkbox">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+<div class="checklist-text"><h5>El PDF se llama EV03_NombreEmpresa.pdf</h5><p>Con portada, plan y enlace; subido al espacio de la EV03.</p></div></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Entrega <strong>con margen</strong>. Una evidencia buena entregada tarde pierde frente a una evidencia sencilla entregada a tiempo.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-17" data-slide="17" data-title="17. Cómo se Conectan">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 17 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge tech"><span class="dot"></span> LA CADENA</div>
+      <h2 class="sec-title">Cómo se conectan las tres evidencias</h2>
+      <p class="sec-desc">Lo que haces en una evidencia es la materia prima de la siguiente.</p>
+      
+      <div class="x-linea"><div class="it" style="--c:#39a900"><span class="n">1</span><h4>EV01 → EV02</h4><p>Los datos de <code>03_Datos_crudos</code> (EV01) son la materia prima de la sistematización. La matriz de la EV01 dice de dónde vino cada uno.</p><span class="ej">El original se queda sin tocar y se trabaja en una copia.</span></div><div class="it" style="--c:#0284c7"><span class="n">2</span><h4>EV02 → EV03</h4><p>Los datos depurados de <code>sistematizado_xxx</code> (EV02) son lo que se analiza. El registro de depuración explica qué se cambió y qué quedó <code>POR VERIFICAR</code>.</p><span class="ej">Los registros POR VERIFICAR no entran al análisis.</span></div><div class="it" style="--c:#ea580c"><span class="n">3</span><h4>EV03 → EV04</h4><p>Las tablas y las medidas de la EV03 muestran qué información se necesita guardar y consultar: eso da forma a la base de datos final.</p><span class="ej">La EV04 se trabaja en la Sesión 5.</span></div></div><div class="x-note piensa"><h5>🤔 Antes de seguir, piensa</h5><p>Mi equipo modificó los datos crudos en la EV02. ¿Qué problema tiene?</p><details><summary>Ver pista</summary><p>Se pierde la prueba de cómo eran los datos originales. Si algo sale mal, no hay forma de volver atrás. Por eso el original se guarda aparte y se trabaja en una copia.</p></details></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Si algo falla en la EV03, <strong>casi siempre empezó antes</strong>: en una columna mal depurada o en un dato sin documentar.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-18" data-slide="18" data-title="18. Preguntas Frecuentes">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 18 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge naranja"><span class="dot"></span> DUDAS COMUNES</div>
+      <h2 class="sec-title">Las dudas más comunes de las tres evidencias</h2>
+      <p class="sec-desc">Abre cada pregunta para ver la respuesta. Si la tuya no está, la resolvemos en vivo.</p>
+      
+      <div class="x-faq">
+<details><summary>EV01 · ¿Puedo usar la empresa donde trabajo?</summary><p>Sí, con autorización escrita de la empresa y sin incluir datos personales ni información confidencial.</p></details>
+<details><summary>EV01 · ¿La documentación de la empresa puede ser ficticia o bajada de internet?</summary><p>Sí, siempre que esté declarada en la matriz y en el LEEME (fuente o «documento de ejemplo») y no incluya datos personales reales.</p></details>
+<details><summary>EV01 · ¿Cuántos documentos necesito?</summary><p>La guía no fija una cantidad: el criterio es la pertinencia. Varios por sistema de gestión y al menos un conjunto de datos tabular (CSV o Excel).</p></details>
+<details><summary>EV02 · ¿Debo calcular promedios o hacer gráficos?</summary><p>No. Eso es de la EV03. En la EV02 se limpia, se segmenta y se documenta.</p></details>
+<details><summary>EV02 · ¿Qué hago con un valor atípico?</summary><p>Verifícalo, decide si se conserva o se marca y anótalo en el registro. Nunca lo borres sin dejar rastro.</p></details>
+<details><summary>EV03 · ¿Puedo usar Power BI en vez de Excel?</summary><p>La guía permite Excel, Power BI u hoja de cálculo. En el curso trabajamos con Excel.</p></details>
+<details><summary>EV03 · ¿Qué pasa si depuré distinto de lo que se vio en clase?</summary><p>Usa tus datos. Pégalos en la plantilla de la EV03 y anota las diferencias en el plan.</p></details>
+<details><summary>General · ¿Todos suben algo a Zajuna?</summary><p>No: una sola entrega por equipo. Acuerden quién sube el PDF y pongan los nombres de todos en la portada.</p></details>
+<details><summary>General · ¿Puedo cambiar la carpeta después de entregar?</summary><p>El enlace es el mismo, pero la versión que cuenta es la que esté en la carpeta a la fecha límite.</p></details></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Si tu duda <strong>no está aquí</strong>, tráela a la sesión: probablemente también es la de alguien más.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-19" data-slide="19" data-title="19. Cómo Preguntar">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 19 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge"><span class="dot"></span> SESIÓN DE DUDAS</div>
+      <h2 class="sec-title">Cómo hacer una pregunta que se responda rápido</h2>
+      <p class="sec-desc">Una buena pregunta ahorra tiempo a todos. Usa esta fórmula:</p>
+      
+      <div class="x-fichas"><div class="x-ficha" style="--c:#39a900"><div class="fh"><div class="ft">❌ Pregunta que cuesta resolver</div></div><div class="fl"><b>Ejemplo</b><p>«No me sale la tabla dinámica.»</p></div><div class="fl"><b>Por qué</b><p>No dice qué hiciste, qué esperabas ni qué pasó: hay que adivinar.</p></div></div><div class="x-ficha" style="--c:#0284c7"><div class="fh"><div class="ft">✅ Pregunta que se resuelve rápido</div></div><div class="fl"><b>Ejemplo</b><p>«En la tabla dinámica, la columna Unidades me muestra Recuento y no Suma. ¿Qué cambio?»</p></div><div class="fl"><b>Por qué</b><p>Dice <strong>qué hiciste</strong>, <strong>qué esperabas</strong> y <strong>qué pasó</strong>. Con eso se responde en un minuto.</p></div></div></div><div class="x-steps"><div class="x-step"><div class="x-step-num">1</div><div><h4>Qué evidencia es</h4><p>EV01, EV02 o EV03.</p></div></div><div class="x-step"><div class="x-step-num">2</div><div><h4>Qué estabas haciendo</h4><p>El paso exacto: «armando el gráfico dinámico».</p></div></div><div class="x-step"><div class="x-step-num">3</div><div><h4>Qué esperabas y qué pasó</h4><p>«Esperaba ver ventas por ciudad, pero aparece el total».</p></div></div><div class="x-step"><div class="x-step-num">4</div><div><h4>Muestra tu pantalla</h4><p>Una imagen vale más que una descripción: prepara el archivo abierto.</p></div></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Pregunta con <strong>evidencia, paso y resultado</strong>: así se resuelve en un minuto.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-20" data-slide="20" data-title="20. Cierre">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 20 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge"><span class="dot"></span> CIERRE DE LA SESIÓN</div>
+      <h2 class="sec-title">Cierre y próximos pasos</h2>
+      <p class="sec-desc">Resumen de lo esencial de cada evidencia y lo que sigue:</p>
+      
+      <div class="callout-box"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg></div>
+<div class="callout-content"><h4>Calendario que sigue</h4><p><strong>miércoles, 18 de noviembre de 2026:</strong> entrega de la <strong>GA5-220501114-AA1-EV03</strong>. <strong>martes, 24 de noviembre de 2026:</strong> Sesión 5, base de datos final (EV04). <strong>martes, 1 de diciembre de 2026:</strong> Sesión 6, modelos matemáticos y estadísticos en Big Data (EV05). <strong>martes, 8 de diciembre de 2026:</strong> Sesión 7, de dudas y cierre de la guía.</p></div></div><div class="grid-3"><div class="card-premium top-verde"><div>
+  <div class="card-header-flex"><div class="card-icon-badge verde"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span class="card-pill-tag verde">EV01</span></div>
+  <h3 class="card-title">Lo que debes recordar</h3><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>La empresa puede ser real o con información libre</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Documentación real, de internet o ficticia, siempre declarada</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Sin datos personales reales</span></li></ul>
+</div></div><div class="card-premium top-tech"><div>
+  <div class="card-header-flex"><div class="card-icon-badge tech"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span class="card-pill-tag tech">EV02</span></div>
+  <h3 class="card-title">Lo que debes recordar</h3><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Original en datos crudos y trabajo en una copia</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Registro de depuración con cada acción</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Sin cálculos: eso es de la EV03</span></li></ul>
+</div></div><div class="card-premium top-naranja"><div>
+  <div class="card-header-flex"><div class="card-icon-badge naranja"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span class="card-pill-tag naranja">EV03</span></div>
+  <h3 class="card-title">Lo que debes recordar</h3><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Plan en PDF de máximo 5 páginas</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Tabla dinámica, gráfico dinámico y dashboard en Excel</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Entrega antes del miércoles, 18 de noviembre de 2026, 11:59 p. m.</span></li></ul>
+</div></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Tres evidencias, <strong>una sola historia</strong>: recolectar, depurar y analizar. Con la EV03 entregada, en la Sesión 5 las convertimos en una base de datos.</p></div>
+    </div>
+  </section>
+</div>
+<div class="toast-notice" id="toastNotice"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span id="toastMessage">Copiado</span></div>
+<script>
+
+function toggleSidebar(){const s=document.getElementById('sidebar'),f=document.getElementById('floatingToggle'),b=document.getElementById('sidebarBackdrop');
+ if(window.innerWidth<=1024){s.classList.toggle('mobile-open');if(b)b.classList.toggle('active',s.classList.contains('mobile-open'));}
+ else{s.classList.toggle('collapsed');f.classList.toggle('visible',s.classList.contains('collapsed'));}}
+document.addEventListener('DOMContentLoaded',()=>{
+ document.querySelectorAll('.sidebar .nav-link').forEach(l=>l.addEventListener('click',()=>{if(window.innerWidth<=1024){document.getElementById('sidebar').classList.remove('mobile-open');const b=document.getElementById('sidebarBackdrop');if(b)b.classList.remove('active');}}));
+ const slides=document.querySelectorAll('.slide'),links=document.querySelectorAll('.sidebar .nav-link'),bar=document.getElementById('progressBar');
+ window.addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-window.innerHeight;bar.style.width=(h>0?window.scrollY/h*100:0)+'%';
+  let cur=null;slides.forEach(s=>{const r=s.getBoundingClientRect();if(r.top<=window.innerHeight*0.4&&r.bottom>=window.innerHeight*0.4)cur=s;});
+  if(cur){const n=cur.getAttribute('data-slide');links.forEach(l=>{if(l.getAttribute('data-slide')===n){l.classList.add('active');l.scrollIntoView({block:'nearest',behavior:'smooth'});}else l.classList.remove('active');});}});
+});
+function showToast(m){const t=document.getElementById('toastNotice');document.getElementById('toastMessage').textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);}
+function toggleChecklistItem(i){i.classList.toggle('checked');const tot=document.querySelectorAll('.checklist-item').length,ok=document.querySelectorAll('.checklist-item.checked').length,c=document.getElementById('checklistCounter');
+ if(c){c.textContent=ok+' / '+tot+' Completados';if(ok===tot){c.style.background='var(--sena-verde)';c.style.color='#fff';showToast('¡Listo! Tienes claras las tres evidencias.');}else{c.style.background='var(--sena-verde-bg)';c.style.color='var(--sena-verde-dark)';}}}
+function copiarBloque(id,btn){const el=document.getElementById(id);navigator.clipboard.writeText(el.innerText).then(()=>{const o=btn.textContent;btn.textContent='¡Copiado!';showToast('Contenido copiado al portapapeles');setTimeout(()=>btn.textContent=o,1800);}).catch(()=>showToast('Selecciona y copia el texto manualmente'));}
+document.addEventListener('keydown',e=>{const a=document.querySelector('.sidebar .nav-link.active'),n=a?parseInt(a.getAttribute('data-slide')):1,T=20;
+ if(e.key==='ArrowRight'||e.key==='PageDown'){if(n<T){e.preventDefault();const t=document.getElementById('slide-'+(n+1));if(t)t.scrollIntoView({behavior:'smooth'});}}
+ else if(e.key==='ArrowLeft'||e.key==='PageUp'){if(n>1){e.preventDefault();const t=document.getElementById('slide-'+(n-1));if(t)t.scrollIntoView({behavior:'smooth'});}}});
+</script>
+</body>
+</html>

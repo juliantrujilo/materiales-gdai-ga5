@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 02: Redes de Información, Dispositivos Inteligentes y Automatización | SENA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sena-verde: #39a900;
+  --sena-verde-dark: #2d8400;
+  --sena-verde-glow: rgba(57,169,0,0.10);
+  --sena-verde-border: rgba(57,169,0,0.30);
+  --sena-naranja: #ff6b00;
+  --sena-naranja-glow: rgba(255,107,0,0.10);
+  --sena-naranja-border: rgba(255,107,0,0.30);
+  --texto: #1a1a2e;
+  --texto-dim: rgba(26,26,46,0.62);
+  --texto-dimmer: rgba(26,26,46,0.38);
+  --bg: #f8fafc;
+  --bg-alt: #f4f7f2;
+  --borde: #e2e8f0;
+  --acento-azul: #3b82f6;
+  --acento-azul-glow: rgba(59,130,246,0.10);
+  --acento-purpura: #8b5cf6;
+  --acento-purpura-glow: rgba(139,92,246,0.10);
+  --alerta-amarillo: #f59e0b;
+  --alerta-amarillo-glow: rgba(245,158,11,0.10);
+  --alerta-rojo: #ef4444;
+  --alerta-rojo-glow: rgba(239,68,68,0.10);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; color:var(--texto); background:var(--bg); line-height:1.6; overflow-x:hidden; }
+
+.topbar { position:sticky; top:0; z-index:100; background:rgba(255,255,255,0.95); backdrop-filter:blur(16px); border-bottom:2px solid var(--sena-verde); padding:12px 32px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 2px 12px var(--sena-verde-glow); }
+.topbar-left { display:flex; align-items:center; gap:16px; }
+.sena-logo { background:var(--sena-verde); color:#fff; font-weight:900; font-size:18px; padding:8px 16px; border-radius:8px; letter-spacing:1px; }
+.topbar-brand { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color:var(--sena-verde-dark); }
+.topbar-sub { font-size:12px; color:var(--texto-dimmer); margin-top:2px; }
+.topbar-nav { display:flex; gap:4px; flex-wrap:wrap; }
+.topbar-nav a { color:var(--texto-dim); text-decoration:none; font-size:11px; font-weight:600; padding:6px 14px; border-radius:20px; border:1px solid transparent; transition:all .25s; white-space:nowrap; }
+.topbar-nav a:hover { color:var(--sena-verde-dark); border-color:var(--sena-verde-border); background:var(--sena-verde-glow); }
+
+.slide { min-height:100vh; padding:80px 48px; position:relative; scroll-margin-top:64px; border-bottom:1px solid var(--borde); }
+.slide.bg-alt { background:var(--bg-alt); }
+.slide.bg-verde { background:linear-gradient(135deg, var(--sena-verde-glow) 0%, #ffffff 60%); }
+.slide.bg-naranja { background:linear-gradient(135deg, #ffffff 40%, var(--sena-naranja-glow) 100%); }
+.slide.bg-azul { background:linear-gradient(135deg, var(--acento-azul-glow) 0%, #ffffff 60%); }
+.slide.bg-purpura { background:linear-gradient(135deg, var(--acento-purpura-glow) 0%, #ffffff 60%); }
+.slide-inner { max-width:1200px; margin:0 auto; }
+.slide-num-badge { position:absolute; top:24px; right:24px; background:var(--sena-verde-glow); color:var(--sena-verde); font-size:11px; font-weight:700; padding:6px 12px; border-radius:20px; letter-spacing:1px; border:1px solid var(--sena-verde-border); }
+
+.bg-dots { position:absolute; inset:0; background-image:radial-gradient(var(--sena-verde-border) 1px, transparent 1px); background-size:28px 28px; pointer-events:none; opacity:0.4; }
+.bg-glow { position:absolute; width:600px; height:600px; border-radius:50%; filter:blur(120px); opacity:0.2; pointer-events:none; z-index:0; }
+.bg-glow.g1 { background:radial-gradient(circle, var(--sena-verde-glow), transparent 70%); top:-200px; left:-200px; }
+.bg-glow.g2 { background:radial-gradient(circle, var(--sena-naranja-glow), transparent 70%); bottom:-200px; right:-200px; }
+
+.portada-sena-tag { display:inline-flex; align-items:center; gap:8px; background:var(--sena-verde-glow); border:1px solid var(--sena-verde-border); padding:10px 20px; border-radius:30px; font-size:12px; font-weight:700; color:var(--sena-verde-dark); letter-spacing:1.5px; margin-bottom:32px; position:relative; z-index:1; }
+.portada-sena-tag .dot { width:6px; height:6px; background:var(--sena-verde); border-radius:50%; animation:blink 1.5s ease-in-out infinite; }
+@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+.portada-titulo { font-family:'Syne',sans-serif; font-size:clamp(40px,7vw,68px); font-weight:800; line-height:1.1; margin-bottom:24px; color:var(--texto); position:relative; z-index:1; }
+.portada-titulo .linea2 { display:block; background:linear-gradient(135deg, var(--sena-verde), var(--sena-naranja)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.portada-desc { font-size:clamp(16px,2vw,20px); color:var(--texto-dim); max-width:760px; margin-bottom:32px; position:relative; z-index:1; line-height:1.7; }
+.portada-meta { display:flex; gap:16px; flex-wrap:wrap; font-size:14px; position:relative; z-index:1; }
+.portada-meta-item { background:rgba(255,255,255,0.9); border:1px solid var(--borde); padding:10px 20px; border-radius:12px; font-weight:600; color:var(--texto-dim); flex:1 1 auto; min-width:180px; text-align:center; }
+.portada-meta-item strong { display:block; color:var(--texto); font-size:16px; margin-bottom:2px; }
+
+.sec-header { margin-bottom:48px; position:relative; z-index:1; }
+.sec-tag { display:inline-block; font-size:11px; font-weight:700; padding:6px 14px; border-radius:20px; letter-spacing:1.2px; margin-bottom:16px; text-transform:uppercase; }
+.sec-tag.verde { background:var(--sena-verde-glow); color:var(--sena-verde); border:1px solid var(--sena-verde-border); }
+.sec-tag.naranja { background:var(--sena-naranja-glow); color:var(--sena-naranja); border:1px solid var(--sena-naranja-border); }
+.sec-tag.azul { background:rgba(59,130,246,0.10); color:#3b82f6; border:1px solid rgba(59,130,246,0.30); }
+.sec-tag.purpura { background:rgba(139,92,246,0.10); color:#8b5cf6; border:1px solid rgba(139,92,246,0.30); }
+.sec-titulo { font-family:'Syne',sans-serif; font-size:clamp(28px,4vw,44px); font-weight:800; line-height:1.2; color:var(--texto); margin-bottom:16px; }
+.sec-desc { font-size:clamp(15px,1.8vw,18px); color:var(--texto-dim); max-width:820px; line-height:1.7; }
+
+.agenda-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:24px; position:relative; z-index:1; }
+.agenda-item { background:rgba(255,255,255,0.9); border:1px solid var(--borde); border-radius:16px; padding:24px; transition:all .3s; }
+.agenda-item:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,0.08); border-color:var(--sena-verde-border); }
+.agenda-num { font-family:'Syne',sans-serif; font-size:40px; font-weight:800; background:linear-gradient(135deg, var(--sena-verde), var(--sena-naranja)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1; margin-bottom:12px; }
+.agenda-titulo { font-size:17px; font-weight:700; color:var(--texto); margin-bottom:8px; }
+.agenda-desc { font-size:14px; color:var(--texto-dim); line-height:1.6; }
+.agenda-time { display:inline-block; background:var(--sena-verde-glow); color:var(--sena-verde); font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px; margin-top:12px; }
+
+.compare-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:24px; margin:32px 0; position:relative; z-index:1; }
+.compare-card { background:rgba(255,255,255,0.9); border:2px solid; border-radius:16px; padding:28px; }
+.compare-card.verde { border-color:var(--sena-verde-border); background:linear-gradient(135deg, var(--sena-verde-glow), rgba(255,255,255,0.9)); }
+.compare-card.naranja { border-color:var(--sena-naranja-border); background:linear-gradient(135deg, rgba(255,255,255,0.9), var(--sena-naranja-glow)); }
+.compare-card.azul { border-color:rgba(59,130,246,0.3); background:linear-gradient(135deg, rgba(59,130,246,0.08), rgba(255,255,255,0.9)); }
+.compare-card.purpura { border-color:rgba(139,92,246,0.3); background:linear-gradient(135deg, rgba(139,92,246,0.08), rgba(255,255,255,0.9)); }
+.compare-title { font-family:'Syne',sans-serif; font-size:19px; font-weight:800; margin-bottom:16px; }
+
+.info-box { border-radius:12px; padding:24px 28px; margin:24px 0; position:relative; z-index:1; border-left:4px solid; }
+.info-box.tip { background:var(--sena-verde-glow); border-color:var(--sena-verde); }
+.info-box.warning { background:rgba(245,158,11,0.10); border-color:#f59e0b; }
+.info-box.info { background:rgba(59,130,246,0.10); border-color:#3b82f6; }
+.info-box-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+.info-box.tip .info-box-label { color:var(--sena-verde); }
+.info-box.warning .info-box-label { color:#f59e0b; }
+.info-box.info .info-box-label { color:#3b82f6; }
+.info-box p { font-size:15px; color:var(--texto); line-height:1.7; }
+
+.check-list { list-style:none; margin:16px 0; position:relative; z-index:1; }
+.check-list li { display:flex; align-items:flex-start; gap:14px; padding:10px 0; border-bottom:1px solid var(--borde); font-size:15px; color:var(--texto-dim); line-height:1.5; }
+.check-list li:last-child { border-bottom:none; }
+.check-list .icon { width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; margin-top:2px; }
+.check-list .icon.verde { background:var(--sena-verde-glow); color:var(--sena-verde); border:1px solid var(--sena-verde-border); }
+.check-list .icon.naranja { background:var(--sena-naranja-glow); color:var(--sena-naranja); border:1px solid var(--sena-naranja-border); }
+.check-list .icon.azul { background:rgba(59,130,246,0.1); color:#3b82f6; border:1px solid rgba(59,130,246,0.3); }
+
+/* NEED CARDS — tarjetas de necesidades / retos (título arriba, descripción abajo) */
+.need-list { list-style:none; margin:16px 0; position:relative; z-index:1; counter-reset:need; }
+.need-item { padding:16px 0; border-bottom:1px solid var(--borde); }
+.need-item:last-child { border-bottom:none; }
+.need-head { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+.need-num { counter-increment:need; width:28px; height:28px; border-radius:50%; background:var(--sena-verde-glow); color:var(--sena-verde); border:1px solid var(--sena-verde-border); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; flex-shrink:0; }
+.need-num::before { content: counter(need); }
+.need-title { font-size:16px; font-weight:700; color:var(--texto); }
+.need-area { font-size:12px; font-weight:700; color:var(--sena-verde-dark); background:var(--sena-verde-glow); padding:2px 10px; border-radius:20px; margin-left:auto; white-space:nowrap; }
+.need-desc { font-size:14px; color:var(--texto-dim); line-height:1.6; padding-left:40px; }
+
+/* CALENDAR CARDS — cronograma tipo tarjeta de calendario */
+.cal-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:20px; margin:32px 0; position:relative; z-index:1; }
+.cal-card { background:rgba(255,255,255,0.95); border:1px solid var(--borde); border-radius:16px; overflow:hidden; transition:all .3s; display:flex; flex-direction:column; }
+.cal-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,0.08); }
+.cal-card.hoy { border:2px solid var(--sena-verde); box-shadow:0 8px 24px var(--sena-verde-glow); }
+.cal-card.hito { border:2px solid var(--sena-naranja); }
+.cal-header { display:flex; align-items:center; gap:14px; padding:18px 20px; background:linear-gradient(135deg, var(--sena-verde-glow), rgba(255,255,255,0.6)); border-bottom:1px solid var(--borde); }
+.cal-card.hito .cal-header { background:linear-gradient(135deg, var(--sena-naranja-glow), rgba(255,255,255,0.6)); }
+.cal-daynum { font-family:'Syne',sans-serif; font-size:32px; font-weight:800; color:var(--sena-verde-dark); line-height:1; min-width:44px; text-align:center; }
+.cal-card.hito .cal-daynum { color:var(--sena-naranja); }
+.cal-daymeta { display:flex; flex-direction:column; }
+.cal-month { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--texto-dim); }
+.cal-weekday { font-size:12px; color:var(--texto-dimmer); }
+.cal-sesnum { margin-left:auto; background:var(--sena-verde); color:#fff; font-family:'Syne',sans-serif; font-weight:800; font-size:13px; padding:4px 12px; border-radius:20px; white-space:nowrap; }
+.cal-card.hito .cal-sesnum { background:var(--sena-naranja); }
+.cal-body { padding:18px 20px; flex:1; }
+.cal-tema { font-size:14px; color:var(--texto); line-height:1.6; }
+.cal-badge { display:inline-block; margin-top:10px; font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px; letter-spacing:0.5px; }
+.cal-badge.actual { background:var(--sena-verde-glow); color:var(--sena-verde-dark); border:1px solid var(--sena-verde-border); }
+.cal-badge.social { background:var(--sena-naranja-glow); color:var(--sena-naranja); border:1px solid var(--sena-naranja-border); }
+.cal-badge.cierre { background:rgba(139,92,246,0.1); color:#8b5cf6; border:1px solid rgba(139,92,246,0.3); }
+
+/* TOOL CARDS — dispositivos/conceptos como tarjetas */
+.tool-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:20px; margin:32px 0; position:relative; z-index:1; }
+.tool-card { background:rgba(255,255,255,0.95); border:1px solid var(--borde); border-radius:16px; padding:24px; transition:all .3s; display:flex; flex-direction:column; gap:12px; }
+.tool-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,0.08); border-color:var(--sena-verde-border); }
+.tool-head { display:flex; align-items:center; gap:12px; }
+.tool-icon { width:44px; height:44px; border-radius:12px; background:var(--sena-verde-glow); display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+.tool-name { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:var(--texto); }
+.tool-func { font-size:13px; color:var(--texto-dim); line-height:1.5; }
+.tool-examples { display:flex; flex-wrap:wrap; gap:6px; }
+.tool-chip { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; background:var(--bg-alt); color:var(--sena-verde-dark); padding:4px 10px; border-radius:20px; border:1px solid var(--borde); }
+.tool-use { font-size:13px; color:var(--texto); line-height:1.5; background:var(--sena-verde-glow); border-left:3px solid var(--sena-verde); padding:10px 14px; border-radius:8px; }
+.tool-use strong { color:var(--sena-verde-dark); }
+
+.tags-table { width:100%; border-collapse:collapse; margin:24px 0; position:relative; z-index:1; border-radius:12px; overflow:hidden; }
+.tags-table thead { background:linear-gradient(135deg, var(--sena-verde), var(--sena-verde-dark)); color:#fff; }
+.tags-table thead th { padding:14px 20px; text-align:left; font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; }
+.tags-table tbody tr { border-bottom:1px solid var(--borde); transition:background .2s; }
+.tags-table tbody tr:hover { background:var(--sena-verde-glow); }
+.tags-table tbody tr:last-child { border-bottom:none; }
+.tags-table tbody td { padding:13px 20px; font-size:14px; color:var(--texto-dim); vertical-align:top; }
+.tags-table tbody td:first-child { font-weight:700; color:var(--texto); font-family:'JetBrains Mono',monospace; font-size:13px; }
+
+.footer-nav { position:fixed; bottom:24px; right:24px; display:flex; gap:8px; z-index:200; }
+.footer-nav a { background:var(--sena-verde); color:#fff; padding:10px 20px; border-radius:24px; font-size:13px; font-weight:700; text-decoration:none; transition:all .25s; box-shadow:0 4px 16px rgba(57,169,0,0.3); }
+.footer-nav a:hover { background:var(--sena-verde-dark); transform:translateY(-2px); }
+.footer-nav a.prev { background:#fff; color:var(--sena-verde); border:2px solid var(--sena-verde-border); box-shadow:none; }
+
+.reveal { opacity:0; transform:translateY(32px); transition:opacity .6s ease, transform .6s ease; }
+.reveal.active { opacity:1; transform:translateY(0); }
+
+.timeline { position:relative; z-index:1; }
+.timeline::before { content:''; position:absolute; left:24px; top:0; bottom:0; width:2px; background:linear-gradient(to bottom, var(--sena-verde), var(--sena-naranja)); }
+.tl-item { display:flex; gap:32px; margin-bottom:28px; padding-left:56px; position:relative; }
+.tl-dot { position:absolute; left:14px; top:4px; width:22px; height:22px; border-radius:50%; background:var(--sena-verde); border:3px solid #fff; box-shadow:0 0 0 3px var(--sena-verde-border); flex-shrink:0; }
+.tl-content { background:rgba(255,255,255,0.9); border:1px solid var(--borde); border-radius:12px; padding:20px 24px; flex:1; }
+.tl-time { font-size:11px; font-weight:700; color:var(--sena-verde); letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; }
+.tl-titulo { font-size:17px; font-weight:700; color:var(--texto); margin-bottom:6px; }
+.tl-desc { font-size:14px; color:var(--texto-dim); line-height:1.6; }
+
+.step-list { list-style:none; margin:20px 0; counter-reset:step; }
+.step-list li { counter-increment:step; display:flex; gap:16px; align-items:flex-start; padding:16px 0; border-bottom:1px solid var(--borde); font-size:15px; color:var(--texto-dim); line-height:1.6; }
+.step-list li:last-child { border-bottom:none; }
+.step-list li::before { content:counter(step); min-width:32px; height:32px; background:linear-gradient(135deg,var(--sena-verde),var(--sena-verde-dark)); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; flex-shrink:0; margin-top:2px; }
+
+.sys-diagram { background:#1e293b; border:1px solid #334155; border-radius:16px; padding:36px 32px; margin:32px 0; position:relative; z-index:1; overflow-x:auto; }
+.sys-diagram-title { font-family:'Syne',sans-serif; font-size:15px; font-weight:800; text-align:center; margin-bottom:28px; color:#94a3b8; letter-spacing:1px; }
+.sys-flow { display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:nowrap; }
+.sys-box { min-width:130px; border-radius:10px; padding:16px 14px; text-align:center; border:2px solid; }
+.sys-box.entrada { background:rgba(57,169,0,0.12); border-color:var(--sena-verde); }
+.sys-box.proceso { background:rgba(59,130,246,0.12); border-color:#3b82f6; }
+.sys-box.almacen { background:rgba(139,92,246,0.12); border-color:#8b5cf6; }
+.sys-box.salida { background:rgba(255,107,0,0.12); border-color:var(--sena-naranja); }
+.sys-box-label { font-family:'Syne',sans-serif; font-weight:800; font-size:13px; color:#fff; margin-bottom:4px; }
+.sys-box-sub { font-size:11px; color:#94a3b8; font-family:'JetBrains Mono',monospace; }
+.sys-arrow { color:#64748b; font-size:22px; flex-shrink:0; }
+.sys-feedback { text-align:center; margin-top:20px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#fbbf24; }
+
+.attr-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:16px; position:relative; z-index:1; }
+.attr-card { background:rgba(255,255,255,0.9); border:1px solid var(--borde); border-radius:12px; padding:20px; }
+.attr-type-badge { display:inline-block; font-size:10px; font-weight:700; padding:3px 10px; border-radius:20px; margin-bottom:10px; letter-spacing:0.8px; text-transform:uppercase; }
+.attr-type-badge.abierto { background:var(--sena-verde-glow); color:var(--sena-verde); border:1px solid var(--sena-verde-border); }
+.attr-type-badge.cerrado { background:rgba(239,68,68,0.1); color:#ef4444; border:1px solid rgba(239,68,68,0.3); }
+.attr-type-badge.estrategico { background:rgba(139,92,246,0.1); color:#8b5cf6; border:1px solid rgba(139,92,246,0.3); }
+.attr-card-title { font-size:15px; font-weight:700; color:var(--texto); margin-bottom:6px; }
+.attr-card-desc { font-size:13px; color:var(--texto-dim); line-height:1.5; margin-bottom:8px; }
+.attr-card-example { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--sena-verde-dark); background:var(--bg-alt); border-radius:6px; padding:4px 10px; }
+
+@media(max-width:768px){
+  .slide { padding:60px 24px; }
+  .topbar { padding:10px 16px; }
+  .topbar-nav { display:none; }
+  .agenda-grid { grid-template-columns:1fr; }
+  .compare-grid { grid-template-columns:1fr; }
+  .sys-flow { flex-direction:column; }
+  .sys-arrow { transform:rotate(90deg); }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="sena-logo">SENA</div>
+    <div>
+      <div class="topbar-brand">GA2-220501121-AA1 · Sesión 2</div>
+      <div class="topbar-sub">Martes 21 de Julio 2026</div>
+    </div>
+  </div>
+  <nav class="topbar-nav">
+    <a href="#portada">Inicio</a>
+    <a href="#repaso">Repaso</a>
+    <a href="#caso">Caso ADMINISTRA</a>
+    <a href="#redes">Redes</a>
+    <a href="#alcance">Internet/Intranet/Extranet</a>
+    <a href="#medio">Alámbrica/Inalámbrica</a>
+    <a href="#dispositivos">Dispositivos Inteligentes</a>
+    <a href="#automatizacion">Automatización</a>
+    <a href="#domotica">Domótica/Inmótica</a>
+    <a href="#diferencias">Diferencias</a>
+  </nav>
+</div>
+
+<!-- SLIDE 1: PORTADA -->
+<section class="slide bg-verde" id="portada">
+  <div class="bg-dots"></div>
+  <div class="bg-glow g1"></div>
+  <div class="bg-glow g2"></div>
+  <div class="slide-num-badge">01 / 12</div>
+  <div class="slide-inner">
+    <div class="portada-sena-tag"><span class="dot"></span> SENA · Gestión del Desarrollo Administrativo e Innovación</div>
+    <h1 class="portada-titulo reveal">
+      Redes de Información
+      <span class="linea2">Dispositivos Inteligentes y Automatización</span>
+    </h1>
+    <p class="portada-desc reveal">Sesión 2 de 6 — Guía de Aprendizaje 2 (GA2). Competencia 220501121: Operar herramientas informáticas y digitales de acuerdo con protocolos y manuales técnicos. Fase de Análisis — AP1. Caso de estudio: <strong>ADMINISTRA S.A.S.</strong> — PYME de servicios administrativos y gestión documental.</p>
+    <div class="portada-meta reveal">
+      <div class="portada-meta-item"><strong>📅 21 Julio 2026</strong>Martes</div>
+      <div class="portada-meta-item"><strong>🎯 Competencia</strong>220501121</div>
+      <div class="portada-meta-item"><strong>📋 RAP trabajado</strong>RAP 1</div>
+      <div class="portada-meta-item"><strong>📘 Contenido</strong>Base teórica (100%)</div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 2: REPASO SESIÓN 1 -->
+<section class="slide" id="repaso">
+  <div class="slide-num-badge">02 / 12</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag verde">Repaso</span>
+      <h2 class="sec-titulo">Lo que vimos en la Sesión 1</h2>
+      <p class="sec-desc">Hoy completamos la base teórica del RAP 1. La sesión pasada vimos "las piezas" — sistemas de información, software y hardware. Hoy vemos "cómo se conectan entre sí": redes, dispositivos inteligentes y automatización.</p>
+    </div>
+    <div class="agenda-grid reveal">
+      <div class="agenda-item" style="border-color:var(--sena-verde-border);background:linear-gradient(135deg,var(--sena-verde-glow),rgba(255,255,255,0.9))">
+        <div class="agenda-num">01</div>
+        <div class="agenda-titulo">Sistemas de información</div>
+        <div class="agenda-desc">Conjunto organizado de personas, procesos, datos, software y hardware que producen información útil.</div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-num">02</div>
+        <div class="agenda-titulo">Teoría General de Sistemas</div>
+        <div class="agenda-desc">Todo sistema está compuesto por partes interrelacionadas que funcionan como un todo (Bertalanffy). Sistemas abiertos vs. cerrados.</div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-num">03</div>
+        <div class="agenda-titulo">Software</div>
+        <div class="agenda-desc">Programas e instrucciones que operan un equipo (propietario, libre, SaaS, freeware).</div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-num">04</div>
+        <div class="agenda-titulo">Hardware</div>
+        <div class="agenda-desc">Componentes físicos de un equipo (CPU, RAM, disco duro/SSD, periféricos).</div>
+      </div>
+    </div>
+    <div class="info-box tip reveal">
+      <div class="info-box-label">💡 Hoy completamos el panorama</div>
+      <p>Si la sesión pasada vimos las piezas del sistema, hoy vemos "la carretera" por la que se conectan entre sí: las redes de información, los dispositivos inteligentes y la automatización (domótica e inmótica).</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3: CASO ADMINISTRA S.A.S. -->
+<section class="slide bg-purpura" id="caso">
+  <div class="slide-num-badge">03 / 12</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag purpura">Caso de Estudio</span>
+      <h2 class="sec-titulo">ADMINISTRA S.A.S. — el reto de la conectividad</h2>
+      <p class="sec-desc">El modelo de negocio de ADMINISTRA S.A.S. — 1 oficina en Bogotá atendiendo clientes remotos en 4 ciudades — depende completamente de estar bien conectada.</p>
+    </div>
+    <div class="compare-grid reveal" style="grid-template-columns:1fr;">
+      <div class="compare-card purpura">
+        <div class="compare-title" style="color:#8b5cf6">🏢 Recordemos el perfil de la empresa</div>
+        <ul class="check-list">
+          <li><span class="icon azul">✓</span><strong>PYME</strong> (Pequeña y Mediana Empresa) de 35 empleados</li>
+          <li><span class="icon azul">✓</span>Outsourcing administrativo, contable y de gestión documental para terceros</li>
+          <li><span class="icon azul">✓</span>1 oficina en Bogotá, clientes atendidos de forma remota en 4 ciudades</li>
+          <li><span class="icon azul">✓</span>Áreas: Gerencia, Talento Humano, Contabilidad, Atención al Cliente, Archivo, Sistemas</li>
+        </ul>
+      </div>
+      <div class="compare-card verde">
+        <div class="compare-title" style="color:var(--sena-verde)">📋 4 retos de conectividad que resolvemos HOY (Sesión 2)</div>
+        <ul class="need-list">
+          <li class="need-item">
+            <div class="need-head"><span class="need-num"></span><span class="need-title">Compartir archivos entre áreas en tiempo real</span><span class="need-area">Interno</span></div>
+            <div class="need-desc">Talento Humano necesita consultar datos que están en Contabilidad. → Se resuelve con una <strong>red interna (Intranet)</strong>.</div>
+          </li>
+          <li class="need-item">
+            <div class="need-head"><span class="need-num"></span><span class="need-title">Recibir documentos de clientes externos</span><span class="need-area">Externo</span></div>
+            <div class="need-desc">Clientes que no son empleados necesitan enviar solicitudes y documentos. → Se resuelve con <strong>Internet</strong> + una <strong>Extranet</strong> controlada.</div>
+          </li>
+          <li class="need-item">
+            <div class="need-head"><span class="need-num"></span><span class="need-title">Videollamadas y trabajo remoto</span><span class="need-area">Conectividad</span></div>
+            <div class="need-desc">Comunicación constante con clientes de otras ciudades. → Depende de una <strong>red alámbrica o inalámbrica</strong> estable.</div>
+          </li>
+          <li class="need-item">
+            <div class="need-head"><span class="need-num"></span><span class="need-title">Controlar el acceso físico y ambiental de la oficina</span><span class="need-area">Automatización</span></div>
+            <div class="need-desc">Cámaras, luces y alarmas gestionadas de forma más eficiente. → Se apoya en <strong>dispositivos inteligentes y automatización (inmótica)</strong>.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="info-box tip reveal" style="margin-top:24px">
+      <div class="info-box-label">💡 Hilo conductor de hoy</div>
+      <p>Cada concepto de red, dispositivo o automatización que veamos, lo vamos a conectar con una de estas 4 necesidades reales de conectividad de ADMINISTRA S.A.S.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4: REDES DE INFORMACIÓN -->
+<section class="slide bg-azul" id="redes">
+  <div class="slide-num-badge">04 / 12</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag azul">Redes de Información</span>
+      <h2 class="sec-titulo">¿Qué es una red de información?</h2>
+      <p class="sec-desc">Conjunto de dispositivos informáticos —computadores, servidores, impresoras, celulares— conectados entre sí mediante un medio físico o inalámbrico, con el propósito de compartir recursos, datos y servicios.</p>
+    </div>
+    <div class="info-box tip reveal">
+      <div class="info-box-label">💡 La analogía clave</div>
+      <p>Si un sistema de información (visto en la Sesión 1) es "el conjunto de personas, procesos y tecnología que producen información útil", la red de información es <strong>la carretera</strong> por la que esa información viaja de un punto a otro dentro y fuera de la organización.</p>
+    </div>
+    <div class="info-box info reveal">
+      <div class="info-box-label">📌 ¿Por qué una PYME necesita redes?</div>
+      <p>Sin una red, cada computador de ADMINISTRA S.A.S. sería una "isla" que no podría compartir archivos, imprimir en la impresora común, ni comunicarse con los clientes remotos. La red convierte un grupo de equipos aislados en un sistema conectado y funcional.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5: INTERNET, INTRANET Y EXTRANET -->
+<section class="slide" id="alcance">
+  <div class="slide-num-badge">05 / 12</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag verde">Redes según su alcance</span>
+      <h2 class="sec-titulo">Internet, Intranet y Extranet</h2>
+      <p class="sec-desc">La diferencia entre estos tres tipos de red no es la tecnología que usan — es <strong>quién tiene permiso de entrar</strong> y qué tan privada es la información que circula.</p>
+    </div>
+    <table class="tags-table reveal">
+      <thead><tr><th>Tipo de red</th><th>¿Quién puede acceder?</th><th>Ejemplo ADMINISTRA S.A.S.</th></tr></thead>
+      <tbody>
+        <tr><td>Internet</td><td>Cualquier persona con acceso a la red pública mundial</td><td>Los clientes consultan la página web de ADMINISTRA S.A.S.</td></tr>
+        <tr><td>Intranet</td><td>Solo empleados de la empresa</td><td>Talento Humano, Contabilidad y Archivo comparten archivos internos</td></tr>
+        <tr><td>Extranet</td><td>Empleados y terceros autorizados con credenciales</td><td>Un cliente de Medellín consulta el estado de su contrato con usuario y contraseña</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box warning reveal">
+      <div class="info-box-label">⚠️ Pregunta de refuerzo</div>
+      <p>Si ADMINISTRA S.A.S. quiere que un proveedor externo suba facturas directamente a un sistema, pero <strong>sin</strong> darle acceso a los archivos internos de nómina, ¿qué tipo de red debería usar? → <strong>Extranet</strong>, porque permite acceso controlado a un tercero sin exponer toda la Intranet.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 6: REDES SEGÚN SU MEDIO DE CONEXIÓN -->
+<section class="slide bg-alt" id="medio">
+  <div class="slide-num-badge">06 / 12</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag naranja">Redes según su medio</span>
+      <h2 class="sec-titulo">Red alámbrica vs. red inalámbrica</h2>
+      <p class="sec-desc">Un área que depende de procesos críticos y continuos se beneficia de una conexión alámbrica más estable; un área con necesidad de movilidad se beneficia más de la conexión inalámbrica.</p>
+    </div>
+    <div class="compare-grid reveal">
+      <div class="compare-card verde">
+        <div class="compare-title" style="color:var(--sena-verde)">🔌 Red alámbrica (cableada)</div>
+        <p style="font-size:14px;color:var(--texto-dim)"><strong>Ventajas:</strong> mayor velocidad y estabilidad, menos interferencias.<br><strong>Desventajas:</strong> menos movilidad, requiere cableado físico.<br><strong>En ADMINISTRA S.A.S.:</strong> los computadores fijos de Contabilidad procesan la nómina sin interrupciones.</p>
+      </div>
+      <div class="compare-card azul">
+        <div class="compare-title" style="color:#3b82f6">📶 Red inalámbrica (wifi)</div>
+        <p style="font-size:14px;color:var(--texto-dim)"><strong>Ventajas:</strong> movilidad, fácil de ampliar.<br><strong>Desventajas:</strong> puede ser menos estable, más vulnerable sin buena protección.<br><strong>En ADMINISTRA S.A.S.:</strong> Atención al Cliente usa portátiles por wifi entre distintas salas.</p>
+      </div>
+    </div>
+    <div class="info-box info reveal">
+      <div class="info-box-label">📌 Idea clave para decisiones administrativas</div>
+      <p>Contabilidad (proceso crítico y continuo como la nómina) se beneficia de una conexión alámbrica más estable; Atención al Cliente (necesita moverse entre salas) se beneficia más de la conexión inalámbrica.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 7: DISPOSITIVOS INTELIGENTES -->
+<section class="slide bg-verde" id="dispositivos">
+  <div class="slide-num-badge">07 / 12</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag verde">Dispositivos Inteligentes</span>
+      <h2 class="sec-titulo">Equipos que se conectan y deciden</h2>
+      <p class="sec-desc">Un dispositivo inteligente, además de cumplir su función básica, tiene la capacidad de <strong>conectarse a una red, recibir y procesar datos, y tomar decisiones automáticas o remotas</strong> sin que una persona lo opere manualmente en todo momento.</p>
+    </div>
+    <div class="info-box tip reveal">
+      <div class="info-box-label">💡 Ejemplo comparativo</div>
+      <p>No es lo mismo una impresora común (solo imprime cuando alguien le da la orden) que una impresora inteligente conectada a la red que recibe trabajos desde cualquier computador, avisa cuando se queda sin tóner, o incluso pide el repuesto automáticamente.</p>
+    </div>
+    <table class="tags-table reveal">
+      <thead><tr><th>Concepto</th><th>Descripción</th><th>Ejemplo ADMINISTRA S.A.S.</th></tr></thead>
+      <tbody>
+        <tr><td>Hub de almacenamiento</td><td>Punto central de una red donde se concentran y distribuyen los datos</td><td>Servidor central en Bogotá donde se guardan todos los contratos digitalizados</td></tr>
+        <tr><td>Root de almacenamiento</td><td>Carpeta o directorio raíz: punto de partida de toda la estructura de archivos</td><td>Carpeta principal "Clientes", organizada en subcarpetas por ciudad y por cliente</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box info reveal">
+      <div class="info-box-label">📌 Ejemplo aplicado</div>
+      <p>Cuando un empleado de Archivo guarda un contrato digitalizado, ese archivo viaja por la red hasta el <strong>hub de almacenamiento</strong> (servidor central), y queda organizado dentro de la carpeta <strong>root</strong> correspondiente, para que cualquier empleado autorizado pueda encontrarlo después.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 8: AUTOMATIZACIÓN -->
+<section class="slide bg-naranja" id="automatizacion">
+  <div class="slide-num-badge">08 / 12</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag naranja">Automatización</span>
+      <h2 class="sec-titulo">Procesos con mínima intervención humana</h2>
+      <p class="sec-desc">La automatización es el uso de tecnología para que un proceso se ejecute de forma total o parcialmente autónoma, una vez ha sido configurado.</p>
+    </div>
+    <div class="sys-diagram reveal">
+      <div class="sys-diagram-title">EJEMPLO DE AUTOMATIZACIÓN — LUCES DEL PASILLO EN ADMINISTRA S.A.S.</div>
+      <div class="sys-flow">
+        <div class="sys-box entrada">
+          <div class="sys-box-label">SENSOR</div>
+          <div class="sys-box-sub">Detecta movimiento</div>
+        </div>
+        <div class="sys-arrow">→</div>
+        <div class="sys-box proceso">
+          <div class="sys-box-label">REGLA CONFIGURADA</div>
+          <div class="sys-box-sub">"Si hay movimiento, encender"</div>
+        </div>
+        <div class="sys-arrow">→</div>
+        <div class="sys-box salida">
+          <div class="sys-box-label">ACTUADOR</div>
+          <div class="sys-box-sub">Enciende la luz</div>
+        </div>
+      </div>
+      <div class="sys-feedback">↩ Sin movimiento por unos minutos → el sensor ordena al actuador apagar la luz automáticamente</div>
+    </div>
+    <div class="info-box tip reveal">
+      <div class="info-box-label">💡 Componentes clave</div>
+      <p>Un proceso automatizado se apoya en <strong>sensores</strong> (detectan un cambio: movimiento, luz, temperatura) y <strong>actuadores</strong> (ejecutan una acción: encender, cerrar, activar). Se ejecuta según reglas predefinidas, reduce el error humano en tareas repetitivas y puede funcionar sin que una persona esté presente todo el tiempo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 9: DOMÓTICA E INMÓTICA -->
+<section class="slide bg-purpura" id="domotica">
+  <div class="slide-num-badge">09 / 12</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag purpura">Domótica e Inmótica</span>
+      <h2 class="sec-titulo">Dos aplicaciones de la automatización</h2>
+      <p class="sec-desc">Ambas usan tecnología similar (sensores, actuadores, redes), pero se diferencian por <strong>el tipo de edificación</strong> donde se aplican.</p>
+    </div>
+    <div class="attr-grid reveal">
+      <div class="attr-card">
+        <span class="attr-type-badge abierto">Domótica</span>
+        <div class="attr-card-title">Automatización de viviendas</div>
+        <div class="attr-card-desc">Control de iluminación, climatización, seguridad y electrodomésticos del hogar.</div>
+        <div class="attr-card-example">Un empleado en teletrabajo tiene un sistema domótico que ajusta la luz de su oficina en casa según la hora</div>
+      </div>
+      <div class="attr-card">
+        <span class="attr-type-badge estrategico">Inmótica</span>
+        <div class="attr-card-title">Automatización de edificios corporativos</div>
+        <div class="attr-card-desc">Control de iluminación, climatización, seguridad, ascensores y accesos en oficinas o centros comerciales.</div>
+        <div class="attr-card-example">La oficina de ADMINISTRA S.A.S. controla el acceso por tarjetas y regula la climatización según el horario laboral</div>
+      </div>
+    </div>
+    <div class="info-box tip reveal">
+      <div class="info-box-label">💡 Regla mnemotécnica</div>
+      <p>"Domótica" suena parecido a "domicilio" (la casa); "inmótica" se asocia a "inmueble" corporativo (oficinas y edificios).</p>
+    </div>
+    <div class="info-box warning reveal">
+      <div class="info-box-label">⚠️ Pregunta de refuerzo</div>
+      <p>Si ADMINISTRA S.A.S. instala un sistema que apaga automáticamente el aire acondicionado de toda la oficina a las 7:00 p.m. cuando ya no hay empleados, ¿es domótica o inmótica? → <strong>Inmótica</strong>, porque se aplica a un edificio corporativo, no a una vivienda.</p>
+    </div>
+    <div class="info-box info reveal">
+      <div class="info-box-label">📌 Beneficios administrativos para una PYME</div>
+      <p><strong>Ahorro de costos:</strong> climatización e iluminación autorreguladas reducen el consumo eléctrico. <strong>Seguridad:</strong> cámaras y alarmas conectadas permiten monitoreo remoto. <strong>Eficiencia operativa:</strong> control de accesos automatizado evita la gestión manual de llaves o registros.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 10: DIFERENCIAS FUNCIONALES -->
+<section class="slide" id="diferencias">
+  <div class="slide-num-badge">10 / 12</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag verde">Diferencias Funcionales</span>
+      <h2 class="sec-titulo">Diferenciar redes y dispositivos con criterio técnico</h2>
+      <p class="sec-desc">Igual que con las herramientas ofimáticas de la Sesión 1: no basta con nombrar la red o el dispositivo — hay que explicar para qué sirve y qué lo diferencia técnicamente de otro.</p>
+    </div>
+    <table class="tags-table reveal">
+      <thead><tr><th>Elemento</th><th>¿Para qué se usa?</th><th>¿Qué NO se debe usar para eso?</th><th>Justificación técnica</th></tr></thead>
+      <tbody>
+        <tr><td>Intranet</td><td>Compartir recursos internos entre empleados</td><td>Exponer información a clientes externos sin control</td><td>Es una red privada; exponerla sin control vulnera la seguridad interna</td></tr>
+        <tr><td>Extranet</td><td>Dar acceso controlado a terceros</td><td>Uso exclusivamente interno entre empleados</td><td>Su valor está en el acceso externo controlado, no en la comunicación interna</td></tr>
+        <tr><td>Red alámbrica</td><td>Procesos críticos que requieren estabilidad (ej. nómina)</td><td>Personal que necesita moverse dentro de la oficina</td><td>Restringe la movilidad física del equipo conectado</td></tr>
+        <tr><td>Red inalámbrica</td><td>Movilidad dentro de un área de cobertura</td><td>Transferencias masivas de datos críticos sin respaldo</td><td>Puede sufrir interferencias o caídas más fácilmente que el cable</td></tr>
+        <tr><td>Domótica</td><td>Automatización de una vivienda</td><td>Control de un edificio corporativo completo</td><td>Diseñada para el contexto y escala de un hogar</td></tr>
+        <tr><td>Inmótica</td><td>Automatización de un edificio corporativo</td><td>El contexto de una vivienda individual</td><td>Diseñada para gestionar múltiples zonas, accesos y usuarios de un edificio</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box tip reveal">
+      <div class="info-box-label">💡 Idea clave</div>
+      <p>Así como un procesador de texto no reemplaza a una hoja de cálculo, una red alámbrica no reemplaza a una inalámbrica, ni la domótica reemplaza a la inmótica — cada una responde a una necesidad distinta según el contexto y la escala.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 11: RESUMEN Y CIERRE -->
+<section class="slide bg-verde" id="resumen">
+  <div class="slide-num-badge">11 / 12</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag verde">Resumen</span>
+      <h2 class="sec-titulo">Lo que vimos hoy</h2>
+      <p class="sec-desc">Con esta sesión se completa la totalidad de la base teórica del RAP 1 relacionada con sistemas, software, hardware, redes y automatización.</p>
+    </div>
+    <div class="tool-grid reveal">
+      <div class="tool-card">
+        <div class="tool-head"><div class="tool-icon">🌐</div><div class="tool-name">Redes de información</div></div>
+        <div class="tool-func">Internet, Intranet y Extranet; redes alámbricas e inalámbricas.</div>
+        <div class="tool-use"><strong>En ADMINISTRA S.A.S.:</strong> conecta las áreas internas y a los clientes remotos.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-head"><div class="tool-icon">🖨️</div><div class="tool-name">Dispositivos inteligentes</div></div>
+        <div class="tool-func">Equipos que se conectan, procesan datos y deciden de forma autónoma o remota.</div>
+        <div class="tool-use"><strong>En ADMINISTRA S.A.S.:</strong> hub y root de almacenamiento en el servidor central.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-head"><div class="tool-icon">⚙️</div><div class="tool-name">Automatización</div></div>
+        <div class="tool-func">Procesos con mínima intervención humana, con sensores y actuadores.</div>
+        <div class="tool-use"><strong>En ADMINISTRA S.A.S.:</strong> luces del pasillo con sensor de movimiento.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-head"><div class="tool-icon">🏠</div><div class="tool-name">Domótica e Inmótica</div></div>
+        <div class="tool-func">Automatización de viviendas (domótica) y de edificios corporativos (inmótica).</div>
+        <div class="tool-use"><strong>En ADMINISTRA S.A.S.:</strong> control de acceso y climatización de la oficina de Bogotá.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 12: CIERRE -->
+<section class="slide bg-naranja" id="cierre">
+  <div class="slide-num-badge">12 / 12</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag naranja">Cierre</span>
+      <h2 class="sec-titulo">Próximos pasos</h2>
+      <p class="sec-desc">Con esta sesión completamos la totalidad del contenido teórico del RAP 1 relacionado con sistemas, software, hardware, redes y automatización.</p>
+    </div>
+    <div class="info-box tip reveal">
+      <div class="info-box-label">💡 Resumen de la sesión</div>
+      <p>Hoy vimos: <strong>redes de información</strong> (Internet, Intranet, Extranet) · <strong>redes según su medio</strong> (alámbrica e inalámbrica) · <strong>dispositivos inteligentes</strong> (hub y root de almacenamiento) · <strong>automatización</strong> (sensores y actuadores) · <strong>domótica e inmótica</strong> · <strong>diferencias funcionales</strong> entre redes y dispositivos.</p>
+    </div>
+    <div class="info-box warning reveal">
+      <div class="info-box-label">⚠️ Próxima sesión — Martes 28 de Julio</div>
+      <p>En la <strong>Sesión 3</strong> se presenta y se socializa, en la misma jornada, la evidencia GA2-220501121-AA1-EV01 (video expositivo). Toda la base teórica vista en las sesiones 1 y 2 será la que usarás para argumentar con criterio técnico las diferencias entre herramientas informáticas en tu video. ¡Nos vemos el martes 28 de julio!</p>
+    </div>
+  </div>
+</section>
+
+<div class="footer-nav">
+  <a href="#portada" class="prev">↑ Inicio</a>
+  <a href="#cierre">Ver cierre →</a>
+</div>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

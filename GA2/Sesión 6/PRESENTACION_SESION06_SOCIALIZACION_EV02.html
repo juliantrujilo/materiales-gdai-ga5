@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 06: Presentación y Socialización del Informe de Normas Técnicas y Protocolos (EV02) — Cierre AA1 | SENA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sena-verde: #39a900;
+  --sena-verde-dark: #2d8400;
+  --sena-verde-glow: rgba(57,169,0,0.10);
+  --sena-verde-border: rgba(57,169,0,0.30);
+  --sena-naranja: #ff6b00;
+  --sena-naranja-glow: rgba(255,107,0,0.10);
+  --sena-naranja-border: rgba(255,107,0,0.30);
+  --texto: #1a1a2e;
+  --texto-dim: rgba(26,26,46,0.62);
+  --texto-dimmer: rgba(26,26,46,0.38);
+  --bg: #f8fafc;
+  --bg-alt: #f4f7f2;
+  --borde: #e2e8f0;
+  --acento-azul: #3b82f6;
+  --acento-azul-glow: rgba(59,130,246,0.10);
+  --acento-purpura: #8b5cf6;
+  --acento-purpura-glow: rgba(139,92,246,0.10);
+  --alerta-amarillo: #f59e0b;
+  --alerta-amarillo-glow: rgba(245,158,11,0.10);
+  --alerta-rojo: #ef4444;
+  --alerta-rojo-glow: rgba(239,68,68,0.10);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; color:var(--texto); background:var(--bg); line-height:1.6; overflow-x:hidden; }
+
+.topbar { position:sticky; top:0; z-index:100; background:rgba(255,255,255,0.95); backdrop-filter:blur(16px); border-bottom:2px solid var(--sena-verde); padding:12px 32px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 2px 12px var(--sena-verde-glow); }
+.topbar-left { display:flex; align-items:center; gap:16px; }
+.sena-logo { background:var(--sena-verde); color:#fff; font-weight:900; font-size:18px; padding:8px 16px; border-radius:8px; letter-spacing:1px; }
+.topbar-brand { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color:var(--sena-verde-dark); }
+.topbar-sub { font-size:12px; color:var(--texto-dimmer); margin-top:2px; }
+.topbar-nav { display:flex; gap:4px; flex-wrap:wrap; }
+.topbar-nav a { color:var(--texto-dim); text-decoration:none; font-size:11px; font-weight:600; padding:6px 14px; border-radius:20px; border:1px solid transparent; transition:all .25s; white-space:nowrap; }
+.topbar-nav a:hover { color:var(--sena-verde-dark); border-color:var(--sena-verde-border); background:var(--sena-verde-glow); }
+
+.slide { min-height:100vh; padding:80px 48px; position:relative; scroll-margin-top:64px; border-bottom:1px solid var(--borde); }
+.slide.bg-alt { background:var(--bg-alt); }
+.slide.bg-verde { background:linear-gradient(135deg, var(--sena-verde-glow) 0%, #ffffff 60%); }
+.slide.bg-naranja { background:linear-gradient(135deg, #ffffff 40%, var(--sena-naranja-glow) 100%); }
+.slide.bg-azul { background:linear-gradient(135deg, var(--acento-azul-glow) 0%, #ffffff 60%); }
+.slide.bg-purpura { background:linear-gradient(135deg, var(--acento-purpura-glow) 0%, #ffffff 60%); }
+.slide-inner { max-width:1200px; margin:0 auto; }
+.slide-num-badge { position:absolute; top:24px; right:24px; background:var(--sena-verde-glow); color:var(--sena-verde); font-size:11px; font-weight:700; padding:6px 12px; border-radius:20px; letter-spacing:1px; border:1px solid var(--sena-verde-border); }
+
+.bg-dots { position:absolute; inset:0; background-image:radial-gradient(var(--sena-verde-border) 1px, transparent 1px); background-size:28px 28px; pointer-events:none; opacity:0.4; }
+.bg-glow { position:absolute; width:600px; height:600px; border-radius:50%; filter:blur(120px); opacity:0.2; pointer-events:none; z-index:0; }
+.bg-glow.g1 { background:radial-gradient(circle, var(--sena-verde-glow), transparent 70%); top:-200px; left:-200px; }
+.bg-glow.g2 { background:radial-gradient(circle, var(--sena-naranja-glow), transparent 70%); bottom:-200px; right:-200px; }
+
+.portada-sena-tag { display:inline-flex; align-items:center; gap:8px; background:var(--sena-verde-glow); border:1px solid var(--sena-verde-border); padding:10px 20px; border-radius:30px; font-size:12px; font-weight:700; color:var(--sena-verde-dark); letter-spacing:1.5px; margin-bottom:32px; position:relative; z-index:1; }
+.portada-sena-tag .dot { width:6px; height:6px; background:var(--sena-verde); border-radius:50%; animation:blink 1.5s ease-in-out infinite; }
+@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+.portada-titulo { font-family:'Syne',sans-serif; font-size:clamp(36px,6vw,60px); font-weight:800; line-height:1.15; margin-bottom:24px; color:var(--texto); position:relative; z-index:1; }
+.portada-titulo .linea2 { display:block; background:linear-gradient(135deg, var(--sena-verde), var(--sena-naranja)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.portada-desc { font-size:clamp(16px,2vw,20px); color:var(--texto-dim); max-width:760px; margin-bottom:32px; position:relative; z-index:1; line-height:1.7; }
+.portada-meta { display:flex; gap:16px; flex-wrap:wrap; font-size:14px; position:relative; z-index:1; }
+.portada-meta-item { background:rgba(255,255,255,0.9); border:1px solid var(--borde); padding:10px 20px; border-radius:12px; font-weight:600; color:var(--texto-dim); flex:1 1 auto; min-width:180px; text-align:center; }
+.portada-meta-item strong { display:block; color:var(--texto); font-size:16px; margin-bottom:2px; }
+
+.sec-header { margin-bottom:48px; position:relative; z-index:1; }
+.sec-tag { display:inline-block; font-size:11px; font-weight:700; padding:6px 14px; border-radius:20px; letter-spacing:1.2px; margin-bottom:16px; text-transform:uppercase; }
+.sec-tag.verde { background:var(--sena-verde-glow); color:var(--sena-verde); border:1px solid var(--sena-verde-border); }
+.sec-tag.naranja { background:var(--sena-naranja-glow); color:var(--sena-naranja); border:1px solid var(--sena-naranja-border); }
+.sec-tag.azul { background:rgba(59,130,246,0.10); color:#3b82f6; border:1px solid rgba(59,130,246,0.30); }
+.sec-tag.purpura { background:rgba(139,92,246,0.10); color:#8b5cf6; border:1px solid rgba(139,92,246,0.30); }
+.sec-titulo { font-family:'Syne',sans-serif; font-size:clamp(28px,4vw,44px); font-weight:800; line-height:1.2; color:var(--texto); margin-bottom:16px; }
+.sec-desc { font-size:clamp(15px,1.8vw,18px); color:var(--texto-dim); max-width:820px; line-height:1.7; }
+
+.compare-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:24px; margin:32px 0; position:relative; z-index:1; }
+.compare-card { background:rgba(255,255,255,0.9); border:2px solid; border-radius:16px; padding:28px; }
+.compare-card.verde { border-color:var(--sena-verde-border); background:linear-gradient(135deg, var(--sena-verde-glow), rgba(255,255,255,0.9)); }
+.compare-card.naranja { border-color:var(--sena-naranja-border); background:linear-gradient(135deg, rgba(255,255,255,0.9), var(--sena-naranja-glow)); }
+.compare-card.azul { border-color:rgba(59,130,246,0.3); background:linear-gradient(135deg, rgba(59,130,246,0.08), rgba(255,255,255,0.9)); }
+.compare-card.purpura { border-color:rgba(139,92,246,0.3); background:linear-gradient(135deg, rgba(139,92,246,0.08), rgba(255,255,255,0.9)); }
+.compare-title { font-family:'Syne',sans-serif; font-size:19px; font-weight:800; margin-bottom:16px; }
+
+.info-box { border-radius:12px; padding:24px 28px; margin:24px 0; position:relative; z-index:1; border-left:4px solid; }
+.info-box.tip { background:var(--sena-verde-glow); border-color:var(--sena-verde); }
+.info-box.warning { background:rgba(245,158,11,0.10); border-color:#f59e0b; }
+.info-box.info { background:rgba(59,130,246,0.10); border-color:#3b82f6; }
+.info-box-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+.info-box.tip .info-box-label { color:var(--sena-verde); }
+.info-box.warning .info-box-label { color:#f59e0b; }
+.info-box.info .info-box-label { color:#3b82f6; }
+.info-box p { font-size:15px; color:var(--texto); line-height:1.7; }
+
+.check-list { list-style:none; margin:16px 0; position:relative; z-index:1; }
+.check-list li { display:flex; align-items:flex-start; gap:14px; padding:10px 0; border-bottom:1px solid var(--borde); font-size:15px; color:var(--texto-dim); line-height:1.5; }
+.check-list li:last-child { border-bottom:none; }
+.check-list .icon { width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; margin-top:2px; }
+.check-list .icon.verde { background:var(--sena-verde-glow); color:var(--sena-verde); border:1px solid var(--sena-verde-border); }
+.check-list .icon.naranja { background:var(--sena-naranja-glow); color:var(--sena-naranja); border:1px solid var(--sena-naranja-border); }
+.check-list .icon.azul { background:rgba(59,130,246,0.1); color:#3b82f6; border:1px solid rgba(59,130,246,0.3); }
+
+.step-list { list-style:none; margin:20px 0; counter-reset:step; position:relative; z-index:1; }
+.step-list li { counter-increment:step; display:flex; gap:16px; align-items:flex-start; padding:16px 0; border-bottom:1px solid var(--borde); font-size:15px; color:var(--texto-dim); line-height:1.6; }
+.step-list li:last-child { border-bottom:none; }
+.step-list li::before { content:counter(step); min-width:32px; height:32px; background:linear-gradient(135deg,var(--sena-verde),var(--sena-verde-dark)); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; flex-shrink:0; margin-top:2px; }
+
+.tags-table { width:100%; border-collapse:collapse; margin:24px 0; position:relative; z-index:1; border-radius:12px; overflow:hidden; }
+.tags-table thead { background:linear-gradient(135deg, var(--sena-verde), var(--sena-verde-dark)); color:#fff; }
+.tags-table thead th { padding:14px 20px; text-align:left; font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; }
+.tags-table tbody tr { border-bottom:1px solid var(--borde); transition:background .2s; }
+.tags-table tbody tr:hover { background:var(--sena-verde-glow); }
+.tags-table tbody tr:last-child { border-bottom:none; }
+.tags-table tbody td { padding:13px 20px; font-size:14px; color:var(--texto-dim); vertical-align:top; }
+.tags-table tbody td:first-child { font-weight:700; color:var(--texto); font-family:'JetBrains Mono',monospace; font-size:13px; }
+
+/* TOOL CARDS */
+.tool-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:20px; margin:32px 0; position:relative; z-index:1; }
+.tool-card { background:rgba(255,255,255,0.95); border:1px solid var(--borde); border-radius:16px; padding:24px; transition:all .3s; display:flex; flex-direction:column; gap:12px; }
+.tool-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,0.08); border-color:var(--sena-verde-border); }
+.tool-head { display:flex; align-items:center; gap:12px; min-width:0; }
+.tool-icon { width:44px; height:44px; border-radius:12px; background:var(--sena-verde-glow); display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+.tool-name { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:var(--texto); min-width:0; word-break:break-word; }
+.tool-func { font-size:13px; color:var(--texto-dim); line-height:1.5; }
+.tool-examples { display:flex; flex-wrap:wrap; gap:6px; }
+.tool-chip { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; background:var(--bg-alt); color:var(--sena-verde-dark); padding:4px 10px; border-radius:20px; border:1px solid var(--borde); }
+.tool-use { font-size:13px; color:var(--texto); line-height:1.5; background:var(--sena-verde-glow); border-left:3px solid var(--sena-verde); padding:10px 14px; border-radius:8px; }
+.tool-use strong { color:var(--sena-verde-dark); }
+
+.checklist-box { list-style:none; margin:16px 0; position:relative; z-index:1; }
+.checklist-box li { display:flex; align-items:flex-start; gap:14px; padding:12px 0; border-bottom:1px solid var(--borde); font-size:15px; color:var(--texto-dim); line-height:1.5; }
+.checklist-box li:last-child { border-bottom:none; }
+.checklist-box .icon { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; margin-top:2px; background:var(--sena-verde-glow); color:var(--sena-verde); border:1px solid var(--sena-verde-border); }
+
+/* TIMELINE — recorrido de las 6 sesiones */
+.tl-caso { list-style:none; margin:24px 0; position:relative; z-index:1; counter-reset:tlstep; }
+.tl-caso-item { counter-increment:tlstep; display:flex; gap:18px; padding:18px 0; border-bottom:1px solid var(--borde); align-items:flex-start; }
+.tl-caso-item:last-child { border-bottom:none; }
+.tl-caso-num { min-width:32px; height:32px; background:linear-gradient(135deg,var(--sena-verde),var(--sena-verde-dark)); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; flex-shrink:0; }
+.tl-caso-num::before { content: counter(tlstep); }
+.tl-caso-body { flex:1; min-width:0; }
+.tl-caso-hora { display:block; font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; color:var(--sena-verde-dark); background:var(--sena-verde-glow); border:1px solid var(--sena-verde-border); border-radius:20px; padding:3px 12px; margin-bottom:8px; }
+.tl-caso-evento { font-size:15px; font-weight:700; color:var(--texto); margin-bottom:4px; }
+.tl-caso-desc { font-size:14px; color:var(--texto-dim); line-height:1.6; }
+.tl-caso-desc .tag-riesgo { display:inline-block; margin-top:6px; font-size:12px; font-weight:700; padding:3px 10px; border-radius:20px; background:var(--sena-verde-glow); color:var(--sena-verde-dark); border:1px solid var(--sena-verde-border); }
+
+/* DOC-STRUCT — estructura del documento: timeline con tarjeta flotante por sección */
+.doc-struct { list-style:none; margin:32px 0; position:relative; z-index:1; counter-reset:docstep; }
+.doc-struct::before { content:''; position:absolute; left:19px; top:8px; bottom:8px; width:2px; background:linear-gradient(to bottom, var(--sena-verde), var(--sena-naranja)); }
+.doc-item { counter-increment:docstep; display:flex; gap:20px; align-items:flex-start; margin-bottom:20px; position:relative; }
+.doc-item:last-child { margin-bottom:0; }
+.doc-num { min-width:40px; height:40px; background:linear-gradient(135deg,var(--sena-verde),var(--sena-naranja)); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; flex-shrink:0; z-index:1; box-shadow:0 0 0 4px var(--bg-alt); }
+.doc-num::before { content: counter(docstep); }
+.doc-card { flex:1; min-width:0; background:rgba(255,255,255,0.95); border:1px solid var(--borde); border-radius:14px; padding:20px 24px; transition:all .3s; }
+.doc-card:hover { transform:translateX(4px); box-shadow:0 8px 24px rgba(0,0,0,0.06); border-color:var(--sena-verde-border); }
+.doc-card-title { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:var(--texto); margin-bottom:6px; }
+.doc-card-desc { font-size:14px; color:var(--texto-dim); line-height:1.6; }
+.doc-card-desc strong { color:var(--texto); }
+
+.reveal { opacity:0; transform:translateY(32px); transition:opacity .6s ease, transform .6s ease; }
+.reveal.active { opacity:1; transform:translateY(0); }
+
+.footer-nav { position:fixed; bottom:24px; right:24px; display:flex; gap:8px; z-index:200; }
+.footer-nav a { background:var(--sena-verde); color:#fff; padding:10px 20px; border-radius:24px; font-size:13px; font-weight:700; text-decoration:none; transition:all .25s; box-shadow:0 4px 16px rgba(57,169,0,0.3); }
+.footer-nav a:hover { background:var(--sena-verde-dark); transform:translateY(-2px); }
+.footer-nav a.prev { background:#fff; color:var(--sena-verde); border:2px solid var(--sena-verde-border); box-shadow:none; }
+
+@media(max-width:768px){
+  .slide { padding:60px 24px; }
+  .topbar { padding:10px 16px; }
+  .topbar-nav { display:none; }
+  .compare-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="sena-logo">SENA</div>
+    <div>
+      <div class="topbar-brand">GA2-220501121-AA1 · Sesión 6</div>
+      <div class="topbar-sub">Martes 18 de Agosto 2026 · Cierre AA1</div>
+    </div>
+  </div>
+  <nav class="topbar-nav">
+    <a href="#portada">Inicio</a>
+    <a href="#repaso">Repaso</a>
+    <a href="#enunciado">Enunciado EV02</a>
+    <a href="#estructura">Estructura del Informe</a>
+    <a href="#caso">Ejemplo Aplicado</a>
+    <a href="#seleccion">Selección</a>
+    <a href="#lineamientos">Lineamientos</a>
+    <a href="#portada-evidencia">Portada Evidencia</a>
+    <a href="#estructura-documento">Estructura Documento</a>
+    <a href="#criterios">Criterios</a>
+    <a href="#cierre-rap">Cierre RAP 1</a>
+  </nav>
+</div>
+
+<!-- SLIDE 1: PORTADA -->
+<section class="slide bg-naranja" id="portada">
+  <div class="bg-dots"></div>
+  <div class="bg-glow g1"></div>
+  <div class="bg-glow g2"></div>
+  <div class="slide-num-badge">01 / 13</div>
+  <div class="slide-inner">
+    <div class="portada-sena-tag"><span class="dot"></span> SENA · Gestión del Desarrollo Administrativo e Innovación</div>
+    <h1 class="portada-titulo reveal">
+      Presentación y Socialización
+      <span class="linea2">Informe EV02 — Cierre del RAP 1</span>
+    </h1>
+    <p class="portada-desc reveal">Sesión 6 de 6 — Guía de Aprendizaje 2 (GA2). Hoy presentamos formalmente la segunda y última evidencia del curso y la socializamos en la misma jornada, cerrando el resultado de aprendizaje 220501121-01. Caso de referencia: <strong>ADMINISTRA S.A.S.</strong> — PYME de servicios administrativos y gestión documental.</p>
+    <div class="portada-meta reveal">
+      <div class="portada-meta-item"><strong>📅 18 Agosto 2026</strong>Martes</div>
+      <div class="portada-meta-item"><strong>🏁 Tipo de sesión</strong>Socialización — Cierre</div>
+      <div class="portada-meta-item"><strong>📋 Evidencia</strong>EV02</div>
+      <div class="portada-meta-item"><strong>⏰ Entrega formal</strong>26 de agosto</div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 2: REPASO -->
+<section class="slide" id="repaso">
+  <div class="slide-num-badge">02 / 13</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag verde">Repaso</span>
+      <h2 class="sec-titulo">Lo que ya sabemos de las sesiones 4 y 5</h2>
+      <p class="sec-desc">Hoy no vamos a ver contenido teórico nuevo. Vamos a <strong>aplicar</strong> todo lo anterior en un producto concreto: tu informe de normas técnicas y protocolos.</p>
+    </div>
+    <div class="compare-grid reveal">
+      <div class="compare-card verde">
+        <div class="compare-title" style="color:var(--sena-verde)">📘 Sesión 4</div>
+        <p style="font-size:14px;color:var(--texto-dim)">Protocolo informático, seguridad de la información (integridad, confidencialidad, disponibilidad), ISO 27001/SGSI.</p>
+      </div>
+      <div class="compare-card azul">
+        <div class="compare-title" style="color:#3b82f6">📗 Sesión 5</div>
+        <p style="font-size:14px;color:var(--texto-dim)">SG-SST, base legal (Ley 1562 de 2012), ciclo PHVA, riesgos administrativos, relación con protocolos informáticos.</p>
+      </div>
+    </div>
+    <div class="info-box tip reveal">
+      <div class="info-box-label">💡 Para qué nos sirve hoy</div>
+      <p>Todo eso lo vamos a usar para <strong>identificar con criterio técnico</strong> el protocolo, la norma técnica y la participación en el SG-SST de cinco software reales — exactamente lo que pide el informe.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3: ENUNCIADO OFICIAL -->
+<section class="slide bg-verde" id="enunciado">
+  <div class="slide-num-badge">03 / 13</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag verde">Enunciado Oficial</span>
+      <h2 class="sec-titulo">GA2-220501121-AA1-EV02</h2>
+      <p class="sec-desc">Normas técnicas y protocolos informáticos.</p>
+    </div>
+    <div class="info-box info reveal">
+      <div class="info-box-label">📖 Texto oficial de la guía de aprendizaje</div>
+      <p>El protocolo en informática es un conjunto formal de estándares y normas que rigen el formato y control de la interacción entre dispositivos. El <strong>SG-SST</strong> es un sistema de gestión normativo y obligatorio en Colombia. El aprendiz elaborará un informe (infograma, matriz en Excel o cuadro comparativo) de <strong>cinco (5) software</strong> de una empresa real, identificando el protocolo, la norma técnica y su participación en el SG-SST.</p>
+    </div>
+    <ol class="step-list reveal">
+      <li>Identificar cinco (5) software utilizados en una empresa real</li>
+      <li>Explicar el <strong>uso y aplicación</strong> de cada uno dentro de la organización</li>
+      <li>Identificar el <strong>protocolo informático</strong> y la <strong>norma técnica</strong> utilizada en cada caso</li>
+      <li>Evidenciar la <strong>participación de cada software en el SG-SST</strong></li>
+    </ol>
+  </div>
+</section>
+
+<!-- SLIDE 4: ESTRUCTURA DEL INFORME -->
+<section class="slide bg-alt" id="estructura">
+  <div class="slide-num-badge">04 / 13</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag naranja">Estructura del Informe</span>
+      <h2 class="sec-titulo">4 elementos por cada software</h2>
+      <p class="sec-desc">Para cada uno de los cinco software analizados, el informe debe presentar estos cuatro elementos completos.</p>
+    </div>
+    <table class="tags-table reveal">
+      <thead><tr><th>Elemento</th><th>¿Qué debe contener?</th></tr></thead>
+      <tbody>
+        <tr><td>1. Uso y aplicación</td><td>Qué hace el software y para qué lo usa específicamente esa área de la organización</td></tr>
+        <tr><td>2. Protocolo informático</td><td>Qué protocolo(s) rige(n) la interacción de ese software (ej. HTTPS, TCP/IP, SMTP)</td></tr>
+        <tr><td>3. Norma técnica</td><td>Qué norma técnica aplica (ej. ISO 27001, normas de protección de datos personales)</td></tr>
+        <tr><td>4. Participación en SG-SST</td><td>Cómo ese software apoya la gestión de seguridad y salud en el trabajo</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box warning reveal">
+      <div class="info-box-label">⚠️ Idea clave</div>
+      <p>Un informe que solo lista los cinco software sin explicar su protocolo, su norma técnica y su relación con el SG-SST <strong>no cumple</strong> con el requisito oficial de la guía.</p>
+    </div>
+    <div class="info-box info reveal">
+      <div class="info-box-label">📌 Formatos permitidos</div>
+      <p><strong>Infograma</strong> (visual y resumido), <strong>matriz en Excel</strong> (tabular y comparable), o <strong>cuadro comparativo</strong> (resalta diferencias entre software).</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5: EJEMPLO APLICADO -->
+<section class="slide bg-purpura" id="caso">
+  <div class="slide-num-badge">05 / 13</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag purpura">Ejemplo Aplicado</span>
+      <h2 class="sec-titulo">Matriz modelo con ADMINISTRA S.A.S.</h2>
+      <p class="sec-desc">Un modelo de referencia — cada aprendiz puede investigar su propia empresa real o usar este caso.</p>
+    </div>
+    <table class="tags-table reveal">
+      <thead><tr><th>Software</th><th>Uso</th><th>Protocolo</th><th>Norma técnica</th><th>SG-SST</th></tr></thead>
+      <tbody>
+        <tr><td>Word</td><td>Redacta la Política de SG-SST y contratos</td><td>Transferencia interna en Intranet</td><td>Gestión documental, control de versiones</td><td>Documenta la política oficial de SG-SST</td></tr>
+        <tr><td>Portal de contratos</td><td>Clientes consultan el estado de su contrato</td><td>HTTPS (conexión cifrada)</td><td>ISO 27001 — datos personales</td><td>Reduce el estrés del personal por reclamos</td></tr>
+        <tr><td>Base de datos Archivo</td><td>Almacena info. de 200+ clientes</td><td>Autenticación de usuario</td><td>ISO 27001, protección de datos</td><td>Registra incidentes laborales con confidencialidad</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box info reveal">
+      <div class="info-box-label">📌 Nota pedagógica</div>
+      <p>Observa cómo cada software se justifica con su <strong>protocolo específico</strong>, su <strong>norma técnica aplicable</strong> y su <strong>relación concreta con el SG-SST</strong> — ese es exactamente el criterio técnico desarrollado en las sesiones 4 y 5.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 6: SELECCIÓN DE EMPRESA Y SOFTWARE -->
+<section class="slide bg-azul" id="seleccion">
+  <div class="slide-num-badge">06 / 13</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag azul">Selección</span>
+      <h2 class="sec-titulo">Cómo elegir la empresa y los cinco software</h2>
+      <p class="sec-desc">La calidad del informe depende directamente de una buena selección inicial.</p>
+    </div>
+    <ul class="checklist-box reveal">
+      <li><span class="icon">✓</span>La empresa puede ser <strong>real</strong> (investigada por el aprendiz) o de <strong>libre acceso en la web</strong></li>
+      <li><span class="icon">✓</span>Preferible una empresa con varias áreas funcionales, para que los software no se repitan</li>
+      <li><span class="icon">✓</span>Los software deben ser realmente usados por la organización, no genéricos sin verificar</li>
+      <li><span class="icon">✓</span>Que permitan identificar con claridad un protocolo y una norma técnica</li>
+      <li><span class="icon">✓</span>Fuentes de consulta: sitio web institucional, manuales técnicos, normativa SG-SST vigente</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SLIDE 7: LINEAMIENTOS FORMALES -->
+<section class="slide bg-alt" id="lineamientos">
+  <div class="slide-num-badge">07 / 13</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag naranja">Lineamientos Formales</span>
+      <h2 class="sec-titulo">Requisitos exactos de entrega</h2>
+      <p class="sec-desc">Cumplir estos requisitos es tan importante como el contenido del informe.</p>
+    </div>
+    <table class="tags-table reveal">
+      <thead><tr><th>Aspecto</th><th>Requisito</th></tr></thead>
+      <tbody>
+        <tr><td>Producto</td><td>Informe tipo infograma, matriz en Excel o cuadro comparativo</td></tr>
+        <tr><td>Formato del documento</td><td>PDF</td></tr>
+        <tr><td>Contenido obligatorio</td><td>Cinco (5) software, cada uno con uso, protocolo, norma técnica y participación en SG-SST</td></tr>
+        <tr><td>Empresa analizada</td><td>Real o de libre acceso en la web</td></tr>
+        <tr><td>Espacio de entrega</td><td>GA2-220501121-AA1-EV02 en Zajuna</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box warning reveal">
+      <div class="info-box-label">⚠️ Fecha límite de entrega</div>
+      <p><strong>Martes 26 de agosto de 2026, 11:59 p.m.</strong> — 8 días calendario después de esta sesión de socialización. Un informe con menos de cinco software o elementos incompletos equivale a una evidencia incompleta.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 8: CÓMO PRESENTAR LA EVIDENCIA — PORTADA -->
+<section class="slide bg-purpura" id="portada-evidencia">
+  <div class="slide-num-badge">08 / 13</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag purpura">Cómo Presentar la Evidencia</span>
+      <h2 class="sec-titulo">Portada y documento final</h2>
+      <p class="sec-desc">El documento que suben a Zajuna es un PDF con portada, introducción y el informe completo.</p>
+    </div>
+    <div class="compare-grid reveal" style="grid-template-columns:1fr;">
+      <div class="compare-card purpura" style="max-width:600px;margin:0 auto;padding:40px 36px;">
+        <p style="font-size:14px;color:var(--texto-dim);text-align:center;margin-bottom:28px;line-height:1.6;">Guía 2 220501121-AA1-EV02. Normas técnicas y protocolos informáticos.</p>
+        <div style="height:120px;"></div>
+        <p style="font-size:14px;color:var(--texto);text-align:center;margin-bottom:10px;">Presentado por: <strong>[Nombre completo del aprendiz]</strong></p>
+        <p style="font-size:14px;color:var(--texto);text-align:center;margin-bottom:0;">Presentado al instructor: <strong>Julián Andrés Trujillo Morales</strong></p>
+        <div style="height:120px;"></div>
+        <p style="font-size:13px;color:var(--texto-dim);text-align:center;margin-bottom:6px;">Centro Agroempresarial y Desarrollo Pecuario del Huila</p>
+        <p style="font-size:13px;color:var(--texto-dim);text-align:center;margin-bottom:6px;">Tecnólogo en Gestión Administrativo e Innovación</p>
+        <p style="font-size:13px;color:var(--texto-dim);text-align:center;margin-bottom:6px;">Ficha: [3466323 / 3466324]</p>
+        <p style="font-size:13px;color:var(--texto-dim);text-align:center;">Garzón Huila</p>
+      </div>
+    </div>
+    <div class="info-box warning reveal">
+      <div class="info-box-label">⚠️ Orden exacto de la portada</div>
+      <p>1) Título de la evidencia (siempre primero) → 2) Presentado por / Presentado al instructor → 3) Centro de formación, programa, ficha y ciudad. Después de la portada va la <strong>introducción</strong> y el <strong>informe</strong>.</p>
+    </div>
+    <div class="info-box tip reveal">
+      <div class="info-box-label">💡 Pasos para el documento final</div>
+      <p>Elabora portada + introducción + informe en <strong>Word</strong> (o combina con Excel si es una matriz) → guarda como <strong>PDF</strong> → sube el PDF al espacio GA2-220501121-AA1-EV02 en <strong>Zajuna</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE: ESTRUCTURA COMPLETA DEL DOCUMENTO -->
+<section class="slide bg-alt" id="estructura-documento">
+  <div class="slide-num-badge">09 / 13</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag purpura">Estructura del Documento</span>
+      <h2 class="sec-titulo">5 secciones obligatorias, en este orden</h2>
+      <p class="sec-desc">El informe se entrega como un documento único en PDF. No es un conjunto de elementos sueltos — es un documento formal con estas 5 partes.</p>
+    </div>
+    <ol class="doc-struct reveal">
+      <li class="doc-item">
+        <div class="doc-num"></div>
+        <div class="doc-card">
+          <div class="doc-card-title">Portada</div>
+          <div class="doc-card-desc">Título de la evidencia (GA2-220501121-AA1-EV02), nombre completo del aprendiz, instructor, centro de formación, programa, ficha y ciudad — en el orden exacto visto en el slide anterior.</div>
+        </div>
+      </li>
+      <li class="doc-item">
+        <div class="doc-num"></div>
+        <div class="doc-card">
+          <div class="doc-card-title">Introducción</div>
+          <div class="doc-card-desc">Párrafo breve presentando qué empresa se analizó y qué se va a desarrollar en el informe. No es un resumen del contenido — es la apertura del documento.</div>
+        </div>
+      </li>
+      <li class="doc-item">
+        <div class="doc-num"></div>
+        <div class="doc-card">
+          <div class="doc-card-title">Informe (desarrollo)</div>
+          <div class="doc-card-desc">Los cinco (5) software analizados, cada uno con sus 4 elementos: uso y aplicación, protocolo informático, norma técnica y participación en el SG-SST, en formato infograma, matriz en Excel o cuadro comparativo.</div>
+        </div>
+      </li>
+      <li class="doc-item">
+        <div class="doc-num"></div>
+        <div class="doc-card">
+          <div class="doc-card-title">Conclusiones</div>
+          <div class="doc-card-desc">Síntesis de lo aprendido sobre protocolos, normas técnicas y SG-SST, y cómo se aplicaría este análisis en una organización real. No repite el desarrollo — lo sintetiza con ideas propias.</div>
+        </div>
+      </li>
+      <li class="doc-item">
+        <div class="doc-num"></div>
+        <div class="doc-card">
+          <div class="doc-card-title">Fuentes de consulta</div>
+          <div class="doc-card-desc">Referencias usadas para identificar los software, sus protocolos y normas técnicas: sitio web institucional de la empresa, manuales técnicos, normativa SG-SST vigente y documentación oficial de normas como ISO 27001.</div>
+        </div>
+      </li>
+    </ol>
+    <div class="info-box warning reveal">
+      <div class="info-box-label">⚠️ Idea clave</div>
+      <p>Un documento sin alguna de estas 5 secciones, o que las presente en desorden, se considera <strong>incompleto</strong> — aunque el análisis técnico de los cinco software esté bien desarrollado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 9: CRITERIOS DE EVALUACIÓN -->
+<section class="slide bg-azul" id="criterios">
+  <div class="slide-num-badge">10 / 13</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag azul">Criterios de Evaluación</span>
+      <h2 class="sec-titulo">Lista de verificación IE-GA2-220501121-AA1-EV02</h2>
+      <p class="sec-desc">Los criterios oficiales están construidos directamente sobre lo visto en las sesiones 1, 2, 4 y 5.</p>
+    </div>
+    <ul class="checklist-box reveal">
+      <li><span class="icon">✓</span><strong>Diferencia procesos y estructuras</strong> de los sistemas y medios de información (sesiones 1 y 2).</li>
+      <li><span class="icon">✓</span><strong>Clasifica herramientas periféricas</strong> (sesión 1: hardware y periféricos).</li>
+      <li><span class="icon">✓</span><strong>Integra normas técnicas y protocolos informáticos</strong> en el desarrollo de actividades (sesión 4).</li>
+      <li><span class="icon">✓</span><strong>Emplea protocolos de seguridad de la información</strong> (sesión 4).</li>
+    </ul>
+    <div class="info-box info reveal">
+      <div class="info-box-label">📌 Por qué importa haber cursado las 4 sesiones teóricas</div>
+      <p>Los criterios de evaluación de EV02 están directamente construidos sobre esos contenidos — por eso hoy no es una sesión de teoría nueva, sino de aplicación práctica.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 10: DINÁMICA DE SOCIALIZACIÓN -->
+<!-- SLIDE 11: CIERRE DEL RAP 1 -->
+<section class="slide bg-naranja" id="cierre-rap">
+  <div class="slide-num-badge">11 / 13</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag naranja">Cierre del RAP 1</span>
+      <h2 class="sec-titulo">Recorrido completo de las 6 sesiones</h2>
+      <p class="sec-desc">Con la socialización de hoy cerramos formalmente el resultado de aprendizaje 220501121-01.</p>
+    </div>
+    <ul class="tl-caso reveal">
+      <li class="tl-caso-item">
+        <div class="tl-caso-num"></div>
+        <div class="tl-caso-body">
+          <span class="tl-caso-hora">Sesión 1</span>
+          <div class="tl-caso-evento">Sistemas de información, software y hardware</div>
+          <div class="tl-caso-desc">Base teórica del RAP 1, aplicada a ADMINISTRA S.A.S.</div>
+        </div>
+      </li>
+      <li class="tl-caso-item">
+        <div class="tl-caso-num"></div>
+        <div class="tl-caso-body">
+          <span class="tl-caso-hora">Sesión 2</span>
+          <div class="tl-caso-evento">Redes de información, dispositivos y automatización</div>
+          <div class="tl-caso-desc">Se completa la primera mitad de la base teórica.</div>
+        </div>
+      </li>
+      <li class="tl-caso-item">
+        <div class="tl-caso-num"></div>
+        <div class="tl-caso-body">
+          <span class="tl-caso-hora">Sesión 3</span>
+          <div class="tl-caso-evento">Socialización EV01 — Video expositivo</div>
+          <div class="tl-caso-desc"><span class="tag-riesgo">✓ Primera evidencia cerrada</span></div>
+        </div>
+      </li>
+      <li class="tl-caso-item">
+        <div class="tl-caso-num"></div>
+        <div class="tl-caso-body">
+          <span class="tl-caso-hora">Sesión 4</span>
+          <div class="tl-caso-evento">Seguridad de la información y protocolos</div>
+          <div class="tl-caso-desc">Segunda mitad de la base teórica del RAP 1.</div>
+        </div>
+      </li>
+      <li class="tl-caso-item">
+        <div class="tl-caso-num"></div>
+        <div class="tl-caso-body">
+          <span class="tl-caso-hora">Sesión 5</span>
+          <div class="tl-caso-evento">Normas SST en ambientes laborales y protocolos</div>
+          <div class="tl-caso-desc">Se completa toda la base teórica del RAP 1.</div>
+        </div>
+      </li>
+      <li class="tl-caso-item">
+        <div class="tl-caso-num"></div>
+        <div class="tl-caso-body">
+          <span class="tl-caso-hora">Sesión 6</span>
+          <div class="tl-caso-evento">Socialización EV02 — Informe de protocolos</div>
+          <div class="tl-caso-desc"><span class="tag-riesgo">✓ RAP 1 cerrado formalmente</span></div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- SLIDE 12: PROYECCIÓN HACIA EL RAP 2 -->
+<section class="slide bg-alt" id="proyeccion">
+  <div class="slide-num-badge">12 / 13</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag verde">Proyección</span>
+      <h2 class="sec-titulo">Del RAP 1 al RAP 2</h2>
+      <p class="sec-desc">Todo lo aprendido en estas 6 sesiones es la base conceptual del siguiente bloque de la competencia.</p>
+    </div>
+    <div class="compare-grid reveal">
+      <div class="compare-card verde">
+        <div class="compare-title" style="color:var(--sena-verde)">✅ RAP 1 (completado)</div>
+        <p style="font-size:14px;color:var(--texto-dim)">Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización — el "qué" y el "por qué".</p>
+      </div>
+      <div class="compare-card azul">
+        <div class="compare-title" style="color:#3b82f6">➡️ RAP 2 (siguiente)</div>
+        <p style="font-size:14px;color:var(--texto-dim)">Utilizar herramientas TIC en actividades administrativas de acuerdo con políticas de uso y procedimientos técnicos — el "cómo".</p>
+      </div>
+    </div>
+    <div class="info-box tip reveal">
+      <div class="info-box-label">💡 Idea clave</div>
+      <p>Mientras el RAP 1 se centró en diagnosticar qué herramientas necesita una organización, el RAP 2 se centrará en operarlas correctamente en el día a día administrativo — usando todo lo aprendido sobre sistemas de información, software, hardware, redes, seguridad de la información y SG-SST.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 13: CIERRE FINAL -->
+<section class="slide bg-verde" id="cierre">
+  <div class="slide-num-badge">13 / 13</div>
+  <div class="slide-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag verde">Cierre</span>
+      <h2 class="sec-titulo">¡Gracias por este recorrido!</h2>
+      <p class="sec-desc">Con la socialización de hoy se cierra el RAP 1 de la competencia 220501121.</p>
+    </div>
+    <div class="info-box warning reveal">
+      <div class="info-box-label">⚠️ Fecha límite formal</div>
+      <p><strong>Martes 26 de agosto de 2026, 11:59 p.m.</strong> — recuerda subir el documento completo con portada, introducción e informe a Zajuna.</p>
+    </div>
+    <div class="info-box tip reveal">
+      <div class="info-box-label">💡 Recorrido completo del RAP 1</div>
+      <p>Sesiones 1 y 2: <strong>sistemas de información, software, hardware, redes y automatización</strong>. Sesión 3: <strong>socialización EV01</strong>. Sesiones 4 y 5: <strong>seguridad de la información, protocolos, ISO 27001, SG-SST y normas SST</strong>. Sesión 6: <strong>socialización EV02</strong>. ¡Excelente trabajo en todo el proceso!</p>
+    </div>
+  </div>
+</section>
+
+<div class="footer-nav">
+  <a href="#portada" class="prev">↑ Inicio</a>
+  <a href="#cierre">Ver cierre →</a>
+</div>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

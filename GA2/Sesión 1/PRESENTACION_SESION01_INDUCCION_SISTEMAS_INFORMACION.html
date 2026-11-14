@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 01: Inducción + Sistemas de Información, Software y Hardware | SENA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sena-verde: #39a900;
+  --sena-verde-dark: #2d8400;
+  --sena-verde-glow: rgba(57,169,0,0.10);
+  --sena-verde-border: rgba(57,169,0,0.30);
+  --sena-naranja: #ff6b00;
+  --sena-naranja-glow: rgba(255,107,0,0.10);
+  --sena-naranja-border: rgba(255,107,0,0.30);
+  --texto: #1a1a2e;
+  --texto-dim: rgba(26,26,46,0.62);
+  --texto-dimmer: rgba(26,26,46,0.38);
+  --bg: #f8fafc;
+  --bg-alt: #f4f7f2;
+  --borde: #e2e8f0;
+  --acento-azul: #3b82f6;
+  --acento-azul-glow: rgba(59,130,246,0.10);
+  --acento-purpura: #8b5cf6;
+  --acento-purpura-glow: rgba(139,92,246,0.10);
+  --alerta-amarillo: #f59e0b;
+  --alerta-amarillo-glow: rgba(245,158,11,0.10);
+  --alerta-rojo: #ef4444;
+  --alerta-rojo-glow: rgba(239,68,68,0.10);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; color:var(--texto); background:var(--bg); line-height:1.6; overflow-x:hidden; }
+
+.topbar { position:sticky; top:0; z-index:100; background:rgba(255,255,255,0.95); backdrop-filter:blur(16px); border-bottom:2px solid var(--sena-verde); padding:12px 32px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 2px 12px var(--sena-verde-glow); }
+.topbar-left { display:flex; align-items:center; gap:16px; }
+.sena-logo { background:var(--sena-verde); color:#fff; font-weight:900; font-size:18px; padding:8px 16px; border-radius:8px; letter-spacing:1px; }
+.topbar-brand { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color:var(--sena-verde-dark); }
+.topbar-sub { font-size:12px; color:var(--texto-dimmer); margin-top:2px; }
+.topbar-nav { display:flex; gap:4px; flex-wrap:wrap; }
+.topbar-nav a { color:var(--texto-dim); text-decoration:none; font-size:11px; font-weight:600; padding:6px 14px; border-radius:20px; border:1px solid transparent; transition:all .25s; white-space:nowrap; }
+.topbar-nav a:hover { color:var(--sena-verde-dark); border-color:var(--sena-verde-border); background:var(--sena-verde-glow); }
+
+.slide { min-height:100vh; padding:80px 48px; position:relative; scroll-margin-top:64px; border-bottom:1px solid var(--borde); }
+.slide.bg-alt { background:var(--bg-alt); }
+.slide.bg-verde { background:linear-gradient(135deg, var(--sena-verde-glow) 0%, #ffffff 60%); }
+.slide.bg-naranja { background:linear-gradient(135deg, #ffffff 40%, var(--sena-naranja-glow) 100%); }
+.slide.bg-azul { background:linear-gradient(135deg, var(--acento-azul-glow) 0%, #ffffff 60%); }
+.slide.bg-purpura { background:linear-gradient(135deg, var(--acento-purpura-glow) 0%, #ffffff 60%); }
+.slide-inner { max-width:1200px; margin:0 auto; }
+.slide-num-badge { position:absolute; top:24px; right:24px; background:var(--sena-verde-glow); color:var(--sena-verde); font-size:11px; font-weight:700; padding:6px 12px; border-radius:20px; letter-spacing:1px; border:1px solid var(--sena-verde-border); }
+
+.bg-dots { position:absolute; inset:0; background-image:radial-gradient(var(--sena-verde-border) 1px, transparent 1px); background-size:28px 28px; pointer-events:none; opacity:0.4; }
+.bg-glow { position:absolute; width:600px; height:600px; border-radius:50%; filter:blur(120px); opacity:0.2; pointer-events:none; z-index:0; }
+.bg-glow.g1 { background:radial-gradient(circle, var(--sena-verde-glow), transparent 70%); top:-200px; left:-200px; }
+.bg-glow.g2 { background:radial-gradient(circle, var(--sena-naranja-glow), transparent 70%); bottom:-200px; right:-200px; }
+
+.portada-sena-tag { display:inline-flex; align-items:center; gap:8px; background:var(--sena-verde-glow); border:1px solid var(--sena-verde-border); padding:10px 20px; border-radius:30px; font-size:12px; font-weight:700; color:var(--sena-verde-dark); letter-spacing:1.5px; margin-bottom:32px; position:relative; z-index:1; }
+.portada-sena-tag .dot { width:6px; height:6px; background:var(--sena-verde); border-radius:50%; animation:blink 1.5s ease-in-out infinite; }
+@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+.portada-titulo { font-family:'Syne',sans-serif; font-size:clamp(40px,7vw,68px); font-weight:800; line-height:1.1; margin-bottom:24px; color:var(--texto); position:relative; z-index:1; }
+.portada-titulo .linea2 { display:block; background:linear-gradient(135deg, var(--sena-verde), var(--sena-naranja)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.portada-desc { font-size:clamp(16px,2vw,20px); color:var(--texto-dim); max-width:760px; margin-bottom:32px; position:relative; z-index:1; line-height:1.7; }
+.portada-meta { display:flex; gap:16px; flex-wrap:wrap; font-size:14px; position:relative; z-index:1; }
+.portada-meta-item { background:rgba(255,255,255,0.9); border:1px solid var(--borde); padding:10px 20px; border-radius:12px; font-weight:600; color:var(--texto-dim); flex:1 1 auto; min-width:180px; text-align:center; }
+.portada-meta-item strong { display:block; color:var(--texto); font-size:16px; margin-bottom:2px; }
+
+.sec-header { margin-bottom:48px; position:relative; z-index:1; }
+.sec-tag { display:inline-block; font-size:11px; font-weight:700; padding:6px 14px; border-radius:20px; letter-spacing:1.2px; margin-bottom:16px; text-transform:uppercase; }
+.sec-tag.verde { background:var(--sena-verde-glow); color:var(--sena-verde); border:1px solid var(--sena-verde-border); }
+.sec-tag.naranja { background:var(--sena-naranja-glow); color:var(--sena-naranja); border:1px solid var(--sena-naranja-border); }
+.sec-tag.azul { background:rgba(59,130,246,0.10); color:#3b82f6; border:1px solid rgba(59,130,246,0.30); }
+.sec-tag.purpura { background:rgba(139,92,246,0.10); color:#8b5cf6; border:1px solid rgba(139,92,246,0.30); }
+.sec-titulo { font-family:'Syne',sans-serif; font-size:clamp(28px,4vw,44px); font-weight:800; line-height:1.2; color:var(--texto); margin-bottom:16px; }
+.sec-desc { font-size:clamp(15px,1.8vw,18px); color:var(--texto-dim); max-width:820px; line-height:1.7; }
+
+.agenda-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:24px; position:relative; z-index:1; }
+.agenda-item { background:rgba(255,255,255,0.9); border:1px solid var(--borde); border-radius:16px; padding:24px; transition:all .3s; }
+.agenda-item:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,0.08); border-color:var(--sena-verde-border); }
+.agenda-num { font-family:'Syne',sans-serif; font-size:40px; font-weight:800; background:linear-gradient(135deg, var(--sena-verde), var(--sena-naranja)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1; margin-bottom:12px; }
+.agenda-titulo { font-size:17px; font-weight:700; color:var(--texto); margin-bottom:8px; }
+.agenda-desc { font-size:14px; color:var(--texto-dim); line-height:1.6; }
+.agenda-time { display:inline-block; background:var(--sena-verde-glow); color:var(--sena-verde); font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px; margin-top:12px; }
+
+.compare-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:24px; margin:32px 0; position:relative; z-index:1; }
+.compare-card { background:rgba(255,255,255,0.9); border:2px solid; border-radius:16px; padding:28px; }
+.compare-card.verde { border-color:var(--sena-verde-border); background:linear-gradient(135deg, var(--sena-verde-glow), rgba(255,255,255,0.9)); }
+.compare-card.naranja { border-color:var(--sena-naranja-border); background:linear-gradient(135deg, rgba(255,255,255,0.9), var(--sena-naranja-glow)); }
+.compare-card.azul { border-color:rgba(59,130,246,0.3); background:linear-gradient(135deg, rgba(59,130,246,0.08), rgba(255,255,255,0.9)); }
+.compare-card.purpura { border-color:rgba(139,92,246,0.3); background:linear-gradient(135deg, rgba(139,92,246,0.08), rgba(255,255,255,0.9)); }
+.compare-title { font-family:'Syne',sans-serif; font-size:19px; font-weight:800; margin-bottom:16px; }
+
+.info-box { border-radius:12px; padding:24px 28px; margin:24px 0; position:relative; z-index:1; border-left:4px solid; }
+.info-box.tip { background:var(--sena-verde-glow); border-color:var(--sena-verde); }
+.info-box.warning { background:rgba(245,158,11,0.10); border-color:#f59e0b; }
+.info-box.info { background:rgba(59,130,246,0.10); border-color:#3b82f6; }
+.info-box-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+.info-box.tip .info-box-label { color:var(--sena-verde); }
+.info-box.warning .info-box-label { color:#f59e0b; }
+.info-box.info .info-box-label { color:#3b82f6; }
+.info-box p { font-size:15px; color:var(--texto); line-height:1.7; }
+
+.check-list { list-style:none; margin:16px 0; position:relative; z-index:1; }
+.check-list li { display:flex; align-items:flex-start; gap:14px; padding:10px 0; border-bottom:1px solid var(--borde); font-size:15px; color:var(--texto-dim); line-height:1.5; }
+.check-list li:last-child { border-bottom:none; }
+.check-list .icon { width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; margin-top:2px; }
+.check-list .icon.verde { background:var(--sena-verde-glow); color:var(--sena-verde); border:1px solid var(--sena-verde-border); }
+.check-list .icon.naranja { background:var(--sena-naranja-glow); color:var(--sena-naranja); border:1px solid var(--sena-naranja-border); }
+.check-list .icon.azul { background:rgba(59,130,246,0.1); color:#3b82f6; border:1px solid rgba(59,130,246,0.3); }
+
+/* NEED CARDS — tarjetas de necesidades (título arriba, descripción abajo, sin flex apretado) */
+.need-list { list-style:none; margin:16px 0; position:relative; z-index:1; counter-reset:need; }
+.need-item { padding:16px 0; border-bottom:1px solid var(--borde); }
+.need-item:last-child { border-bottom:none; }
+.need-head { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+.need-num { counter-increment:need; width:28px; height:28px; border-radius:50%; background:var(--sena-verde-glow); color:var(--sena-verde); border:1px solid var(--sena-verde-border); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; flex-shrink:0; }
+.need-num::before { content: counter(need); }
+.need-title { font-size:16px; font-weight:700; color:var(--texto); }
+.need-area { font-size:12px; font-weight:700; color:var(--sena-verde-dark); background:var(--sena-verde-glow); padding:2px 10px; border-radius:20px; margin-left:auto; white-space:nowrap; }
+.need-desc { font-size:14px; color:var(--texto-dim); line-height:1.6; padding-left:40px; }
+
+/* CALENDAR CARDS — cronograma tipo tarjeta de calendario */
+.cal-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:20px; margin:32px 0; position:relative; z-index:1; }
+.cal-card { background:rgba(255,255,255,0.95); border:1px solid var(--borde); border-radius:16px; overflow:hidden; transition:all .3s; display:flex; flex-direction:column; }
+.cal-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,0.08); }
+.cal-card.hoy { border:2px solid var(--sena-verde); box-shadow:0 8px 24px var(--sena-verde-glow); }
+.cal-card.hito { border:2px solid var(--sena-naranja); }
+.cal-header { display:flex; align-items:center; gap:14px; padding:18px 20px; background:linear-gradient(135deg, var(--sena-verde-glow), rgba(255,255,255,0.6)); border-bottom:1px solid var(--borde); }
+.cal-card.hito .cal-header { background:linear-gradient(135deg, var(--sena-naranja-glow), rgba(255,255,255,0.6)); }
+.cal-daynum { font-family:'Syne',sans-serif; font-size:32px; font-weight:800; color:var(--sena-verde-dark); line-height:1; min-width:44px; text-align:center; }
+.cal-card.hito .cal-daynum { color:var(--sena-naranja); }
+.cal-daymeta { display:flex; flex-direction:column; }
+.cal-month { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--texto-dim); }
+.cal-weekday { font-size:12px; color:var(--texto-dimmer); }
+.cal-sesnum { margin-left:auto; background:var(--sena-verde); color:#fff; font-family:'Syne',sans-serif; font-weight:800; font-size:13px; padding:4px 12px; border-radius:20px; white-space:nowrap; }
+.cal-card.hito .cal-sesnum { background:var(--sena-naranja); }
+.cal-body { padding:18px 20px; flex:1; }
+.cal-tema { font-size:14px; color:var(--texto); line-height:1.6; }
+.cal-badge { display:inline-block; margin-top:10px; font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px; letter-spacing:0.5px; }
+.cal-badge.actual { background:var(--sena-verde-glow); color:var(--sena-verde-dark); border:1px solid var(--sena-verde-border); }
+.cal-badge.social { background:var(--sena-naranja-glow); color:var(--sena-naranja); border:1px solid var(--sena-naranja-border); }
+.cal-badge.cierre { background:rgba(139,92,246,0.1); color:#8b5cf6; border:1px solid rgba(139,92,246,0.3); }
+
+/* TOOL CARDS — herramientas ofimáticas como tarjetas */
+.tool-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:20px; margin:32px 0; position:relative; z-index:1; }
+.tool-card { background:rgba(255,255,255,0.95); border:1px solid var(--borde); border-radius:16px; padding:24px; transition:all .3s; display:flex; flex-direction:column; gap:12px; }
+.tool-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,0.08); border-color:var(--sena-verde-border); }
+.tool-head { display:flex; align-items:center; gap:12px; }
+.tool-icon { width:44px; height:44px; border-radius:12px; background:var(--sena-verde-glow); display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+.tool-name { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:var(--texto); }
+.tool-func { font-size:13px; color:var(--texto-dim); line-height:1.5; }
+.tool-examples { display:flex; flex-wrap:wrap; gap:6px; }
+.tool-chip { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; background:var(--bg-alt); color:var(--sena-verde-dark); padding:4px 10px; border-radius:20px; border:1px solid var(--borde); }
+.tool-use { font-size:13px; color:var(--texto); line-height:1.5; background:var(--sena-verde-glow); border-left:3px solid var(--sena-verde); padding:10px 14px; border-radius:8px; }
+.tool-use strong { color:var(--sena-verde-dark); }
+
+.tags-table { width:100%; border-collapse:collapse; margin:24px 0; position:relative; z-index:1; border-radius:12px; overflow:hidden; }
+.tags-table thead { background:linear-gradient(135deg, var(--sena-verde), var(--sena-verde-dark)); color:#fff; }
+.tags-table thead th { padding:14px 20px; text-align:left; font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; }
+.tags-table tbody tr { border-bottom:1px solid var(--borde); transition:background .2s; }
+.tags-table tbody tr:hover { background:var(--sena-verde-glow); }
+.tags-table tbody tr:last-child { border-bottom:none; }
+.tags-table tbody td { padding:13px 20px; font-size:14px; color:var(--texto-dim); vertical-align:top; }
+.tags-table tbody td:first-child { font-weight:700; color:var(--texto); font-family:'JetBrains Mono',monospace; font-size:13px; }
+
+.footer-nav { position:fixed; bottom:24px; right:24px; display:flex; gap:8px; z-index:200; }
+.footer-nav a { background:var(--sena-verde); color:#fff; padding:10px 20px; border-radius:24px; font-size:13px; font-weight:700; text-decoration:none; transition:all .25s; box-shadow:0 4px 16px rgba(57,169,0,0.3); }
+.footer-nav a:hover { background:var(--sena-verde-dark); transform:translateY(-2px); }
+.footer-nav a.prev { background:#fff; color:var(--sena-verde); border:2px solid var(--sena-verde-border); box-shadow:none; }
+
+.reveal { opacity:0; transform:translateY(32px); transition:opacity .6s ease, transform .6s ease; }
+.reveal.active { opacity:1; transform:translateY(0); }
+
+.timeline { position:relative; z-index:1; }
+.timeline::before { content:''; position:absolute; left:24px; top:0; bottom:0; width:2px; background:linear-gradient(to bottom, var(--sena-verde), var(--sena-naranja)); }
+.tl-item { display:flex; gap:32px; margin-bottom:28px; padding-left:56px; position:relative; }
+.tl-dot { position:absolute; left:14px; top:4px; width:22px; height:22px; border-radius:50%; background:var(--sena-verde); border:3px solid #fff; box-shadow:0 0 0 3px var(--sena-verde-border); flex-shrink:0; }
+.tl-content { background:rgba(255,255,255,0.9); border:1px solid var(--borde); border-radius:12px; padding:20px 24px; flex:1; }
+.tl-time { font-size:11px; font-weight:700; color:var(--sena-verde); letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; }
+.tl-titulo { font-size:17px; font-weight:700; color:var(--texto); margin-bottom:6px; }
+.tl-desc { font-size:14px; color:var(--texto-dim); line-height:1.6; }
+
+.step-list { list-style:none; margin:20px 0; counter-reset:step; }
+.step-list li { counter-increment:step; display:flex; gap:16px; align-items:flex-start; padding:16px 0; border-bottom:1px solid var(--borde); font-size:15px; color:var(--texto-dim); line-height:1.6; }
+.step-list li:last-child { border-bottom:none; }
+.step-list li::before { content:counter(step); min-width:32px; height:32px; background:linear-gradient(135deg,var(--sena-verde),var(--sena-verde-dark)); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; flex-shrink:0; margin-top:2px; }
+
+.sys-diagram { background:#1e293b; border:1px solid #334155; border-radius:16px; padding:36px 32px; margin:32px 0; position:relative; z-index:1; overflow-x:auto; }
+.sys-diagram-title { font-family:'Syne',sans-serif; font-size:15px; font-weight:800; text-align:center; margin-bottom:28px; color:#94a3b8; letter-spacing:1px; }
+.sys-flow { display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:nowrap; }
+.sys-box { min-width:130px; border-radius:10px; padding:16px 14px; text-align:center; border:2px solid; }
+.sys-box.entrada { background:rgba(57,169,0,0.12); border-color:var(--sena-verde); }
+.sys-box.proceso { background:rgba(59,130,246,0.12); border-color:#3b82f6; }
+.sys-box.almacen { background:rgba(139,92,246,0.12); border-color:#8b5cf6; }
+.sys-box.salida { background:rgba(255,107,0,0.12); border-color:var(--sena-naranja); }
+.sys-box-label { font-family:'Syne',sans-serif; font-weight:800; font-size:13px; color:#fff; margin-bottom:4px; }
+.sys-box-sub { font-size:11px; color:#94a3b8; font-family:'JetBrains Mono',monospace; }
+.sys-arrow { color:#64748b; font-size:22px; flex-shrink:0; }
+.sys-feedback { text-align:center; margin-top:20px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#fbbf24; }
+
+.attr-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:16px; position:relative; z-index:1; }
+.attr-card { background:rgba(255,255,255,0.9); border:1px solid var(--borde); border-radius:12px; padding:20px; }
+.attr-type-badge { display:inline-block; font-size:10px; font-weight:700; padding:3px 10px; border-radius:20px; margin-bottom:10px; letter-spacing:0.8px; text-transform:uppercase; }
+.attr-type-badge.abierto { background:var(--sena-verde-glow); color:var(--sena-verde); border:1px solid var(--sena-verde-border); }
+.attr-type-badge.cerrado { background:rgba(239,68,68,0.1); color:#ef4444; border:1px solid rgba(239,68,68,0.3); }
+.attr-type-badge.estrategico { background:rgba(139,92,246,0.1); color:#8b5cf6; border:1px solid rgba(139,92,246,0.3); }
+.attr-card-title { font-size:15px; font-weight:700; color:var(--texto); margin-bottom:6px; }
+.attr-card-desc { font-size:13px; color:var(--texto-dim); line-height:1.5; margin-bottom:8px; }
+.attr-card-example { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--sena-verde-dark); background:var(--bg-alt); border-radius:6px; padding:4px 10px; }
+
+@media(max-width:768px){
+  .slide { padding:60px 24px; }
+  .topbar { padding:10px 16px; }
+  .topbar-nav { display:none; }
+  .agenda-grid { grid-template-columns:1fr; }
+  .compare-grid { grid-template-columns:1fr; }
+  .sys-flow { flex-direction:column; }
+  .sys-arrow { transform:rotate(90deg); }
+}
+
+/* ===== CONTEXTO DIDÁCTICO: competencia + RAP siempre visibles ===== */
+.ctx-strip { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:0 0 28px; position:relative; z-index:1; }
+.ctx-chip { font-size:12px; font-weight:600; line-height:1.4; padding:7px 14px; border-radius:12px; border:1px solid; }
+.ctx-chip b { font-weight:800; }
+.ctx-chip.comp { background:var(--sena-verde-glow); border-color:var(--sena-verde-border); color:var(--sena-verde-dark); }
+.ctx-chip.rap { background:var(--sena-naranja-glow); border-color:var(--sena-naranja-border); color:#b34700; }
+.ctx-aporte { flex-basis:100%; font-size:13px; color:var(--texto-dim); background:rgba(255,255,255,0.85); border:1px dashed var(--borde); border-radius:10px; padding:8px 14px; }
+.ctx-aporte b { color:var(--texto); }
+
+.info-box.piensa { background:rgba(139,92,246,0.08); border-color:#8b5cf6; }
+.info-box.piensa .info-box-label { color:#8b5cf6; }
+.info-box.analogia { background:rgba(245,158,11,0.10); border-color:#f59e0b; }
+.info-box.analogia .info-box-label { color:#b45309; }
+.info-box.llevar { background:var(--sena-verde-glow); border-color:var(--sena-verde); }
+.info-box.llevar .info-box-label { color:var(--sena-verde-dark); }
+
+details.reveal-ans { margin-top:12px; background:rgba(255,255,255,0.8); border:1px solid var(--borde); border-radius:10px; padding:10px 16px; }
+details.reveal-ans summary { cursor:pointer; font-size:13px; font-weight:700; color:var(--sena-verde-dark); }
+details.reveal-ans p { margin-top:8px; font-size:14px; color:var(--texto-dim); line-height:1.6; }
+
+.chain { display:flex; align-items:stretch; gap:10px; flex-wrap:wrap; margin:24px 0; position:relative; z-index:1; }
+.chain-step { flex:1 1 200px; background:rgba(255,255,255,0.95); border:2px solid var(--borde); border-radius:14px; padding:18px 18px; }
+.chain-step.comp { border-color:var(--sena-verde-border); background:linear-gradient(135deg,var(--sena-verde-glow),rgba(255,255,255,.95)); }
+.chain-step.rap { border-color:var(--sena-naranja-border); background:linear-gradient(135deg,var(--sena-naranja-glow),rgba(255,255,255,.95)); }
+.chain-step.aa { border-color:rgba(59,130,246,.3); background:linear-gradient(135deg,rgba(59,130,246,.08),rgba(255,255,255,.95)); }
+.chain-step.ev { border-color:rgba(139,92,246,.3); background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(255,255,255,.95)); }
+.chain-lbl { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:var(--texto-dimmer); margin-bottom:6px; }
+.chain-ttl { font-family:'Syne',sans-serif; font-size:16px; font-weight:800; color:var(--texto); margin-bottom:6px; line-height:1.25; }
+.chain-txt { font-size:13px; color:var(--texto-dim); line-height:1.5; }
+.chain-arrow { align-self:center; color:var(--sena-verde); font-size:24px; font-weight:800; }
+
+.auto-q { font-size:15px; color:var(--texto); line-height:1.7; }
+.reto-table { width:100%; border-collapse:collapse; margin:20px 0; position:relative; z-index:1; }
+.reto-table td { padding:14px 16px; border-bottom:1px solid var(--borde); font-size:14px; color:var(--texto-dim); vertical-align:top; }
+.reto-table td:first-child { width:48px; font-family:'Syne',sans-serif; font-weight:800; font-size:20px; color:var(--sena-verde); }
+.reto-table td strong { color:var(--texto); }
+@media(max-width:768px){ .chain-arrow { transform:rotate(90deg); width:100%; text-align:center; } .ctx-chip { flex-basis:100%; } }
+.topbar-left { flex-shrink:0; } .topbar-brand { white-space:nowrap; } .topbar-nav { justify-content:flex-end; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="sena-logo">SENA</div>
+    <div>
+      <div class="topbar-brand">GA2-220501121-AA1 · Sesión 1</div>
+      <div class="topbar-sub"><strong style="color:var(--sena-verde-dark)">Competencia 220501121 · RAP 1 (220501121-01)</strong> · 14 jul 2026</div>
+    </div>
+  </div>
+  <nav class="topbar-nav">
+    <a href="#portada">Inicio</a>
+    <a href="#objetivos">Objetivos</a>
+    <a href="#induccion">Inducción</a>
+    <a href="#ruta">Ruta RAP→EV</a>
+    <a href="#cronograma">Cronograma</a>
+    <a href="#caso">Caso ADMINISTRA</a>
+    <a href="#sistemas">Sistemas Info.</a>
+    <a href="#tgs">Teoría Sistemas</a>
+    <a href="#abiertos">Abiertos/Cerrados</a>
+    <a href="#estrategicos">Estratégicos</a>
+    <a href="#software">Software</a>
+    <a href="#hardware">Hardware</a>
+    <a href="#diferencias">Diferencias</a>
+    <a href="#reto">Mini-reto</a>
+    <a href="#cierre">Cierre</a>
+  </nav>
+</div>
+
+<!-- SLIDE 1: PORTADA -->
+<section class="slide bg-verde" id="portada">
+  <div class="bg-dots"></div>
+  <div class="bg-glow g1"></div>
+  <div class="bg-glow g2"></div>
+  <div class="slide-num-badge">01 / 17</div>
+  <div class="slide-inner">
+    <div class="portada-sena-tag"><span class="dot"></span> SENA · Gestión del Desarrollo Administrativo e Innovación</div>
+    <h1 class="portada-titulo reveal">
+      Inducción a la Competencia
+      <span class="linea2">Sistemas de Información, Software y Hardware</span>
+    </h1>
+    <p class="portada-desc reveal">Sesión 1 de 6 — Guía de Aprendizaje 2 (GA2). Competencia 220501121: Operar herramientas informáticas y digitales de acuerdo con protocolos y manuales técnicos. Fase de Análisis — AP1. Caso de estudio: <strong>ADMINISTRA S.A.S.</strong> — PYME de servicios administrativos y gestión documental.</p>
+    <div class="portada-meta reveal">
+      <div class="portada-meta-item"><strong>📅 14 Julio 2026</strong>Martes</div>
+      <div class="portada-meta-item"><strong>🎯 Competencia</strong>220501121</div>
+      <div class="portada-meta-item"><strong>📋 RAP trabajado</strong>RAP 1 · 220501121-01</div>
+      <div class="portada-meta-item"><strong>📘 Contenido</strong>Base teórica</div>
+    </div>
+    <div style="height:24px"></div>
+    <div class="ctx-strip reveal">
+      <span class="ctx-chip comp">🎯 <b>Competencia 220501121</b> · Operar herramientas informáticas y digitales de acuerdo con protocolos y manuales técnicos</span>
+      <span class="ctx-chip rap">📋 <b>RAP 1 (220501121-01)</b> · Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización</span>
+      <span class="ctx-aporte">🧩 <b>Qué aporta esta sección al RAP 1:</b> hoy empieza el RAP 1: antes de usar cualquier herramienta, la organización debe saber <b>qué necesita</b> y <b>qué puede hacer cada herramienta</b>.</span>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE NUEVA: OBJETIVOS DE LA SESIÓN -->
+<section class="slide" id="objetivos">
+  <div class="slide-num-badge">02 / 17</div>
+  <div class="slide-inner">
+    <div class="ctx-strip reveal">
+      <span class="ctx-chip comp">🎯 <b>Competencia 220501121</b> · Operar herramientas informáticas y digitales de acuerdo con protocolos y manuales técnicos</span>
+      <span class="ctx-chip rap">📋 <b>RAP 1 (220501121-01)</b> · Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización</span>
+      <span class="ctx-aporte">🧩 <b>Qué aporta esta sección al RAP 1:</b> define con claridad qué lograrás hoy para avanzar en el RAP 1.</span>
+    </div>
+    <div class="sec-header reveal">
+      <span class="sec-tag verde">Punto de partida</span>
+      <h2 class="sec-titulo">¿Qué vas a lograr hoy?</h2>
+      <p class="sec-desc">Esta es la primera sesión de la competencia. Hoy construimos el vocabulario y los conceptos que usarás en todas las evidencias.</p>
+    </div>
+    <div class="compare-grid reveal">
+      <div class="compare-card verde">
+        <div class="compare-title" style="color:var(--sena-verde)">🎯 Al terminar la sesión podrás…</div>
+        <ul class="check-list">
+          <li><span class="icon verde">1</span><span>Explicar qué es un <strong>sistema de información</strong> y reconocer sus 4 elementos en un ejemplo real.</span></li>
+          <li><span class="icon verde">2</span><span>Diferenciar <strong>sistemas abiertos, cerrados y estratégicos</strong>, y los tipos TPS, DSS y EIS.</span></li>
+          <li><span class="icon verde">3</span><span>Distinguir <strong>software y hardware</strong> y relacionarlos con una necesidad concreta.</span></li>
+          <li><span class="icon verde">4</span><span>Elegir la <strong>herramienta ofimática adecuada</strong> y justificar por qué no usar otra.</span></li>
+          <li><span class="icon verde">5</span><span>Saber qué se espera de tu primera evidencia, el <strong>video expositivo (EV01)</strong>.</span></li>
+        </ul>
+      </div>
+      <div class="compare-card naranja">
+        <div class="compare-title" style="color:var(--sena-naranja)">🛠️ Cómo vamos a trabajar</div>
+        <ul class="check-list">
+          <li><span class="icon naranja">1</span><span><strong>Concepto corto</strong> con palabras sencillas.</span></li>
+          <li><span class="icon naranja">2</span><span><strong>Ejemplo real</strong> en la empresa ADMINISTRA S.A.S.</span></li>
+          <li><span class="icon naranja">3</span><span><strong>Pregunta para pensar</strong> antes de seguir (con pista).</span></li>
+          <li><span class="icon naranja">4</span><span><strong>Idea para llevar</strong> al final de cada tema.</span></li>
+          <li><span class="icon naranja">5</span><span><strong>Mini-reto</strong> y autoevaluación al cierre.</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="info-box piensa reveal">
+      <div class="info-box-label">🤔 Pregunta de calentamiento</div>
+      <p>Piensa en la última vez que usaste una herramienta digital para resolver algo del estudio o del trabajo (Excel, WhatsApp, Drive, Word…). ¿Era la herramienta correcta para esa tarea? ¿Cómo lo sabes?</p>
+      <details class="reveal-ans"><summary>Ver pista</summary><p>Si tuviste que hacer mucho trabajo manual, cometiste errores o la herramienta se quedó corta, probablemente no era la adecuada. Saber elegir bien es exactamente la habilidad que desarrolla el RAP 1.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 2: INDUCCIÓN -->
+<section class="slide" id="induccion">
+  <div class="slide-num-badge">03 / 17</div>
+  <div class="slide-inner">
+    <div class="ctx-strip reveal">
+      <span class="ctx-chip comp">🎯 <b>Competencia 220501121</b> · Operar herramientas informáticas y digitales de acuerdo con protocolos y manuales técnicos</span>
+      <span class="ctx-chip rap">📋 <b>RAP 1 (220501121-01)</b> · Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización</span>
+      <span class="ctx-aporte">🧩 <b>Qué aporta esta sección al RAP 1:</b> ubicamos el RAP 1 dentro de los 4 RAP de la competencia: es el primer paso del camino.</span>
+    </div>
+    <div class="sec-header reveal">
+      <span class="sec-tag verde">Inducción</span>
+      <h2 class="sec-titulo">La Competencia 220501121</h2>
+      <p class="sec-desc">Operación de tecnologías informáticas y digitales — 4 Resultados de Aprendizaje. En este plan de 6 sesiones trabajamos únicamente el <strong>RAP 1</strong>.</p>
+    </div>
+    <div class="info-box piensa reveal">
+      <div class="info-box-label">🤔 Antes de seguir, piensa</div>
+      <p>Imagina que equipas una oficina nueva con poco presupuesto. ¿Qué averiguarías <em>antes</em> de comprar computadores o programas?</p>
+      <details class="reveal-ans"><summary>Ver pista</summary><p>Qué trabajos va a hacer cada persona (informes, cuentas, archivo, atención). Eso es justamente lo que pide el RAP 1: determinar funcionalidades <b>según las necesidades</b> de la organización.</p></details>
+    </div>
+    <div class="agenda-grid reveal">
+      <div class="agenda-item" style="border-color:var(--sena-verde-border);background:linear-gradient(135deg,var(--sena-verde-glow),rgba(255,255,255,0.9))">
+        <div class="agenda-num">RAP 1</div>
+        <div class="agenda-titulo">Funcionalidades de herramientas informáticas</div>
+        <div class="agenda-desc">Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización. Ejemplo: decidir si ADMINISTRA S.A.S. necesita una hoja de cálculo o un software contable especializado para la nómina.</div>
+        <span class="agenda-time">Trabajado en este plan · Sesiones 1–6</span>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-num">RAP 2</div>
+        <div class="agenda-titulo">Uso de TIC en actividades administrativas</div>
+        <div class="agenda-desc">Utilizar herramientas TIC en actividades administrativas de acuerdo con políticas de uso y procedimientos técnicos. Ejemplo: una vez elegida la hoja de cálculo, aprender a operarla correctamente para calcular la nómina real.</div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-num">RAP 3</div>
+        <div class="agenda-titulo">Administración de bases de datos</div>
+        <div class="agenda-desc">Administrar bases de datos de la unidad administrativa de acuerdo con necesidades de la organización. Ejemplo: organizar la base de datos de los 200+ clientes de Archivo para poder consultarlos rápidamente.</div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-num">RAP 4</div>
+        <div class="agenda-titulo">Acciones de mejora de la información</div>
+        <div class="agenda-desc">Proponer acciones de mejora de la información procesada según procedimientos de la unidad administrativa. Ejemplo: detectar que los informes de nómina se demoran mucho y proponer una plantilla más eficiente.</div>
+      </div>
+    </div>
+    <div class="info-box tip reveal">
+      <div class="info-box-label">💡 ¿Por qué empezamos por el RAP 1?</div>
+      <p>Antes de operar cualquier herramienta (RAP 2) o administrar una base de datos (RAP 3), toda organización necesita primero <strong>diagnosticar qué herramientas realmente necesita</strong>. Es como cuando alguien va a comprar herramientas para un taller: primero identifica qué trabajos va a hacer, y después decide qué comprar — no al revés. Eso es exactamente lo que desarrolla el RAP 1.</p>
+    </div>
+    <div class="info-box llevar reveal">
+      <div class="info-box-label">✅ Idea para llevar</div>
+      <p>Primero la necesidad, después la herramienta. Los RAP 2, 3 y 4 solo tienen sentido si el RAP 1 se hizo bien.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE NUEVA: RUTA COMPETENCIA → RAP → EVIDENCIAS -->
+<section class="slide bg-alt" id="ruta">
+  <div class="slide-num-badge">04 / 17</div>
+  <div class="slide-inner">
+    <div class="ctx-strip reveal">
+      <span class="ctx-chip comp">🎯 <b>Competencia 220501121</b> · Operar herramientas informáticas y digitales de acuerdo con protocolos y manuales técnicos</span>
+      <span class="ctx-chip rap">📋 <b>RAP 1 (220501121-01)</b> · Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización</span>
+      <span class="ctx-aporte">🧩 <b>Qué aporta esta sección al RAP 1:</b> muestra cómo lo que ves en clase se convierte en las evidencias que entregas.</span>
+    </div>
+    <div class="sec-header reveal">
+      <span class="sec-tag naranja">Mapa del camino</span>
+      <h2 class="sec-titulo">Del RAP a tus evidencias</h2>
+      <p class="sec-desc">Cada sesión es un escalón: la competencia se concreta en un RAP, el RAP en una actividad de aprendizaje y esta en evidencias que entregas en Zajuna.</p>
+    </div>
+    <div class="chain reveal">
+      <div class="chain-step comp">
+        <div class="chain-lbl">Competencia</div>
+        <div class="chain-ttl">220501121</div>
+        <div class="chain-txt">Operar herramientas informáticas y digitales de acuerdo con protocolos y manuales técnicos.</div>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-step rap">
+        <div class="chain-lbl">Resultado de aprendizaje</div>
+        <div class="chain-ttl">RAP 1 · 220501121-01</div>
+        <div class="chain-txt">Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización.</div>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-step aa">
+        <div class="chain-lbl">Actividad de aprendizaje · 48 h</div>
+        <div class="chain-ttl">GA2-220501121-AA1</div>
+        <div class="chain-txt">Gestionar y administrar herramientas ofimáticas que permitan implementar funcionalidades, de acuerdo con las necesidades de la organización.</div>
+      </div>
+    </div>
+    <div class="compare-grid reveal">
+      <div class="compare-card purpura">
+        <div class="compare-title" style="color:#8b5cf6">🎬 EV01 · Video expositivo</div>
+        <p style="font-size:14px;color:var(--texto-dim)">Video de máximo 3 minutos sobre el uso y las diferencias en la aplicación de herramientas informáticas. Socialización: <strong>martes 28 de julio</strong>. Entrega: <strong>miércoles 5 de agosto</strong>.</p>
+        <p style="font-size:13px;color:var(--texto-dim);margin-top:10px"><strong>Lo de hoy te sirve para:</strong> distinguir herramientas y argumentar por qué cada una se usa en cada caso.</p>
+      </div>
+      <div class="compare-card azul">
+        <div class="compare-title" style="color:#3b82f6">📑 EV02 · Normas técnicas y protocolos informáticos</div>
+        <p style="font-size:14px;color:var(--texto-dim)">Informe (infograma, matriz en Excel o cuadro comparativo) con cinco software de una empresa real, su protocolo, su norma técnica y su relación con el SG-SST. Socialización: <strong>martes 18 de agosto</strong>. Entrega: <strong>miércoles 26 de agosto</strong>.</p>
+        <p style="font-size:13px;color:var(--texto-dim);margin-top:10px"><strong>Lo de hoy te sirve para:</strong> reconocer software y hardware, base para identificar los cinco software de la empresa.</p>
+      </div>
+    </div>
+    <div class="info-box llevar reveal">
+      <div class="info-box-label">✅ Idea para llevar</div>
+      <p>Cada vez que veas un tema hoy, pregúntate: <strong>«¿Cómo me ayuda a determinar qué herramienta necesita una organización?»</strong> Esa pregunta es el RAP 1.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3: CRONOGRAMA -->
+<section class="slide bg-alt" id="cronograma">
+  <div class="slide-num-badge">05 / 17</div>
+  <div class="slide-inner">
+    <div class="ctx-strip reveal">
+      <span class="ctx-chip comp">🎯 <b>Competencia 220501121</b> · Operar herramientas informáticas y digitales de acuerdo con protocolos y manuales técnicos</span>
+      <span class="ctx-chip rap">📋 <b>RAP 1 (220501121-01)</b> · Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización</span>
+      <span class="ctx-aporte">🧩 <b>Qué aporta esta sección al RAP 1:</b> las 6 sesiones recorren el RAP 1 completo y te preparan para las evidencias EV01 (video) y EV02 (normas y protocolos).</span>
+    </div>
+    <div class="sec-header reveal">
+      <span class="sec-tag naranja">Cronograma</span>
+      <h2 class="sec-titulo">Plan de las 6 sesiones</h2>
+      <p class="sec-desc">Las sesiones 1 y 2 desarrollan toda la base teórica del RAP 1: sistemas de información, Teoría General de Sistemas, software, hardware, redes, dispositivos inteligentes y automatización. Las sesiones 4 y 5 profundizan en seguridad de la información y normas de SST.</p>
+    </div>
+    <div class="info-box piensa reveal">
+      <div class="info-box-label">🤔 Antes de seguir, piensa</div>
+      <p>Mira el calendario: ¿en qué sesiones recibes teoría y en cuáles presentas algo? Anota las dos fechas de socialización.</p>
+      <details class="reveal-ans"><summary>Ver pista</summary><p>Socialización de EV01: martes 28 de julio (S3). Socialización de EV02: martes 18 de agosto (S6).</p></details>
+    </div>
+    <div class="cal-grid reveal">
+      <div class="cal-card hoy">
+        <div class="cal-header">
+          <div class="cal-daynum">14</div>
+          <div class="cal-daymeta"><span class="cal-month">Julio</span><span class="cal-weekday">Martes</span></div>
+          <span class="cal-sesnum">S1</span>
+        </div>
+        <div class="cal-body">
+          <div class="cal-tema">Inducción + Sistemas de información, Teoría General de Sistemas, software y hardware</div>
+          <span class="cal-badge actual">📍 Hoy</span>
+        </div>
+      </div>
+      <div class="cal-card">
+        <div class="cal-header">
+          <div class="cal-daynum">21</div>
+          <div class="cal-daymeta"><span class="cal-month">Julio</span><span class="cal-weekday">Martes</span></div>
+          <span class="cal-sesnum">S2</span>
+        </div>
+        <div class="cal-body">
+          <div class="cal-tema">Redes de información, dispositivos inteligentes, automatización y diferencias funcionales</div>
+        </div>
+      </div>
+      <div class="cal-card hito">
+        <div class="cal-header">
+          <div class="cal-daynum">28</div>
+          <div class="cal-daymeta"><span class="cal-month">Julio</span><span class="cal-weekday">Martes</span></div>
+          <span class="cal-sesnum">S3</span>
+        </div>
+        <div class="cal-body">
+          <div class="cal-tema">Socialización del video expositivo</div>
+          <span class="cal-badge social">🎤 Socialización</span>
+        </div>
+      </div>
+      <div class="cal-card">
+        <div class="cal-header">
+          <div class="cal-daynum">4</div>
+          <div class="cal-daymeta"><span class="cal-month">Agosto</span><span class="cal-weekday">Martes</span></div>
+          <span class="cal-sesnum">S4</span>
+        </div>
+        <div class="cal-body">
+          <div class="cal-tema">Seguridad de la información y protocolos informáticos</div>
+        </div>
+      </div>
+      <div class="cal-card">
+        <div class="cal-header">
+          <div class="cal-daynum">11</div>
+          <div class="cal-daymeta"><span class="cal-month">Agosto</span><span class="cal-weekday">Martes</span></div>
+          <span class="cal-sesnum">S5</span>
+        </div>
+        <div class="cal-body">
+          <div class="cal-tema">Normas de SST en ambientes laborales y construcción del informe</div>
+        </div>
+      </div>
+      <div class="cal-card hito">
+        <div class="cal-header">
+          <div class="cal-daynum">18</div>
+          <div class="cal-daymeta"><span class="cal-month">Agosto</span><span class="cal-weekday">Martes</span></div>
+          <span class="cal-sesnum">S6</span>
+        </div>
+        <div class="cal-body">
+          <div class="cal-tema">Socialización del informe — Cierre de AA1</div>
+          <span class="cal-badge cierre">🏁 Cierre</span>
+        </div>
+      </div>
+    </div>
+    <div class="info-box info reveal" style="margin-top:28px">
+      <div class="info-box-label">📌 Fechas de entrega en Zajuna (8 días después de cada socialización)</div>
+      <p><strong>EV01 · Video expositivo:</strong> se socializa el martes 28 de julio y se entrega el <strong>miércoles 5 de agosto</strong>. <strong>EV02 · Normas técnicas y protocolos informáticos:</strong> se socializa el martes 18 de agosto y se entrega el <strong>miércoles 26 de agosto</strong>. Hoy no hay evidencia: es una sesión para construir la base teórica.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4: CASO ADMINISTRA S.A.S. -->
+<section class="slide bg-purpura" id="caso">
+  <div class="slide-num-badge">06 / 17</div>
+  <div class="slide-inner">
+    <div class="ctx-strip reveal">
+      <span class="ctx-chip comp">🎯 <b>Competencia 220501121</b> · Operar herramientas informáticas y digitales de acuerdo con protocolos y manuales técnicos</span>
+      <span class="ctx-chip rap">📋 <b>RAP 1 (220501121-01)</b> · Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización</span>
+      <span class="ctx-aporte">🧩 <b>Qué aporta esta sección al RAP 1:</b> ADMINISTRA S.A.S. es «la organización» cuyas necesidades guían la elección de herramientas, tal como pide el RAP 1.</span>
+    </div>
+    <div class="sec-header reveal">
+      <span class="sec-tag purpura">Caso de Estudio</span>
+      <h2 class="sec-titulo">ADMINISTRA S.A.S.</h2>
+      <p class="sec-desc">A lo largo de toda la sesión usaremos esta empresa como hilo conductor para ejemplificar cada concepto teórico con una situación real.</p>
+    </div>
+    <div class="info-box piensa reveal">
+      <div class="info-box-label">🤔 Antes de seguir, piensa</div>
+      <p>Lee las 4 necesidades de abajo. Antes de leer la herramienta que las resuelve, <strong>adivina</strong> cuál sería. Luego compara.</p>
+      <details class="reveal-ans"><summary>Ver pista</summary><p>Documentos escritos → procesador de texto · cálculos → hoja de cálculo · comunicar a clientes → presentaciones · convertir papel en digital → scanner (hardware).</p></details>
+    </div>
+    <div class="compare-grid reveal" style="grid-template-columns:1fr;">
+      <div class="compare-card purpura">
+        <div class="compare-title" style="color:#8b5cf6">🏢 Perfil de la empresa</div>
+        <ul class="check-list">
+          <li><span class="icon azul">✓</span><span><strong>PYME</strong> (Pequeña y Mediana Empresa) de 35 empleados</span></li>
+          <li><span class="icon azul">✓</span><span><strong>Outsourcing administrativo</strong>: otras empresas le encargan sus tareas administrativas y contables en vez de tener su propio personal para hacerlo</span></li>
+          <li><span class="icon azul">✓</span><span>1 oficina en Bogotá, clientes atendidos por internet (remotos) en 4 ciudades</span></li>
+          <li><span class="icon azul">✓</span><span>Áreas: Gerencia, Talento Humano, Contabilidad, Atención al Cliente, Archivo, Sistemas</span></li>
+        </ul>
+      </div>
+      <div class="compare-card verde">
+        <div class="compare-title" style="color:var(--sena-verde)">📋 4 necesidades que resolvemos HOY (Sesión 1)</div>
+        <ul class="need-list">
+          <li class="need-item">
+            <div class="need-head"><span class="need-num"></span><span class="need-title">Elaborar informes y contratos</span><span class="need-area">Talento Humano</span></div>
+            <div class="need-desc">Un <strong>contrato</strong> es el documento con los acuerdos entre la empresa y un empleado; un <strong>informe</strong> resume lo que pasó o se hizo. → Se resuelve con <strong>procesador de texto</strong>.</div>
+          </li>
+          <li class="need-item">
+            <div class="need-head"><span class="need-num"></span><span class="need-title">Calcular nómina y presupuestos</span><span class="need-area">Contabilidad</span></div>
+            <div class="need-desc">La <strong>nómina</strong> es el pago mensual de cada empleado; el <strong>presupuesto</strong> es el plan de cuánto dinero se espera gastar o recibir. → Se resuelve con <strong>hoja de cálculo</strong>.</div>
+          </li>
+          <li class="need-item">
+            <div class="need-head"><span class="need-num"></span><span class="need-title">Presentar propuestas comerciales</span><span class="need-area">Atención al Cliente</span></div>
+            <div class="need-desc">Documento donde se le explica a un cliente nuevo qué servicios ofrece la empresa. → Se resuelve con <strong>software de presentaciones</strong>.</div>
+          </li>
+          <li class="need-item">
+            <div class="need-head"><span class="need-num"></span><span class="need-title">Digitalizar y archivar contratos de 200+ clientes</span><span class="need-area">Archivo</span></div>
+            <div class="need-desc"><strong>Digitalizar</strong> es convertir papel en archivo digital; <strong>archivar</strong> es guardarlo ordenado para encontrarlo después. → Se resuelve con <strong>scanner y hardware</strong> (lo veremos en el slide de Hardware).</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="info-box warning reveal" style="margin-top:24px">
+      <div class="info-box-label">⚠️ Una quinta necesidad que NO se resuelve hoy</div>
+      <p>ADMINISTRA S.A.S. también debe <strong>cumplir el SG-SST</strong> (Sistema de Gestión de Seguridad y Salud en el Trabajo: normas obligatorias en Colombia para cuidar la salud y seguridad de los trabajadores) en todas sus áreas. Este tema no se ve hoy — se profundiza más adelante, en las <strong>sesiones 4 y 5</strong> del plan de esta competencia.</p>
+    </div>
+    <div class="info-box llevar reveal">
+      <div class="info-box-label">✅ Idea para llevar</div>
+      <p>Cada necesidad apunta a una herramienta distinta. Elegir bien es el corazón del RAP 1.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5: SISTEMAS DE INFORMACIÓN — FUNDAMENTOS -->
+<section class="slide bg-azul" id="sistemas">
+  <div class="slide-num-badge">07 / 17</div>
+  <div class="slide-inner">
+    <div class="ctx-strip reveal">
+      <span class="ctx-chip comp">🎯 <b>Competencia 220501121</b> · Operar herramientas informáticas y digitales de acuerdo con protocolos y manuales técnicos</span>
+      <span class="ctx-chip rap">📋 <b>RAP 1 (220501121-01)</b> · Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización</span>
+      <span class="ctx-aporte">🧩 <b>Qué aporta esta sección al RAP 1:</b> Criterio de evaluación de la guía: «Diferencia procesos y estructuras de los sistemas y medios de información».</span>
+    </div>
+    <div class="sec-header reveal">
+      <span class="sec-tag azul">Sistemas de Información</span>
+      <h2 class="sec-titulo">¿Qué es un sistema de información?</h2>
+      <p class="sec-desc">Conjunto organizado de <strong>personas, procesos, datos, software y hardware</strong> que interactúan para producir información útil. No es solo "el computador".</p>
+    </div>
+    <div class="info-box analogia reveal">
+      <div class="info-box-label">🍽️ Para entenderlo con algo cotidiano</div>
+      <p>En un <strong>restaurante</strong>: la <em>entrada</em> es el pedido y los ingredientes; el <em>procesamiento</em> es la cocina; el <em>almacenamiento</em> es la nevera y la despensa; la <em>salida</em> es el plato servido; y la <em>retroalimentación</em> es el cliente que dice «le faltó sal» y la cocina ajusta la receta. Un sistema de información funciona igual, pero con datos.</p>
+    </div>
+    <div class="info-box piensa reveal">
+      <div class="info-box-label">🤔 Antes de seguir, piensa</div>
+      <p>¿Un computador, por sí solo, es un sistema de información? ¿Qué le faltaría?</p>
+      <details class="reveal-ans"><summary>Ver pista</summary><p>No: le faltan las <b>personas</b>, los <b>procesos</b> y los <b>datos</b>. El computador es solo uno de los 5 componentes (personas, procesos, datos, software y hardware).</p></details>
+    </div>
+    <div class="sys-diagram reveal">
+      <div class="sys-diagram-title">LOS 4 ELEMENTOS DE UN SISTEMA DE INFORMACIÓN — EJEMPLO: HORAS EXTRA EN ADMINISTRA S.A.S.</div>
+      <div class="sys-flow">
+        <div class="sys-box entrada">
+          <div class="sys-box-label">ENTRADA</div>
+          <div class="sys-box-sub">"35 horas extra"</div>
+        </div>
+        <div class="sys-arrow">→</div>
+        <div class="sys-box proceso">
+          <div class="sys-box-label">PROCESAMIENTO</div>
+          <div class="sys-box-sub">Relaciona empleado + tarifa</div>
+        </div>
+        <div class="sys-arrow">→</div>
+        <div class="sys-box almacen">
+          <div class="sys-box-label">ALMACENAMIENTO</div>
+          <div class="sys-box-sub">BD de Contabilidad</div>
+        </div>
+        <div class="sys-arrow">→</div>
+        <div class="sys-box salida">
+          <div class="sys-box-label">SALIDA</div>
+          <div class="sys-box-sub">Desprendible $420.000</div>
+        </div>
+      </div>
+      <div class="sys-feedback">↩ Retroalimentación: el gerente aprueba el pago y ajusta el presupuesto del siguiente mes</div>
+    </div>
+    <div class="info-box info reveal">
+      <div class="info-box-label">📌 Ciclo de vida de la información</div>
+      <p><strong>DATO</strong> (aislado, sin contexto) → <strong>PROCESO</strong> → <strong>INFORMACIÓN</strong> (con sentido) → <strong>DECISIÓN</strong>. "35 horas extra" no significa nada hasta que se procesa y se convierte en "Carlos Pérez trabajó 35 horas extra en julio, equivalentes a $420.000".</p>
+    </div>
+    <div class="info-box tip reveal">
+      <div class="info-box-label">💡 Otro ejemplo del mismo ciclo, en Archivo</div>
+      <p><strong>Dato:</strong> "Contrato #4521" (aislado, no dice nada) → <strong>Proceso:</strong> el sistema lo relaciona con el nombre del cliente, la fecha de radicación y el tipo de servicio contratado → <strong>Información:</strong> "El cliente Panadería El Trigal radicó su contrato de servicios contables el 10 de julio" → <strong>Decisión:</strong> Archivo confirma que el contrato está completo y lo envía a Contabilidad para iniciar la facturación.</p>
+    </div>
+    <div class="info-box llevar reveal">
+      <div class="info-box-label">✅ Idea para llevar</div>
+      <p>Un sistema de información no es «el computador»: es el conjunto de personas, procesos, datos, software y hardware que convierte datos en información útil para decidir.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 6: CLASIFICACIÓN DE SISTEMAS DE INFORMACIÓN -->
+<section class="slide" id="clasificacion">
+  <div class="slide-num-badge">08 / 17</div>
+  <div class="slide-inner">
+    <div class="ctx-strip reveal">
+      <span class="ctx-chip comp">🎯 <b>Competencia 220501121</b> · Operar herramientas informáticas y digitales de acuerdo con protocolos y manuales técnicos</span>
+      <span class="ctx-chip rap">📋 <b>RAP 1 (220501121-01)</b> · Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización</span>
+      <span class="ctx-aporte">🧩 <b>Qué aporta esta sección al RAP 1:</b> Criterio de evaluación de la guía: «Diferencia procesos y estructuras de los sistemas y medios de información».</span>
+    </div>
+    <div class="sec-header reveal">
+      <span class="sec-tag verde">Clasificación</span>
+      <h2 class="sec-titulo">Clasificación de los sistemas de información</h2>
+      <p class="sec-desc">Se pueden clasificar por estructura organizacional, por área funcional y por el tipo de apoyo a la decisión que brindan.</p>
+    </div>
+    <div class="info-box analogia reveal">
+      <div class="info-box-label">🏫 Para entenderlo con algo cotidiano</div>
+      <p>Piensa en un <strong>colegio</strong>: el control de asistencia diario es un sistema <em>transaccional (TPS)</em>; el rector comparando la deserción por grados para decidir qué reforzar es un <em>sistema de apoyo a decisiones (DSS)</em>; y el plan de crecimiento a cinco años es información <em>ejecutiva (EIS)</em>. Cada nivel necesita información distinta.</p>
+    </div>
+    <div class="info-box piensa reveal">
+      <div class="info-box-label">🤔 Antes de seguir, piensa</div>
+      <p>¿Quién toma cada decisión: el auxiliar de Archivo que registra un contrato nuevo o el gerente que decide abrir una sede en otra ciudad?</p>
+      <details class="reveal-ans"><summary>Ver pista</summary><p>Auxiliar → nivel operativo (TPS). Gerente → nivel estratégico (EIS). El jefe de área que compara gastos mes a mes → nivel táctico (DSS).</p></details>
+    </div>
+    <table class="tags-table reveal">
+      <thead><tr><th>Criterio</th><th>Tipo</th><th>Ejemplo ADMINISTRA S.A.S.</th></tr></thead>
+      <tbody>
+        <tr><td>Por estructura</td><td>Jerárquico</td><td>Reportes diarios de Archivo suben a un informe mensual para Gerencia</td></tr>
+        <tr><td>Por estructura</td><td>En red</td><td>Contabilidad se conecta con Talento Humano para calcular la nómina</td></tr>
+        <tr><td>Por estructura</td><td>Distribuido</td><td>Atención a clientes remotos en 4 ciudades sobre la misma plataforma en la nube</td></tr>
+        <tr><td>Por apoyo a decisión</td><td>Transaccional (TPS)</td><td>Registra entradas/salidas de documentos y registros de nómina — nivel operativo</td></tr>
+        <tr><td>Por apoyo a decisión</td><td>Apoyo a Decisiones (DSS)</td><td>Compara gastos de nómina mes a mes — nivel táctico</td></tr>
+        <tr><td>Por apoyo a decisión</td><td>Información Ejecutiva (EIS)</td><td>Indicadores de rentabilidad por cliente atendido — nivel estratégico</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box info reveal">
+      <div class="info-box-label">📌 ¿Por qué importa esta clasificación?</div>
+      <p>Cada tipo de sistema resuelve una necesidad distinta dentro de ADMINISTRA S.A.S.: el <strong>TPS</strong> registra lo que pasa día a día (quién entregó qué documento hoy), el <strong>DSS</strong> ayuda a un jefe de área a comparar y decidir (¿subieron o bajaron los gastos de nómina este mes?), y el <strong>EIS</strong> le da al gerente una foto general del negocio (¿qué clientes son más rentables?). No se puede tomar una buena decisión gerencial con datos operativos sin procesar, ni se necesita un indicador ejecutivo para registrar la entrada de un documento.</p>
+    </div>
+    <div class="info-box llevar reveal">
+      <div class="info-box-label">✅ Idea para llevar</div>
+      <p>TPS registra lo que pasa hoy, DSS ayuda a comparar y decidir en el área, EIS entrega la foto general para decidir hacia dónde va la empresa.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 7: TEORÍA GENERAL DE SISTEMAS -->
+<section class="slide bg-verde" id="tgs">
+  <div class="slide-num-badge">09 / 17</div>
+  <div class="slide-inner">
+    <div class="ctx-strip reveal">
+      <span class="ctx-chip comp">🎯 <b>Competencia 220501121</b> · Operar herramientas informáticas y digitales de acuerdo con protocolos y manuales técnicos</span>
+      <span class="ctx-chip rap">📋 <b>RAP 1 (220501121-01)</b> · Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización</span>
+      <span class="ctx-aporte">🧩 <b>Qué aporta esta sección al RAP 1:</b> Criterio de evaluación de la guía: «Diferencia procesos y estructuras de los sistemas y medios de información».</span>
+    </div>
+    <div class="sec-header reveal">
+      <span class="sec-tag verde">Teoría General de Sistemas</span>
+      <h2 class="sec-titulo">Orígenes y fundamentos</h2>
+      <p class="sec-desc">Formulada por el biólogo <strong>Ludwig von Bertalanffy</strong> a mediados del siglo XX: todo sistema —biológico, físico, social u organizacional— está compuesto por partes interrelacionadas que funcionan como un todo.</p>
+    </div>
+    <div class="info-box analogia reveal">
+      <div class="info-box-label">🫀 Para entenderlo con algo cotidiano</div>
+      <p>El <strong>cuerpo humano</strong>: el corazón, los pulmones y el estómago se estudian por separado, pero la persona solo vive si trabajan juntos. Una empresa es igual: Talento Humano, Contabilidad y Archivo son partes de un mismo todo.</p>
+    </div>
+    <div class="info-box piensa reveal">
+      <div class="info-box-label">🤔 Antes de seguir, piensa</div>
+      <p>Piensa en tu casa a la hora del almuerzo como un sistema. ¿Cuál sería la entrada, el procesamiento, la salida y la retroalimentación?</p>
+      <details class="reveal-ans"><summary>Ver pista</summary><p>Entrada: ingredientes. Procesamiento: cocinar. Salida: el almuerzo servido. Retroalimentación: alguien dice «está desabrido» y ajustas la sazón.</p></details>
+    </div>
+    <div class="info-box tip reveal">
+      <div class="info-box-label">💡 ¿Por qué le importa esto a un gestor administrativo?</div>
+      <p>Explica por qué ADMINISTRA S.A.S. no funciona bien si Talento Humano, Contabilidad y Archivo trabajan aislados unos de otros — el comportamiento del conjunto no se explica observando solo sus partes por separado.</p>
+    </div>
+    <table class="tags-table reveal">
+      <thead><tr><th>Elemento TGS</th><th>Descripción</th></tr></thead>
+      <tbody>
+        <tr><td>Entrada de información</td><td>Insumos o recursos que ingresan al sistema</td></tr>
+        <tr><td>Procesamiento</td><td>Transformación que sufren esos insumos dentro del sistema</td></tr>
+        <tr><td>Almacenamiento</td><td>Conservación de la información o los recursos procesados</td></tr>
+        <tr><td>Salida</td><td>Resultado o producto final que el sistema entrega a su entorno</td></tr>
+        <tr><td>Retroalimentación (feedback)</td><td>Información de salida que regresa al sistema para ajustar su funcionamiento</td></tr>
+        <tr><td>Entorno o ambiente</td><td>Todo lo que rodea al sistema y con lo que este interactúa</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box tip reveal">
+      <div class="info-box-label">💡 Ejemplo de retroalimentación en Atención al Cliente</div>
+      <p>Un cliente llama para quejarse de que su factura llegó con un error (esa queja es la <strong>salida</strong> del sistema anterior, que se convierte en nueva <strong>entrada</strong>). El área de Contabilidad revisa el error y ajusta su proceso de revisión antes de enviar facturas — eso es la <strong>retroalimentación</strong> funcionando: la información que sale del sistema regresa para mejorarlo.</p>
+    </div>
+    <div class="info-box llevar reveal">
+      <div class="info-box-label">✅ Idea para llevar</div>
+      <p>Si una parte falla o trabaja aislada, todo el sistema se resiente: por eso estudiamos la empresa como un conjunto, no como áreas sueltas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 8: SISTEMAS ABIERTOS Y CERRADOS -->
+<section class="slide bg-alt" id="abiertos">
+  <div class="slide-num-badge">10 / 17</div>
+  <div class="slide-inner">
+    <div class="ctx-strip reveal">
+      <span class="ctx-chip comp">🎯 <b>Competencia 220501121</b> · Operar herramientas informáticas y digitales de acuerdo con protocolos y manuales técnicos</span>
+      <span class="ctx-chip rap">📋 <b>RAP 1 (220501121-01)</b> · Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización</span>
+      <span class="ctx-aporte">🧩 <b>Qué aporta esta sección al RAP 1:</b> Criterio de evaluación de la guía: «Diferencia procesos y estructuras de los sistemas y medios de información».</span>
+    </div>
+    <div class="sec-header reveal">
+      <span class="sec-tag naranja">Clasificación TGS</span>
+      <h2 class="sec-titulo">Sistemas abiertos y sistemas cerrados</h2>
+      <p class="sec-desc">Todo sistema puede clasificarse según su relación con el entorno.</p>
+    </div>
+    <div class="info-box analogia reveal">
+      <div class="info-box-label">🏪 Para entenderlo con algo cotidiano</div>
+      <p>Una <strong>tienda de barrio</strong> con la puerta abierta recibe clientes, escucha qué piden y cambia sus productos: es un sistema <em>abierto</em>. Una <strong>caja fuerte</strong> no intercambia nada con el exterior: es un sistema <em>cerrado</em>.</p>
+    </div>
+    <div class="info-box piensa reveal">
+      <div class="info-box-label">🤔 Antes de seguir, piensa</div>
+      <p>¿Podría una empresa de servicios sobrevivir mucho tiempo con todos sus sistemas completamente cerrados? ¿Por qué?</p>
+      <details class="reveal-ans"><summary>Ver pista</summary><p>Difícilmente: necesita información de clientes, proveedores y normas (entorno) para adaptarse. Un sistema cerrado se queda desactualizado.</p></details>
+    </div>
+    <div class="attr-grid reveal">
+      <div class="attr-card">
+        <span class="attr-type-badge abierto">Sistema Abierto</span>
+        <div class="attr-card-title">Intercambia con el entorno</div>
+        <div class="attr-card-desc">Intercambia energía, materia o información con su entorno de forma constante; se adapta a los cambios externos.</div>
+        <div class="attr-card-example">Atención al Cliente: recibe constantemente PQRSF (Peticiones, Quejas, Reclamos, Sugerencias y Felicitaciones de los clientes)</div>
+      </div>
+      <div class="attr-card">
+        <span class="attr-type-badge cerrado">Sistema Cerrado</span>
+        <div class="attr-card-title">No intercambia con el entorno</div>
+        <div class="attr-card-desc">No intercambia información con el entorno; opera de forma autónoma y aislada.</div>
+        <div class="attr-card-example">Archivo histórico de contratos ya cerrados, sin nuevas consultas</div>
+      </div>
+    </div>
+    <div class="info-box info reveal">
+      <div class="info-box-label">📌 En la práctica administrativa</div>
+      <p>La mayoría de los sistemas de información <strong>son abiertos</strong>, porque las organizaciones están en constante interacción con clientes, proveedores y el entorno normativo (como el SG-SST, que veremos en la sesión 4).</p>
+    </div>
+    <div class="info-box llevar reveal">
+      <div class="info-box-label">✅ Idea para llevar</div>
+      <p>En la práctica administrativa casi todos los sistemas son abiertos; los cerrados son excepciones (como un archivo histórico sin consultas).</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 9: SISTEMAS ESTRATÉGICOS -->
+<section class="slide bg-purpura" id="estrategicos">
+  <div class="slide-num-badge">11 / 17</div>
+  <div class="slide-inner">
+    <div class="ctx-strip reveal">
+      <span class="ctx-chip comp">🎯 <b>Competencia 220501121</b> · Operar herramientas informáticas y digitales de acuerdo con protocolos y manuales técnicos</span>
+      <span class="ctx-chip rap">📋 <b>RAP 1 (220501121-01)</b> · Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización</span>
+      <span class="ctx-aporte">🧩 <b>Qué aporta esta sección al RAP 1:</b> Criterio de evaluación de la guía: «Diferencia procesos y estructuras de los sistemas y medios de información».</span>
+    </div>
+    <div class="sec-header reveal">
+      <span class="sec-tag purpura">Sistemas Estratégicos</span>
+      <h2 class="sec-titulo">Sistemas que dan ventaja competitiva</h2>
+      <p class="sec-desc">A diferencia de un sistema transaccional (que solo registra operaciones), un sistema estratégico <strong>transforma la forma en que la organización compite</strong> en su mercado.</p>
+    </div>
+    <div class="info-box piensa reveal">
+      <div class="info-box-label">🤔 Antes de seguir, piensa</div>
+      <p>Una app de domicilios: ¿solo <em>registra</em> pedidos o <em>cambia la forma de competir</em> frente a los restaurantes tradicionales?</p>
+      <details class="reveal-ans"><summary>Ver pista</summary><p>Hace ambas cosas, pero lo que la hace estratégica es que transformó el mercado (rapidez, seguimiento en vivo, alcance). Un sistema solo transaccional apenas registra.</p></details>
+    </div>
+    <div class="info-box tip reveal">
+      <div class="info-box-label">💡 Ejemplo ADMINISTRA S.A.S.</div>
+      <p>Implementar una plataforma en línea donde los clientes consulten en tiempo real el estado de sus documentos <strong>radicados</strong> (ya recibidos y registrados oficialmente por la empresa) es un sistema estratégico — ninguna otra empresa de outsourcing administrativo de la zona lo ofrece, lo cual atrae más clientes.</p>
+    </div>
+    <table class="tags-table reveal">
+      <thead><tr><th>Tipo según naturaleza</th><th>Descripción</th></tr></thead>
+      <tbody>
+        <tr><td>Sistema físico</td><td>Tiene existencia material y tangible (ej. los servidores donde se aloja la plataforma)</td></tr>
+        <tr><td>Sistema abstracto</td><td>Existe como constructo conceptual, no material (ej. el modelo de datos o el flujo de procesos diseñado)</td></tr>
+        <tr><td>Sistema cerrado</td><td>No interactúa con el entorno una vez implementado</td></tr>
+        <tr><td>Sistema abierto</td><td>Se retroalimenta constantemente del entorno para mejorar su ventaja competitiva</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box tip reveal">
+      <div class="info-box-label">💡 Otro ejemplo: un chatbot de atención al cliente</div>
+      <p>Si ADMINISTRA S.A.S. implementa un asistente virtual (chatbot) que responde preguntas frecuentes de los clientes las 24 horas, sin necesidad de que un empleado esté disponible, eso también es un sistema estratégico: reduce costos de personal, mejora la satisfacción del cliente y la diferencia de otras empresas de outsourcing que solo atienden en horario de oficina.</p>
+    </div>
+    <div class="info-box warning reveal">
+      <div class="info-box-label">⚠️ Idea clave</div>
+      <p>Los sistemas estratégicos casi siempre son sistemas <strong>abiertos</strong>, porque su valor depende de adaptarse constantemente a las necesidades cambiantes del mercado y de los clientes.</p>
+    </div>
+    <div class="info-box llevar reveal">
+      <div class="info-box-label">✅ Idea para llevar</div>
+      <p>Transaccional = registra. Estratégico = transforma cómo compite la organización.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 10: SOFTWARE -->
+<section class="slide" id="software">
+  <div class="slide-num-badge">12 / 17</div>
+  <div class="slide-inner">
+    <div class="ctx-strip reveal">
+      <span class="ctx-chip comp">🎯 <b>Competencia 220501121</b> · Operar herramientas informáticas y digitales de acuerdo con protocolos y manuales técnicos</span>
+      <span class="ctx-chip rap">📋 <b>RAP 1 (220501121-01)</b> · Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización</span>
+      <span class="ctx-aporte">🧩 <b>Qué aporta esta sección al RAP 1:</b> criterio de la guía para EV01: explicar el uso y las <b>diferencias en la aplicación</b> de herramientas informáticas.</span>
+    </div>
+    <div class="sec-header reveal">
+      <span class="sec-tag verde">Software</span>
+      <h2 class="sec-titulo">Concepto, licenciamiento y herramientas ofimáticas</h2>
+      <p class="sec-desc">El software es el conjunto de programas e instrucciones que permite operar un dispositivo informático. Sin software, el hardware es solo componentes electrónicos inertes.</p>
+    </div>
+    <div class="info-box analogia reveal">
+      <div class="info-box-label">🧠 Para entenderlo con algo cotidiano</div>
+      <p>El software y el hardware son como la <strong>mente y el cuerpo</strong>: el cuerpo (hardware) puede ser fuerte, pero sin instrucciones (software) no hace nada útil; y la mejor idea (software) no se ejecuta sin un cuerpo que la realice.</p>
+    </div>
+    <div class="info-box piensa reveal">
+      <div class="info-box-label">🤔 Antes de seguir, piensa</div>
+      <p>Si tu empresa casi no tiene presupuesto para licencias, ¿qué tipo de software elegirías? ¿Qué ganas y qué pierdes con esa decisión?</p>
+      <details class="reveal-ans"><summary>Ver pista</summary><p>Software libre (p. ej. LibreOffice): ganas ahorro y libertad; pierdes cierta compatibilidad o soporte comercial. Si necesitas trabajo colaborativo, evalúa un SaaS.</p></details>
+    </div>
+    <table class="tags-table reveal">
+      <thead><tr><th>Tipo de licencia</th><th>Características</th><th>Ejemplos</th></tr></thead>
+      <tbody>
+        <tr><td>Propietario</td><td>Licencia de pago, código fuente cerrado</td><td>Microsoft Office, Windows</td></tr>
+        <tr><td>Libre / open source</td><td>Uso, estudio, modificación y distribución libres</td><td>LibreOffice, Linux, GIMP</td></tr>
+        <tr><td>SaaS</td><td>Suscripción en la nube, sin instalación local</td><td>Google Workspace, Microsoft 365, Canva</td></tr>
+        <tr><td>Freeware</td><td>Gratuito, código cerrado, sin modificación</td><td>Adobe Acrobat Reader</td></tr>
+      </tbody>
+    </table>
+    <div class="tool-grid reveal">
+      <div class="tool-card">
+        <div class="tool-head">
+          <div class="tool-icon">📝</div>
+          <div class="tool-name">Procesador de texto</div>
+        </div>
+        <div class="tool-func">Creación y edición de documentos escritos.</div>
+        <div class="tool-examples">
+          <span class="tool-chip">Microsoft Word</span>
+          <span class="tool-chip">Google Docs</span>
+          <span class="tool-chip">LibreOffice Writer</span>
+        </div>
+        <div class="tool-use"><strong>En ADMINISTRA S.A.S.:</strong> Talento Humano redacta contratos y actas (combinación de correspondencia).</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-head">
+          <div class="tool-icon">📊</div>
+          <div class="tool-name">Hoja de cálculo</div>
+        </div>
+        <div class="tool-func">Cálculo y análisis de datos numéricos.</div>
+        <div class="tool-examples">
+          <span class="tool-chip">Microsoft Excel</span>
+          <span class="tool-chip">Google Sheets</span>
+          <span class="tool-chip">LibreOffice Calc</span>
+        </div>
+        <div class="tool-use"><strong>En ADMINISTRA S.A.S.:</strong> Contabilidad calcula la nómina de 35 empleados.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-head">
+          <div class="tool-icon">📽️</div>
+          <div class="tool-name">Presentaciones</div>
+        </div>
+        <div class="tool-func">Comunicación visual de información.</div>
+        <div class="tool-examples">
+          <span class="tool-chip">Microsoft PowerPoint</span>
+          <span class="tool-chip">Google Slides</span>
+          <span class="tool-chip">Canva</span>
+        </div>
+        <div class="tool-use"><strong>En ADMINISTRA S.A.S.:</strong> Atención al Cliente prepara propuestas comerciales.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-head">
+          <div class="tool-icon">🗄️</div>
+          <div class="tool-name">Bases de datos</div>
+        </div>
+        <div class="tool-func">Almacenamiento y consulta estructurada.</div>
+        <div class="tool-examples">
+          <span class="tool-chip">Microsoft Access</span>
+          <span class="tool-chip">MySQL</span>
+          <span class="tool-chip">Google Sheets (básico)</span>
+        </div>
+        <div class="tool-use"><strong>En ADMINISTRA S.A.S.:</strong> Archivo gestiona información de 200+ clientes.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-head">
+          <div class="tool-icon">📧</div>
+          <div class="tool-name">Gestores de correo</div>
+        </div>
+        <div class="tool-func">Comunicación formal y organización de mensajes.</div>
+        <div class="tool-examples">
+          <span class="tool-chip">Gmail</span>
+          <span class="tool-chip">Microsoft Outlook</span>
+          <span class="tool-chip">Yahoo Mail</span>
+        </div>
+        <div class="tool-use"><strong>En ADMINISTRA S.A.S.:</strong> todas las áreas se comunican con clientes y proveedores.</div>
+      </div>
+    </div>
+    <div class="info-box tip reveal">
+      <div class="info-box-label">💡 Decisión real de ADMINISTRA S.A.S.</div>
+      <p>Por presupuesto, la empresa migró de licencias de Microsoft Office a <strong>Google Workspace (SaaS)</strong>, lo que permitió trabajo colaborativo en la nube entre Bogotá y los clientes remotos, sin pagar licencias individuales por equipo.</p>
+    </div>
+    <div class="info-box info reveal">
+      <div class="info-box-label">📌 Otro ejemplo de decisión de software</div>
+      <p>Para su primer año, cuando el presupuesto era muy bajo, ADMINISTRA S.A.S. usó <strong>LibreOffice</strong> (software libre) en lugar de pagar licencias de Microsoft Office. Cuando la empresa creció y necesitó compartir archivos en tiempo real con clientes de 4 ciudades, migró a Google Workspace (SaaS) — cada tipo de software tiene su momento según las necesidades y el presupuesto de la organización.</p>
+    </div>
+    <div class="info-box tip reveal">
+      <div class="info-box-label">🧭 4 preguntas antes de elegir una herramienta</div>
+      <p><strong>1.</strong> ¿Qué necesidad resuelve? · <strong>2.</strong> ¿Cuánto presupuesto hay (licencia, suscripción o gratis)? · <strong>3.</strong> ¿El hardware disponible la soporta? · <strong>4.</strong> ¿Hay que trabajar en equipo o a distancia? Con esas cuatro respuestas se <em>determina la funcionalidad</em> que necesita la organización: eso es el RAP 1.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 11: HARDWARE -->
+<section class="slide bg-alt" id="hardware">
+  <div class="slide-num-badge">13 / 17</div>
+  <div class="slide-inner">
+    <div class="ctx-strip reveal">
+      <span class="ctx-chip comp">🎯 <b>Competencia 220501121</b> · Operar herramientas informáticas y digitales de acuerdo con protocolos y manuales técnicos</span>
+      <span class="ctx-chip rap">📋 <b>RAP 1 (220501121-01)</b> · Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización</span>
+      <span class="ctx-aporte">🧩 <b>Qué aporta esta sección al RAP 1:</b> criterio de la guía: «Clasifica herramientas periféricas» y reconoce los requerimientos del equipo.</span>
+    </div>
+    <div class="sec-header reveal">
+      <span class="sec-tag naranja">Hardware</span>
+      <h2 class="sec-titulo">Componentes básicos y periféricos</h2>
+      <p class="sec-desc">El hardware es la parte física de un equipo informático: componentes eléctricos, electrónicos, electromecánicos y mecánicos.</p>
+    </div>
+    <div class="info-box analogia reveal">
+      <div class="info-box-label">🗂️ Para entenderlo con algo cotidiano</div>
+      <p>La <strong>memoria RAM</strong> es el escritorio donde tienes abiertos los papeles que estás usando ahora; el <strong>disco duro</strong> es el archivador donde guardas todo. Si el escritorio es pequeño no puedes trabajar con muchos papeles a la vez, aunque el archivador sea enorme.</p>
+    </div>
+    <div class="info-box piensa reveal">
+      <div class="info-box-label">🤔 Antes de seguir, piensa</div>
+      <p>El computador de Contabilidad se congela al abrir un Excel muy grande. ¿Es un problema del software o del hardware? ¿Cómo lo averiguarías?</p>
+      <details class="reveal-ans"><summary>Ver pista</summary><p>Revisa el uso de memoria RAM y de CPU en el administrador de tareas. Si la RAM está al 100 %, el problema es de capacidad física, no de la herramienta.</p></details>
+    </div>
+    <table class="tags-table reveal">
+      <thead><tr><th>Componente</th><th>Función</th></tr></thead>
+      <tbody>
+        <tr><td>CPU (procesador)</td><td>Ejecuta las instrucciones y realiza los cálculos</td></tr>
+        <tr><td>Memoria RAM</td><td>Almacenamiento temporal de datos mientras el equipo está en uso — se borra al apagarlo</td></tr>
+        <tr><td>Disco duro / SSD</td><td>Almacenamiento permanente de programas y archivos — no se borra al apagar el equipo</td></tr>
+        <tr><td>Placa base</td><td>Conecta e integra todos los componentes internos</td></tr>
+        <tr><td>Fuente de poder</td><td>Suministra energía eléctrica al equipo</td></tr>
+      </tbody>
+    </table>
+    <div class="compare-grid reveal">
+      <div class="compare-card verde">
+        <div class="compare-title" style="color:var(--sena-verde)">📥 Entrada</div>
+        <p style="font-size:14px;color:var(--texto-dim)">Teclado, mouse, scanner, cámara web. En ADMINISTRA S.A.S., el scanner digitaliza contratos físicos para el sistema de gestión documental.</p>
+      </div>
+      <div class="compare-card naranja">
+        <div class="compare-title" style="color:var(--sena-naranja)">📤 Salida</div>
+        <p style="font-size:14px;color:var(--texto-dim)">Monitor, impresora, video proyector, parlantes. La impresora genera los desprendibles de pago mensuales.</p>
+      </div>
+      <div class="compare-card azul">
+        <div class="compare-title" style="color:#3b82f6">🔄 Entrada/Salida</div>
+        <p style="font-size:14px;color:var(--texto-dim)">Pantallas táctiles, módems, discos externos. Un disco externo se usa para respaldo semanal de la información contable.</p>
+      </div>
+    </div>
+    <div class="info-box warning reveal">
+      <div class="info-box-label">⚠️ Caso real: equipo insuficiente</div>
+      <p>Un equipo de Contabilidad en ADMINISTRA S.A.S. tenía solo 4 GB de RAM y se congelaba cada vez que intentaba abrir la hoja de cálculo con la nómina completa de los 35 empleados junto con el histórico de 12 meses. La solución no fue el software — fue actualizar el hardware (más RAM), porque el problema era de capacidad física del equipo, no de la herramienta usada.</p>
+    </div>
+    <div class="info-box llevar reveal">
+      <div class="info-box-label">✅ Idea para llevar</div>
+      <p>Hardware = lo que se toca (procesa, almacena, entra y sale información). Cuando el problema es de capacidad, se resuelve con hardware, no cambiando de software.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 12: RELACIÓN SOFTWARE-HARDWARE -->
+<section class="slide" id="relacion">
+  <div class="slide-num-badge">14 / 17</div>
+  <div class="slide-inner">
+    <div class="ctx-strip reveal">
+      <span class="ctx-chip comp">🎯 <b>Competencia 220501121</b> · Operar herramientas informáticas y digitales de acuerdo con protocolos y manuales técnicos</span>
+      <span class="ctx-chip rap">📋 <b>RAP 1 (220501121-01)</b> · Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización</span>
+      <span class="ctx-aporte">🧩 <b>Qué aporta esta sección al RAP 1:</b> criterio de la guía: relacionar herramientas con los <b>requerimientos técnicos</b> que necesita la organización.</span>
+    </div>
+    <div class="sec-header reveal">
+      <span class="sec-tag azul">Relación Software-Hardware</span>
+      <h2 class="sec-titulo">Requerimientos técnicos en la práctica</h2>
+      <p class="sec-desc">Ningún software funciona sin el hardware que lo soporta, ni el hardware sirve sin software que lo controle.</p>
+    </div>
+    <div class="info-box piensa reveal">
+      <div class="info-box-label">🤔 Antes de seguir, piensa</div>
+      <p>Vas a digitalizar 200 contratos de papel. Además del scanner, ¿qué más debes revisar antes de comprarlo?</p>
+      <details class="reveal-ans"><summary>Ver pista</summary><p>El software de gestión documental, que el computador tenga RAM/disco suficientes y dónde se almacenarán los archivos (espacio y respaldo).</p></details>
+    </div>
+    <table class="tags-table reveal">
+      <thead><tr><th>Necesidad</th><th>Software requerido</th><th>Hardware requerido</th></tr></thead>
+      <tbody>
+        <tr><td>Digitalizar contratos físicos</td><td>Gestión documental</td><td>Scanner de alta resolución</td></tr>
+        <tr><td>Videollamadas con clientes remotos</td><td>Plataforma de videoconferencia</td><td>Cámara web, micrófono, internet estable</td></tr>
+        <tr><td>Elaborar presupuestos anuales</td><td>Hoja de cálculo</td><td>Equipo con suficiente RAM</td></tr>
+        <tr><td>Imprimir contratos para firma física</td><td>Procesador de texto + gestor de impresión</td><td>Impresora conectada en red</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box warning reveal">
+      <div class="info-box-label">⚠️ Idea clave</div>
+      <p>Antes de adquirir cualquier software, la organización debe verificar que el hardware disponible cumple los requerimientos mínimos técnicos — de lo contrario, la herramienta no funcionará correctamente o será muy lenta.</p>
+    </div>
+    <div class="info-box llevar reveal">
+      <div class="info-box-label">✅ Idea para llevar</div>
+      <p>Antes de comprar o instalar software, verifica el hardware; antes de comprar hardware, define el software que lo usará.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 13: DIFERENCIAS FUNCIONALES Y CIERRE -->
+<section class="slide bg-verde" id="diferencias">
+  <div class="slide-num-badge">15 / 17</div>
+  <div class="slide-inner">
+    <div class="ctx-strip reveal">
+      <span class="ctx-chip comp">🎯 <b>Competencia 220501121</b> · Operar herramientas informáticas y digitales de acuerdo con protocolos y manuales técnicos</span>
+      <span class="ctx-chip rap">📋 <b>RAP 1 (220501121-01)</b> · Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización</span>
+      <span class="ctx-aporte">🧩 <b>Qué aporta esta sección al RAP 1:</b> esta sección es la base directa de tu <b>EV01</b>: diferenciar herramientas y justificar con argumentos técnicos.</span>
+    </div>
+    <div class="sec-header reveal">
+      <span class="sec-tag verde">Diferencias Funcionales</span>
+      <h2 class="sec-titulo">Diferenciar herramientas con criterio técnico</h2>
+      <p class="sec-desc">No basta con nombrar el software — hay que explicar para qué sirve y por qué NO se usaría otra herramienta en su lugar.</p>
+    </div>
+    <div class="info-box piensa reveal">
+      <div class="info-box-label">🤔 Antes de seguir, piensa</div>
+      <p>Sin mirar la tabla: ¿por qué <em>no</em> haríamos la nómina de 35 empleados en un procesador de texto?</p>
+      <details class="reveal-ans"><summary>Ver pista</summary><p>Porque no tiene motor de cálculo con fórmulas: cada cambio habría que recalcularlo a mano y habría errores. La hoja de cálculo sí recalcula automáticamente.</p></details>
+    </div>
+    <table class="tags-table reveal">
+      <thead><tr><th>Herramienta</th><th>¿Para qué se usa?</th><th>¿Qué NO se debe usar para eso?</th><th>Justificación técnica</th></tr></thead>
+      <tbody>
+        <tr><td>Procesador de texto</td><td>Redactar informes, cartas, actas</td><td>Cálculos numéricos extensos</td><td>No tiene motor de cálculo con fórmulas</td></tr>
+        <tr><td>Hoja de cálculo</td><td>Cálculos, presupuestos, nómina</td><td>Documentos largos narrativos</td><td>El formato de celdas no es para texto corrido</td></tr>
+        <tr><td>Presentaciones</td><td>Exponer información resumida</td><td>Almacenar bases de datos</td><td>No tiene capacidad de consulta ni relación de datos</td></tr>
+        <tr><td>Base de datos</td><td>Gestionar información estructurada</td><td>Diseño gráfico</td><td>Prioriza integridad y consulta, no estética</td></tr>
+        <tr><td>Gestor de correo</td><td>Comunicación formal</td><td>Almacenamiento masivo a largo plazo</td><td>Límites de almacenamiento, no es repositorio documental</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box info reveal">
+      <div class="info-box-label">📌 Caso real que resume todo lo visto hoy</div>
+      <p>Cuando ADMINISTRA S.A.S. recibió 200 contratos nuevos de un cliente grande, un empleado intentó guardarlos todos como archivos adjuntos en su correo electrónico. El correo se llenó y empezó a rechazar mensajes nuevos. La solución correcta fue usar una <strong>base de datos con gestión documental</strong>: el correo es para comunicar, no para almacenar volúmenes grandes de archivos a largo plazo. Este es exactamente el tipo de análisis que van a aplicar en el video expositivo: identificar la herramienta correcta según la necesidad real.</p>
+    </div>
+    <div class="info-box tip reveal">
+      <div class="info-box-label">🎬 Cómo se conecta con tu EV01 (video expositivo, máx. 3 minutos)</div>
+      <p>Tu video debe mostrar: <strong>(1)</strong> una empresa real y las herramientas que usa, <strong>(2)</strong> un guion corto que explique cómo, para qué y de qué forma las usa, <strong>(3)</strong> las diferencias claras entre las herramientas y <strong>(4)</strong> un argumento justificado de por qué cada una es la adecuada. Lo de hoy es tu caja de herramientas para ese argumento.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE NUEVA: MINI-RETO -->
+<section class="slide bg-purpura" id="reto">
+  <div class="slide-num-badge">16 / 17</div>
+  <div class="slide-inner">
+    <div class="ctx-strip reveal">
+      <span class="ctx-chip comp">🎯 <b>Competencia 220501121</b> · Operar herramientas informáticas y digitales de acuerdo con protocolos y manuales técnicos</span>
+      <span class="ctx-chip rap">📋 <b>RAP 1 (220501121-01)</b> · Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización</span>
+      <span class="ctx-aporte">🧩 <b>Qué aporta esta sección al RAP 1:</b> practicas la decisión central del RAP 1: elegir la herramienta según la necesidad.</span>
+    </div>
+    <div class="sec-header reveal">
+      <span class="sec-tag purpura">Mini-reto</span>
+      <h2 class="sec-titulo">¿Qué herramienta usarías?</h2>
+      <p class="sec-desc">Para cada situación de ADMINISTRA S.A.S., decide primero qué herramienta resolvería la necesidad y por qué. Después abre la respuesta y compara con tu razonamiento.</p>
+    </div>
+    <table class="reto-table reveal">
+      <tbody>
+        <tr><td>1</td><td><strong>Escribir el acta de la reunión de gerencia.</strong>
+          <details class="reveal-ans"><summary>Ver respuesta</summary><p><strong>Procesador de texto.</strong> Es un documento narrativo; no requiere cálculos ni consultas.</p></details></td></tr>
+        <tr><td>2</td><td><strong>Calcular el valor de las horas extra de los 35 empleados.</strong>
+          <details class="reveal-ans"><summary>Ver respuesta</summary><p><strong>Hoja de cálculo.</strong> Necesita fórmulas que se recalculen solas al cambiar un dato.</p></details></td></tr>
+        <tr><td>3</td><td><strong>Mostrar a un cliente nuevo los servicios de la empresa.</strong>
+          <details class="reveal-ans"><summary>Ver respuesta</summary><p><strong>Software de presentaciones.</strong> Sirve para comunicar información resumida de forma visual.</p></details></td></tr>
+        <tr><td>4</td><td><strong>Guardar y consultar rápidamente la información de más de 200 clientes.</strong>
+          <details class="reveal-ans"><summary>Ver respuesta</summary><p><strong>Base de datos.</strong> Prioriza la integridad y la consulta estructurada de grandes volúmenes de información.</p></details></td></tr>
+        <tr><td>5</td><td><strong>El equipo de Contabilidad se congela al abrir el archivo de nómina de 12 meses.</strong>
+          <details class="reveal-ans"><summary>Ver respuesta</summary><p><strong>Es un problema de hardware</strong> (probablemente poca memoria RAM), no de la herramienta. La solución es ampliar la capacidad del equipo.</p></details></td></tr>
+        <tr><td>6</td><td><strong>Un empleado guardó 200 contratos como adjuntos en su correo y este dejó de recibir mensajes.</strong>
+          <details class="reveal-ans"><summary>Ver respuesta</summary><p><strong>Error de herramienta:</strong> el correo es para comunicar, no para almacenar. Lo correcto es una base de datos con gestión documental.</p></details></td></tr>
+      </tbody>
+    </table>
+    <div class="info-box llevar reveal">
+      <div class="info-box-label">✅ Idea para llevar</div>
+      <p>Si pudiste explicar <em>por qué</em> cada herramienta es la adecuada (y por qué no otra), ya tienes la lógica que necesitas para el argumento de tu EV01.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE NUEVA: CIERRE -->
+<section class="slide bg-verde" id="cierre">
+  <div class="slide-num-badge">17 / 17</div>
+  <div class="slide-inner">
+    <div class="ctx-strip reveal">
+      <span class="ctx-chip comp">🎯 <b>Competencia 220501121</b> · Operar herramientas informáticas y digitales de acuerdo con protocolos y manuales técnicos</span>
+      <span class="ctx-chip rap">📋 <b>RAP 1 (220501121-01)</b> · Determinar funcionalidades de las herramientas informáticas de acuerdo con las necesidades de la organización</span>
+      <span class="ctx-aporte">🧩 <b>Qué aporta esta sección al RAP 1:</b> cierra la primera mitad de los conocimientos del RAP 1; la sesión 2 completa el resto.</span>
+    </div>
+    <div class="sec-header reveal">
+      <span class="sec-tag verde">Cierre de la sesión</span>
+      <h2 class="sec-titulo">Lo que te llevas de hoy</h2>
+      <p class="sec-desc">Antes de terminar, verifica qué tanto quedó claro y qué debes preparar para la próxima sesión.</p>
+    </div>
+    <div class="compare-grid reveal">
+      <div class="compare-card verde">
+        <div class="compare-title" style="color:var(--sena-verde)">📚 Resumen de la sesión</div>
+        <ul class="check-list">
+          <li><span class="icon verde">✓</span><span><strong>Inducción:</strong> competencia 220501121, los 4 RAP y el cronograma de 6 sesiones.</span></li>
+          <li><span class="icon verde">✓</span><span><strong>Sistemas de información:</strong> 5 componentes y 4 elementos (entrada, procesamiento, almacenamiento, salida) + retroalimentación.</span></li>
+          <li><span class="icon verde">✓</span><span><strong>Teoría General de Sistemas:</strong> sistemas abiertos, cerrados y estratégicos.</span></li>
+          <li><span class="icon verde">✓</span><span><strong>Software:</strong> tipos de licencia y herramientas ofimáticas.</span></li>
+          <li><span class="icon verde">✓</span><span><strong>Hardware:</strong> componentes, periféricos y su relación con el software.</span></li>
+          <li><span class="icon verde">✓</span><span><strong>Diferencias funcionales:</strong> para qué sirve cada herramienta y para qué no.</span></li>
+        </ul>
+      </div>
+      <div class="compare-card naranja">
+        <div class="compare-title" style="color:var(--sena-naranja)">📝 Para la próxima sesión (martes 21 de julio)</div>
+        <ul class="check-list">
+          <li><span class="icon naranja">1</span><span>Observa <strong>3 herramientas</strong> que uses en tu casa o trabajo y anota para qué sirven y qué hardware necesitan.</span></li>
+          <li><span class="icon naranja">2</span><span>Piensa en <strong>una empresa real</strong> que podrías investigar para tu video EV01.</span></li>
+          <li><span class="icon naranja">3</span><span>Repasa el <strong>manual de la Sesión 1</strong> y anota tus dudas.</span></li>
+        </ul>
+        <p style="font-size:13px;color:var(--texto-dim);margin-top:12px">En la <strong>sesión 2</strong> completamos el RAP 1 con redes de información, dispositivos inteligentes y automatización.</p>
+      </div>
+    </div>
+    <div class="info-box piensa reveal">
+      <div class="info-box-label">🧪 Autoevaluación rápida · ¿verdadero o falso?</div>
+      <div class="auto-q"><strong>1.</strong> El computador, por sí solo, es un sistema de información.
+        <details class="reveal-ans"><summary>Ver respuesta</summary><p><strong>Falso.</strong> También lo forman personas, procesos, datos, software y hardware.</p></details></div>
+      <div class="auto-q" style="margin-top:10px"><strong>2.</strong> La mayoría de los sistemas de información de una empresa son abiertos.
+        <details class="reveal-ans"><summary>Ver respuesta</summary><p><strong>Verdadero.</strong> Interactúan constantemente con clientes, proveedores y normas.</p></details></div>
+      <div class="auto-q" style="margin-top:10px"><strong>3.</strong> La memoria RAM guarda los archivos de forma permanente.
+        <details class="reveal-ans"><summary>Ver respuesta</summary><p><strong>Falso.</strong> La RAM es temporal; el almacenamiento permanente es el disco duro o SSD.</p></details></div>
+      <div class="auto-q" style="margin-top:10px"><strong>4.</strong> Para calcular una nómina conviene usar una hoja de cálculo y no un procesador de texto.
+        <details class="reveal-ans"><summary>Ver respuesta</summary><p><strong>Verdadero.</strong> La hoja de cálculo tiene motor de fórmulas que recalcula automáticamente.</p></details></div>
+      <div class="auto-q" style="margin-top:10px"><strong>5.</strong> Antes de instalar un software hay que revisar el hardware disponible.
+        <details class="reveal-ans"><summary>Ver respuesta</summary><p><strong>Verdadero.</strong> Si el equipo no cumple los requisitos mínimos, la herramienta irá lenta o no funcionará.</p></details></div>
+    </div>
+    <div class="info-box tip reveal">
+      <div class="info-box-label">💬 ¿Dudas?</div>
+      <p>Escríbelas en el foro de Zajuna o en el chat de Teams antes de la próxima sesión. Cada duda resuelta hoy es una evidencia más fácil mañana.</p>
+    </div>
+  </div>
+</section>
+
+<div class="footer-nav">
+  <a href="#portada" class="prev">↑ Inicio</a>
+  <a href="#cierre">Ver cierre →</a>
+</div>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
