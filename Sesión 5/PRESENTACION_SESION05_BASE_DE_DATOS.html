@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 5 — Base de Datos Final (EV04) | SENA GDAI GA5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Paleta SENA Institucional Premium Claras */
+  --sena-verde: #39a900;
+  --sena-verde-dark: #236b00;
+  --sena-verde-soft: #44c702;
+  --sena-verde-bg: rgba(57, 169, 0, 0.08);
+  --sena-verde-border: rgba(57, 169, 0, 0.28);
+  
+  --sena-naranja: #ff6b00;
+  --sena-naranja-dark: #c2410c;
+  --sena-naranja-bg: rgba(255, 107, 0, 0.08);
+  --sena-naranja-border: rgba(255, 107, 0, 0.28);
+
+  --azul-tech: #0284c7;
+  --azul-tech-dark: #0369a1;
+  --azul-bg: rgba(2, 132, 199, 0.08);
+  --azul-border: rgba(2, 132, 199, 0.28);
+
+  --purpura: #7c3aed;
+  --purpura-bg: rgba(124, 58, 237, 0.08);
+
+  /* Fondos y Superficies Claras */
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --borde-light: #e2e8f0;
+  --borde-focus: #cbd5e1;
+  
+  --texto-main: #0f172a;
+  --texto-muted: #475569;
+  --texto-sub: #64748b;
+  
+  --shadow-card: 0 10px 30px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
+  --shadow-hover: 0 20px 40px rgba(57, 169, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
+  --radius-xl: 20px;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--texto-main);
+  background-color: var(--bg-main);
+  background-image: 
+    radial-gradient(circle at 5% 10%, rgba(57, 169, 0, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 95% 90%, rgba(255, 107, 0, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(2, 132, 199, 0.03) 0%, transparent 60%);
+  background-attachment: fixed;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ==========================================================
+   SIDEBAR LATERAL OBLIGATORIO (280px)
+   ========================================================== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 280px;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-right: 1px solid var(--borde-light);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 4px 0 24px rgba(15, 23, 42, 0.04);
+}
+
+.sidebar.collapsed {
+  transform: translateX(-100%);
+}
+
+.sidebar-header {
+  padding: 18px 16px;
+  border-bottom: 1px solid var(--borde-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-logo {
+  background: var(--sena-verde);
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px -2px rgba(57, 169, 0, 0.4);
+}
+
+.sidebar-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.sidebar-sub {
+  font-size: 10px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.sidebar-toggle-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #64748b;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sidebar-toggle-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-color: #e2e8f0;
+}
+
+/* Botón Flotante Reactivo */
+.floating-sidebar-toggle {
+  position: fixed;
+  top: 18px;
+  left: 20px;
+  z-index: 999;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #1e293b;
+  height: 38px;
+  padding: 0 14px 0 10px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  display: none;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.floating-sidebar-toggle:hover {
+  background: #ffffff;
+  color: var(--sena-verde-dark);
+  border-color: var(--sena-verde);
+  box-shadow: 0 8px 22px rgba(57, 169, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+.sidebar.collapsed ~ .floating-sidebar-toggle,
+.floating-sidebar-toggle.visible {
+  display: inline-flex !important;
+  animation: fadeInToggle 0.25s ease-out forwards;
+}
+
+@keyframes fadeInToggle {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.sidebar-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 10px;
+}
+
+.sidebar-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.nav-group {
+  margin-bottom: 18px;
+}
+
+.nav-group-title {
+  font-size: 9.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #94a3b8;
+  padding: 0 10px 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  color: #475569;
+  text-decoration: none;
+  font-size: 11.8px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  margin-bottom: 2px;
+  position: relative;
+}
+
+.nav-link:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.nav-link.active {
+  background: rgba(57, 169, 0, 0.1);
+  color: var(--sena-verde-dark);
+  font-weight: 700;
+}
+
+.nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3.5px;
+  background: var(--sena-verde);
+  border-radius: 0 4px 4px 0;
+}
+
+.nav-link-num {
+  font-size: 10px;
+  font-weight: 700;
+  color: #94a3b8;
+  min-width: 15px;
+}
+
+.nav-link.active .nav-link-num {
+  color: var(--sena-verde);
+}
+
+.nav-link-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.nav-link:hover .nav-link-icon {
+  color: #0f172a;
+}
+
+.nav-link.active .nav-link-icon {
+  color: var(--sena-verde-dark);
+}
+
+.nav-link-text {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-footer {
+  padding: 12px 14px;
+  border-top: 1px solid #e2e8f0;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sidebar-corte-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 107, 0, 0.08);
+  border: 1px solid rgba(255, 107, 0, 0.22);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--sena-naranja-dark);
+}
+
+.sidebar-link-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #334155;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.sidebar-link-btn:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+/* ==========================================================
+   CONTENIDO PRINCIPAL ADAPTABLE (.main-content)
+   ========================================================== */
+.main-content {
+  margin-left: 280px;
+  min-height: 100vh;
+  transition: margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.collapsed ~ .main-content {
+  margin-left: 0;
+}
+
+/* Barra Superior de Estado y Controles */
+.content-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--borde-light);
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topbar-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--texto-sub);
+  font-weight: 600;
+}
+
+.topbar-breadcrumbs .sep { color: #cbd5e1; }
+.topbar-breadcrumbs .current { color: var(--sena-verde-dark); font-weight: 700; }
+
+.topbar-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.topbar-tool-btn {
+  background: #ffffff;
+  border: 1px solid var(--borde-light);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--texto-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.topbar-tool-btn:hover {
+  background: #f8fafc;
+  color: var(--texto-main);
+  border-color: #cbd5e1;
+}
+
+/* Barra de Progreso Global */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--sena-verde), var(--sena-naranja));
+  width: 0%;
+  z-index: 2000;
+  transition: width 0.1s ease;
+}
+
+/* ==========================================================
+   ESTRUCTURA DE CADA SLIDE
+   ========================================================== */
+.slide {
+  min-height: 100vh;
+  padding: 40px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px dashed #e2e8f0;
+  position: relative;
+}
+
+.slide-inner {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.slide-num-indicator {
+  position: absolute;
+  top: 24px;
+  right: 48px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--texto-sub);
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--borde-light);
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Headers y Tipografía */
+.slide-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--sena-verde-bg);
+  border: 1px solid var(--sena-verde-border);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--sena-verde-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 14px;
+}
+
+.slide-header-badge.tech {
+  background: var(--azul-bg);
+  border-color: var(--azul-border);
+  color: var(--azul-tech);
+}
+
+.slide-header-badge.naranja {
+  background: var(--sena-naranja-bg);
+  border-color: var(--sena-naranja-border);
+  color: var(--sena-naranja-dark);
+}
+
+.slide-header-badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.sec-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(24px, 2.5vw, 34px);
+  font-weight: 800;
+  color: var(--texto-main);
+  line-height: 1.25;
+  margin-bottom: 10px;
+  letter-spacing: -0.5px;
+}
+
+.sec-desc {
+  font-size: 15px;
+  color: var(--texto-muted);
+  max-width: 860px;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.grad-verde {
+  background: linear-gradient(135deg, var(--sena-verde), var(--sena-verde-dark));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.grad-naranja {
+  background: linear-gradient(135deg, var(--sena-naranja), #ea580c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.grad-tech {
+  background: linear-gradient(135deg, var(--azul-tech), #1d4ed8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ==========================================================
+   COMPONENTES Y TARJETAS PREMIUM
+   ========================================================== */
+.card-premium {
+  background: linear-gradient(175deg, #ffffff 0%, #fbfcfe 65%, #f8fafc 100%);
+  border: 1px solid var(--borde-light);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-premium:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(57, 169, 0, 0.3);
+}
+
+.card-premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3.5px;
+  background: #cbd5e1;
+}
+
+.card-premium.top-verde::before { background: linear-gradient(90deg, var(--sena-verde), var(--sena-verde-dark)); }
+.card-premium.top-naranja::before { background: linear-gradient(90deg, var(--sena-naranja), #ea580c); }
+.card-premium.top-tech::before { background: linear-gradient(90deg, var(--azul-tech), #1d4ed8); }
+
+.card-header-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.card-icon-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  color: var(--texto-main);
+  flex-shrink: 0;
+}
+
+.card-icon-badge.verde { background: var(--sena-verde-bg); color: var(--sena-verde-dark); }
+.card-icon-badge.naranja { background: var(--sena-naranja-bg); color: var(--sena-naranja-dark); }
+.card-icon-badge.tech { background: var(--azul-bg); color: var(--azul-tech); }
+
+.card-pill-tag {
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 3px 9px;
+  border-radius: 14px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.card-pill-tag.verde { background: var(--sena-verde-bg); color: var(--sena-verde-dark); border: 1px solid var(--sena-verde-border); }
+.card-pill-tag.naranja { background: var(--sena-naranja-bg); color: var(--sena-naranja-dark); border: 1px solid var(--sena-naranja-border); }
+.card-pill-tag.tech { background: var(--azul-bg); color: var(--azul-tech); border: 1px solid var(--azul-border); }
+
+.card-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--texto-main);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+
+.card-text {
+  font-size: 13.5px;
+  color: var(--texto-muted);
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+
+.list-premium {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--texto-muted);
+}
+
+.list-premium li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.list-premium li svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* Grillas */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+
+/* Hero Portada */
+.hero-wrapper {
+  display: grid;
+  grid-template-columns: 1.25fr 0.95fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.hero-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(30px, 3.8vw, 46px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.8px;
+  color: var(--texto-main);
+  margin-bottom: 16px;
+}
+
+.hero-subtitle {
+  font-size: 16px;
+  color: var(--texto-muted);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.hero-card-widget {
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  padding: 30px;
+  border: 1px solid var(--borde-light);
+  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.06);
+}
+
+.hero-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.meta-box {
+  background: #f8fafc;
+  border: 1px solid var(--borde-light);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+
+.meta-box-title {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--texto-sub);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.meta-box-val {
+  font-family: 'Outfit', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--texto-main);
+  line-height: 1.2;
+}
+
+.meta-box-sub {
+  font-size: 11px;
+  color: var(--texto-sub);
+  margin-top: 4px;
+}
+
+/* Callout Box Institucional */
+.callout-box {
+  background: var(--sena-verde-bg);
+  border: 1.5px solid var(--sena-verde-border);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.callout-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid var(--sena-verde-border);
+  color: var(--sena-verde-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.callout-content h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--sena-verde-dark);
+  margin-bottom: 4px;
+}
+
+.callout-content p {
+  font-size: 13.5px;
+  color: var(--texto-main);
+  line-height: 1.5;
+}
+
+/* Tabla de Matriz de Sesiones */
+.table-wrapper {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--borde-light);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: var(--shadow-card);
+  width: 100%;
+}
+
+.matriz-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.matriz-table th {
+  background: #f8fafc;
+  padding: 12px 18px;
+  font-weight: 700;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--texto-sub);
+  border-bottom: 1px solid var(--borde-light);
+}
+
+.matriz-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--borde-light);
+  vertical-align: middle;
+}
+
+.matriz-table tr:hover {
+  background: #fbfcfe;
+}
+
+.sesion-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  background: #f1f5f9;
+  color: var(--texto-main);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--borde-light);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.evidencia-tag {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 600;
+  background: #f1f5f9;
+  border: 1px solid var(--borde-light);
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin: 2px;
+  color: var(--texto-muted);
+  white-space: nowrap;
+}
+
+.deadline-badge {
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.deadline-badge.corte1 {
+  color: var(--sena-naranja-dark);
+  background: var(--sena-naranja-bg);
+  border: 1px solid var(--sena-naranja-border);
+}
+
+.deadline-badge.corte2 {
+  color: var(--sena-verde-dark);
+  background: var(--sena-verde-bg);
+  border: 1px solid var(--sena-verde-border);
+}
+
+/* Botones Principales */
+.btn-action-pro {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+}
+
+.btn-action-pro.verde {
+  background: linear-gradient(135deg, var(--sena-verde), var(--sena-verde-dark));
+  color: #fff;
+  box-shadow: 0 4px 14px var(--sena-verde-bg);
+}
+
+.btn-action-pro.verde:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(57, 169, 0, 0.25);
+}
+
+.btn-action-pro.tech {
+  background: linear-gradient(135deg, var(--azul-tech), var(--azul-tech-dark));
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.25);
+}
+
+.btn-action-pro.tech:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(2, 132, 199, 0.35);
+}
+
+.btn-action-pro.neutral {
+  background: #ffffff;
+  color: var(--texto-main);
+  border: 1px solid var(--borde-light);
+}
+
+.btn-action-pro.neutral:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+/* Checklist Interactivo */
+.checklist-card {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--borde-light);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+}
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f5f9;
+  cursor: pointer;
+}
+
+.checklist-item:last-child { border-bottom: none; }
+
+.checklist-checkbox {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: 2px solid #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  background: #ffffff;
+}
+
+.checklist-item.checked .checklist-checkbox {
+  background: var(--sena-verde);
+  border-color: var(--sena-verde);
+  color: #ffffff;
+}
+
+.checklist-item.checked .checklist-text h5 {
+  text-decoration: line-through;
+  color: #94a3b8;
+}
+
+.checklist-text h5 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--texto-main);
+  margin-bottom: 3px;
+  transition: color 0.2s;
+}
+
+.checklist-text p {
+  font-size: 12.5px;
+  color: var(--texto-sub);
+  line-height: 1.4;
+}
+
+/* Toast de Notificación */
+.toast-notice {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 3000;
+}
+
+.toast-notice.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ==========================================================
+   BACKDROP Y RESPONSIVIDAD MULTIDISPOSITIVO (Móvil / Tablet)
+   ========================================================== */
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1099;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.sidebar-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    transform: translateX(-100%);
+    z-index: 1200;
+  }
+  .sidebar.mobile-open {
+    transform: translateX(0);
+    box-shadow: 10px 0 35px rgba(0, 0, 0, 0.25);
+  }
+  .main-content {
+    margin-left: 0 !important;
+  }
+  .floating-sidebar-toggle {
+    display: inline-flex !important;
+    z-index: 1050;
+  }
+  .hero-wrapper {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .slide {
+    padding: 60px 18px 40px;
+  }
+  .slide-inner {
+    max-width: 100%;
+  }
+  .slide-num-indicator {
+    top: 14px;
+    right: 18px;
+    font-size: 10.5px;
+    padding: 3px 8px;
+  }
+  .floating-sidebar-toggle {
+    top: 12px;
+    left: 14px;
+    height: 34px;
+    padding: 0 10px;
+    font-size: 11px;
+  }
+  .floating-sidebar-toggle span {
+    display: none;
+  }
+  .content-topbar {
+    padding: 8px 14px;
+    padding-left: 56px;
+    font-size: 11px;
+  }
+  .topbar-breadcrumbs {
+    font-size: 10.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .topbar-tools {
+    display: none;
+  }
+  .sec-title {
+    font-size: clamp(20px, 5.5vw, 26px);
+  }
+  .sec-desc {
+    font-size: 13.5px;
+    margin-bottom: 20px;
+  }
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .hero-cta-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cta-btn {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .matriz-table {
+    min-width: 580px;
+    font-size: 12px;
+  }
+  .matriz-table th,
+  .matriz-table td {
+    padding: 10px 12px;
+  }
+  .sesion-badge,
+  .evidencia-tag,
+  .deadline-badge {
+    font-size: 10.5px;
+    padding: 3px 7px;
+  }
+  .callout-content h4 {
+    font-size: 13.5px;
+  }
+  .callout-content p {
+    font-size: 12.5px;
+  }
+}
+
+/* ===== Extensiones GA5 (mismo sistema de diseño) ===== */
+.x-code-wrap{margin:14px 0;border-radius:12px;overflow:hidden;border:1px solid #1e293b;box-shadow:var(--shadow-card)}
+.x-code-head{display:flex;justify-content:space-between;align-items:center;background:#1e293b;color:#cbd5e1;padding:8px 14px;font-size:11.5px;font-weight:700;font-family:'Outfit',sans-serif}
+.x-code{background:#0f172a;color:#e2e8f0;padding:14px 18px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.7;overflow-x:auto;white-space:pre;margin:0}
+.x-copy{background:#39a900;color:#fff;border:0;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:800;cursor:pointer;font-family:'Outfit',sans-serif}
+.x-copy:hover{background:#44c702}.x-flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:18px 0}
+.x-flow .x-node{background:#fff;border:1px solid var(--borde-light);border-radius:14px;padding:14px;box-shadow:var(--shadow-card);position:relative}
+.x-flow .x-node h4{font-family:'Outfit',sans-serif;font-size:14px;margin:6px 0 4px}
+.x-flow .x-node p{font-size:11.8px;color:var(--texto-muted);line-height:1.5}
+.x-flow .x-node .x-tag{font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;border-radius:10px;display:inline-block}
+.x-tag.verde{background:var(--sena-verde-bg);color:var(--sena-verde-dark)}
+.x-tag.naranja{background:var(--sena-naranja-bg);color:var(--sena-naranja-dark)}
+.x-tag.tech{background:var(--azul-bg);color:var(--azul-tech-dark)}
+.x-tag.purpura{background:var(--purpura-bg);color:var(--purpura)}
+.x-steps{display:grid;gap:12px;margin:16px 0}
+.x-step{display:flex;gap:14px;background:#fff;border:1px solid var(--borde-light);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow-card)}
+.x-step-num{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:var(--sena-verde);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:800}
+.x-step h4{font-family:'Outfit',sans-serif;font-size:15px;margin-bottom:2px}
+.x-step p{font-size:12.8px;color:var(--texto-muted);line-height:1.55}
+.x-faq details{background:#fff;border:1px solid var(--borde-light);border-radius:12px;padding:12px 16px;margin-bottom:8px}
+.x-faq summary{cursor:pointer;font-weight:700;font-size:13.5px}
+.x-faq details p{font-size:13px;color:var(--texto-muted);margin-top:8px;line-height:1.6}
+.x-agenda{margin:14px 0}
+.x-agenda .bar{display:flex;height:12px;border-radius:8px;overflow:hidden;gap:3px;margin-bottom:6px}
+.x-agenda .bar span{background:var(--c);display:block}
+.x-agenda .bar-lbl{display:flex;gap:3px;font-size:10.5px;font-weight:800;color:var(--texto-sub);margin-bottom:16px}
+.x-agenda .bar-lbl span{text-align:left;overflow:hidden;white-space:nowrap}
+.x-agenda .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+@media (min-width:1280px){.x-agenda .cards{grid-template-columns:repeat(5,1fr)}.x-agenda .card{padding:16px 14px 14px}.x-agenda .card h4{font-size:14.5px}}
+.x-agenda .card{position:relative;background:#fff;border:1px solid var(--borde-light);border-top:4px solid var(--c);border-radius:16px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow-card);transition:transform .2s,box-shadow .2s}
+.x-agenda .card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(15,23,42,.10)}
+.x-agenda .card .top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.x-agenda .card .n{width:30px;height:30px;border-radius:50%;background:var(--c);color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center}
+.x-agenda .card .t{font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;color:var(--c);background:color-mix(in srgb,var(--c) 12%,#fff);padding:3px 10px;border-radius:20px}
+.x-agenda .card h4{font-family:'Syne',sans-serif;font-size:15.5px;font-weight:800;line-height:1.25;color:var(--texto-main);margin:4px 0 0}
+.x-agenda .card p{font-size:12.5px;line-height:1.55;color:var(--texto-muted);margin:0;flex:1}
+.x-agenda .card .m{font-size:10.5px;font-weight:800;color:var(--texto-sub);border-top:1px dashed var(--borde-light);padding-top:8px;display:flex;justify-content:space-between}
+.x-mini{font-size:11.5px;color:var(--texto-sub)}
+.x-pill{display:inline-block;font-size:10.5px;font-weight:800;padding:2px 9px;border-radius:10px;margin:0 4px 4px 0}
+@media (max-width:1024px){.x-flow{grid-template-columns:1fr 1fr}}
+
+.x-ctx{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.x-chip{font-size:11.5px;font-weight:700;line-height:1.45;padding:6px 12px;border-radius:10px;border:1px solid}
+.x-chip b{font-weight:800}
+.x-chip.comp{background:var(--sena-verde-bg);border-color:var(--sena-verde-border);color:var(--sena-verde-dark)}
+.x-chip.rap{background:color-mix(in srgb,var(--sena-naranja) 10%,#fff);border-color:color-mix(in srgb,var(--sena-naranja) 35%,#fff);color:#b34700}
+.x-aporte{flex-basis:100%;font-size:12.5px;color:var(--texto-muted);background:#fff;border:1px dashed var(--borde-light);border-radius:10px;padding:7px 12px;line-height:1.5}
+.x-aporte b{color:var(--texto-main)}
+.x-note{border-radius:14px;padding:16px 20px;margin:16px 0;border:1px solid;border-left-width:5px;font-size:13.5px;line-height:1.65;color:var(--texto-muted)}
+.x-note h5{font-family:'Outfit',sans-serif;font-size:11.5px;text-transform:uppercase;letter-spacing:.9px;font-weight:800;margin:0 0 6px}
+.x-note p{margin:0}
+.x-note strong{color:var(--texto-main)}
+.x-note.piensa{background:color-mix(in srgb,#7c3aed 7%,#fff);border-color:color-mix(in srgb,#7c3aed 28%,#fff);border-left-color:#7c3aed}.x-note.piensa h5{color:#7c3aed}
+.x-note.analogia{background:color-mix(in srgb,#f59e0b 9%,#fff);border-color:color-mix(in srgb,#f59e0b 32%,#fff);border-left-color:#f59e0b}.x-note.analogia h5{color:#b45309}
+.x-note.llevar{background:var(--sena-verde-bg);border-color:var(--sena-verde-border);border-left-color:var(--sena-verde)}.x-note.llevar h5{color:var(--sena-verde-dark)}
+.x-note details,.x-quiz details{margin-top:10px;background:#fff;border:1px solid var(--borde-light);border-radius:10px;padding:8px 14px}
+.x-note summary,.x-quiz summary{cursor:pointer;font-weight:700;font-size:12.5px;color:var(--sena-verde-dark)}
+.x-note details p,.x-quiz details p{margin:8px 0 0;font-size:13px;color:var(--texto-muted)}
+.x-chain{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap;margin:20px 0}
+.x-chain .st{flex:1 1 210px;background:#fff;border:2px solid var(--borde-light);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow-card)}
+.x-chain .st.comp{border-color:var(--sena-verde-border);background:linear-gradient(135deg,var(--sena-verde-bg),#fff)}
+.x-chain .st.rap{border-color:color-mix(in srgb,var(--sena-naranja) 35%,#fff);background:linear-gradient(135deg,color-mix(in srgb,var(--sena-naranja) 9%,#fff),#fff)}
+.x-chain .st.aa{border-color:color-mix(in srgb,#0284c7 30%,#fff);background:linear-gradient(135deg,color-mix(in srgb,#0284c7 8%,#fff),#fff)}
+.x-chain .lb{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--texto-sub);margin-bottom:6px}
+.x-chain .tt{font-family:'Syne',sans-serif;font-size:15.5px;font-weight:800;color:var(--texto-main);line-height:1.25;margin-bottom:6px}
+.x-chain .tx{font-size:12.5px;color:var(--texto-muted);line-height:1.5}
+.x-chain .ar{align-self:center;color:var(--sena-verde);font-size:22px;font-weight:800}
+.x-ev{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:18px 0}
+.x-ev .e{position:relative;background:#fff;border:1px solid var(--borde-light);border-top:4px solid var(--c);border-radius:14px;padding:14px 14px 12px;box-shadow:var(--shadow-card);display:flex;flex-direction:column;gap:6px}
+.x-ev .e.hoy{border:2px solid var(--c);box-shadow:0 8px 22px color-mix(in srgb,var(--c) 22%,transparent)}
+.x-ev .e .id{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--c)}
+.x-ev .e .nm{font-size:12.5px;font-weight:700;color:var(--texto-main);line-height:1.35;flex:1}
+.x-ev .e .mt{font-size:11px;color:var(--texto-sub);line-height:1.5;border-top:1px dashed var(--borde-light);padding-top:6px}
+.x-ev .e .tag{position:absolute;top:10px;right:10px;font-size:9.5px;font-weight:800;background:var(--c);color:#fff;padding:2px 8px;border-radius:10px}
+.x-quiz{display:grid;gap:10px;margin:16px 0}
+.x-quiz .q{background:#fff;border:1px solid var(--borde-light);border-radius:14px;padding:14px 18px;display:grid;grid-template-columns:36px 1fr;gap:12px;box-shadow:var(--shadow-card)}
+.x-quiz .q .n{width:30px;height:30px;border-radius:50%;background:var(--sena-verde);color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.x-quiz .q .t{font-size:13.5px;font-weight:600;color:var(--texto-main);line-height:1.5}
+@media (max-width:768px){.x-chain .ar{transform:rotate(90deg);width:100%;text-align:center}.x-chip{flex-basis:100%}}
+
+.x-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px;margin:16px 0}
+.x-form{background:#fff;border:1px solid var(--borde-light);border-top:5px solid var(--c);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow-card);display:flex;flex-direction:column;gap:10px;min-width:0}
+.x-form h4{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--c);margin:0}
+.x-form .cap{font-size:12.5px;color:var(--texto-muted);line-height:1.55;margin:0}
+.x-form .cap strong{color:var(--texto-main)}
+.x-form ul{margin:0;padding-left:18px;font-size:12.5px;color:var(--texto-muted);line-height:1.65}
+.x-form ul strong{color:var(--texto-main)}
+.x-form .x-code-wrap{margin:0}
+.x-form .x-code{font-size:11px;padding:10px 12px;white-space:pre-wrap;word-break:break-word}
+.x-mini-t{width:100%;border-collapse:collapse;font-size:11.5px}
+.x-mini-t th{background:color-mix(in srgb,var(--c) 14%,#fff);color:var(--texto-main);text-align:left;padding:6px 8px;font-weight:800;border-bottom:2px solid var(--c)}
+.x-mini-t td{padding:6px 8px;border-bottom:1px solid var(--borde-light);color:var(--texto-muted)}
+.x-quote{background:color-mix(in srgb,var(--c) 6%,#fff);border-left:4px solid var(--c);border-radius:10px;padding:12px 14px;font-style:italic;font-size:12.5px;color:var(--texto-muted);line-height:1.6}
+.x-tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;background:color-mix(in srgb,var(--c) 14%,#fff);color:var(--c);padding:2px 9px;border-radius:10px;align-self:flex-start}
+.x-ej{background:color-mix(in srgb,#0284c7 6%,#fff);border:1px dashed color-mix(in srgb,#0284c7 40%,#fff);border-radius:12px;padding:10px 14px;font-size:12px;color:var(--texto-muted);margin:10px 0}
+.x-ej b{color:#0369a1}
+
+.x-tree{background:#fff;border:1px solid var(--borde-light);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden}
+.x-tree-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;background:linear-gradient(135deg,var(--sena-verde-bg),#fff);border-bottom:1px solid var(--borde-light);font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;color:var(--texto-main)}
+.x-tree-head span{display:flex;align-items:center;gap:8px}
+.x-tree-body{padding:14px 16px 16px}
+.x-tr{display:flex;align-items:center;gap:10px;padding:6px 10px;border-radius:10px;transition:background .15s}
+.x-tr:hover{background:color-mix(in srgb,var(--c) 8%,#fff)}
+.x-tr .ic{width:30px;height:30px;border-radius:9px;background:color-mix(in srgb,var(--c) 14%,#fff);color:var(--c);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.x-tr .nm{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;color:var(--texto-main);word-break:break-all}
+.x-tr .ds{margin-left:auto;font-size:11px;font-weight:600;color:var(--c);background:color-mix(in srgb,var(--c) 10%,#fff);border:1px solid color-mix(in srgb,var(--c) 25%,#fff);padding:2px 10px;border-radius:20px;text-align:right}
+.x-tr.raiz{background:var(--sena-verde-bg);border:1px solid var(--sena-verde-border);margin-bottom:6px}
+.x-kids{margin-left:24px;padding-left:12px;border-left:2px solid var(--borde-light);display:flex;flex-direction:column;gap:2px}
+.x-kids .x-kids{margin-left:22px}
+.sr-only-copy{position:absolute;left:-9999px;top:0;white-space:pre}
+@media (max-width:640px){.x-tr{flex-wrap:wrap}.x-tr .ds{margin-left:40px;text-align:left}}
+
+.x-xl{background:#fff;border:1px solid #c6c6c6;border-radius:10px;overflow:hidden;box-shadow:var(--shadow-card);margin:16px 0}
+.x-xl-title{display:flex;align-items:center;gap:10px;background:#217346;color:#fff;padding:8px 14px;font-family:'Outfit',sans-serif;font-weight:700;font-size:12.5px}
+.x-xl-title .x-copy{margin-left:auto;background:#fff;color:#217346}
+.x-xl-title .x-copy:hover{background:#e9f3ee}
+.x-xl-fx{display:flex;align-items:center;gap:8px;background:#f3f3f3;border-bottom:1px solid #d4d4d4;padding:5px 10px;font-size:12px;color:#444}
+.x-xl-fx .nb{background:#fff;border:1px solid #c6c6c6;padding:1px 10px;font-weight:700;min-width:46px;text-align:center}
+.x-xl-fx i{color:#217346;font-weight:800;font-family:serif}
+.x-xl-fx .fv{background:#fff;border:1px solid #c6c6c6;padding:1px 10px;flex:1;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.x-xl-scroll{overflow:auto;max-width:100%}
+.x-xl table{border-collapse:collapse;font-family:'Plus Jakarta Sans',Arial,sans-serif;font-size:11.5px;min-width:1700px}
+.x-xl th.col{background:#e6e6e6;color:#444;font-weight:600;border:1px solid #c6c6c6;padding:3px 6px;text-align:center;font-size:11px}
+.x-xl th.corner,.x-xl td.rn{position:sticky;left:0;z-index:2}
+.x-xl td.rn{background:#e6e6e6;color:#444;border:1px solid #c6c6c6;text-align:center;width:34px;font-size:11px}
+.x-xl td.c{border:1px solid #d4d4d4;padding:5px 9px;white-space:nowrap;color:#222;background:#fff}
+.x-xl tr.hd td.c{background:#217346;color:#fff;font-weight:700;border-color:#1a5c38}
+.x-xl tr.band td.c{background:#eef6f1}
+.x-xl td.sel{outline:2px solid #217346;outline-offset:-2px}
+.x-xl .t1,.x-xl .t2,.x-xl .t3,.x-xl .ok,.x-xl .no{border-radius:10px;padding:1px 8px;font-weight:700;font-size:11px}
+.x-xl .t1{background:#dcfce7;color:#166534}.x-xl .t2{background:#dbeafe;color:#1d4ed8}.x-xl .t3{background:#ffedd5;color:#c2410c}
+.x-xl .ok{background:#dcfce7;color:#166534}.x-xl .no{background:#fee2e2;color:#b91c1c}
+.x-xl tr.descartada td.c{background:#fff5f5;color:#7f1d1d}
+.x-xl-tabs{display:flex;gap:2px;background:#f3f3f3;border-top:1px solid #c6c6c6;padding:0 10px;font-size:11.5px;align-items:flex-end}
+.x-xl-tabs span{padding:4px 16px;background:#fff;font-weight:700;color:#217346;border-bottom:3px solid #217346;border-left:1px solid #c6c6c6;border-right:1px solid #c6c6c6}
+.x-xl-tabs em{margin-left:auto;font-style:normal;color:#6b7280;padding:4px 0}
+
+.x-qgrid{display:grid;gap:14px;margin:16px 0;align-items:start}
+.x-qgrid.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.x-qgrid.c4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.x-qgrid .qc{background:#fff;border:1px solid var(--borde-light);border-top:4px solid var(--sena-verde);border-radius:16px;padding:16px 16px 14px;box-shadow:var(--shadow-card);display:flex;flex-direction:column;gap:10px;transition:transform .2s,box-shadow .2s}
+.x-qgrid .qc:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(15,23,42,.10)}
+.x-qgrid .qh{display:flex;align-items:center;gap:10px}
+.x-qgrid .qn{width:32px;height:32px;border-radius:50%;background:var(--sena-verde);color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center}
+.x-qgrid .ql{font-size:10.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--texto-sub)}
+.x-qgrid .qt{margin:0;font-size:13.5px;font-weight:600;line-height:1.55;color:var(--texto-main);min-height:62px}
+.x-qgrid details{margin:0}
+.x-qgrid summary{list-style:none;cursor:pointer;text-align:center;font-weight:800;font-size:12.5px;color:var(--sena-verde-dark);background:var(--sena-verde-bg);border:1px solid var(--sena-verde-border);border-radius:10px;padding:8px 12px;transition:background .15s}
+.x-qgrid summary::-webkit-details-marker{display:none}
+.x-qgrid summary:hover{background:color-mix(in srgb,var(--sena-verde) 18%,#fff)}
+.x-qgrid details[open] summary{background:var(--sena-verde);color:#fff}
+.x-qgrid .qa{margin-top:10px;font-size:12.5px;line-height:1.6;color:var(--texto-muted);background:color-mix(in srgb,var(--sena-verde) 6%,#fff);border-left:4px solid var(--sena-verde);border-radius:8px;padding:10px 12px}
+.x-qgrid .qa strong{color:var(--texto-main)}
+@media (max-width:1100px){.x-qgrid.c3,.x-qgrid.c4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:700px){.x-qgrid.c3,.x-qgrid.c4{grid-template-columns:1fr}}
+
+.x-doc{border:1px solid #dadce0;border-radius:12px;overflow:hidden;box-shadow:var(--shadow-card);margin:18px 0;background:#f8f9fa}
+.x-doc-top{display:flex;align-items:center;gap:12px;background:#fff;padding:10px 16px;border-bottom:1px solid #e3e5e8}
+.x-doc-ico{width:26px;height:34px;background:#4285f4;border-radius:3px;position:relative;flex-shrink:0}
+.x-doc-ico:before{content:"";position:absolute;right:0;top:0;border:7px solid transparent;border-top-color:#a8c7fa;border-right-color:#a8c7fa}
+.x-doc-ico:after{content:"";position:absolute;left:6px;right:6px;top:15px;height:2px;background:#fff;box-shadow:0 5px 0 #fff,0 10px 0 #fff}
+.x-doc-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;color:#1f1f1f;line-height:1.1}
+.x-doc-menu{display:flex;gap:14px;font-size:12px;color:#444;margin-top:3px;flex-wrap:wrap}
+.x-doc-top .x-copy{margin-left:auto;background:#1a73e8;color:#fff;border-radius:18px;padding:7px 16px;font-weight:700}
+.x-doc-top .x-copy:hover{background:#1765cc}
+.x-doc-tb{display:flex;align-items:center;gap:6px;background:#edf2fa;padding:5px 14px;font-size:12px;color:#444;border-bottom:1px solid #dadce0;flex-wrap:wrap}
+.x-doc-tb span{padding:2px 8px;border-radius:4px}
+.x-doc-tb .sel{background:#fff;border:1px solid #dadce0;border-radius:4px}
+.x-doc-tb .sep{width:1px;height:16px;background:#c7c7c7;padding:0;border-radius:0;margin:0 4px}
+.x-doc-canvas{background:#f1f3f4;padding:18px 12px 22px;overflow-x:auto}
+.x-doc-page{position:relative;margin-top:30px !important}
+.x-doc-page:first-child{margin-top:24px !important}
+.x-doc-page:before{content:attr(data-lbl);position:absolute;top:-22px;left:0;font-size:11px;font-weight:700;color:#5f6368;font-family:'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:.5px}
+.x-doc-page p{margin:0 0 10px}
+.x-doc-page{background:#fff;width:100%;max-width:720px;margin:0 auto;padding:46px 56px 52px;box-shadow:0 1px 3px rgba(60,64,67,.3),0 4px 8px 3px rgba(60,64,67,.15);font-family:Arial,Helvetica,sans-serif;color:#202124;font-size:13.5px;line-height:1.55;text-align:left}
+.x-doc-page .c{text-align:center}
+.x-doc-page .ent{font-size:12.5px;font-weight:700;letter-spacing:.4px}
+.x-doc-page .sub{font-size:12.5px;color:#3c4043}
+.x-doc-page .ev{font-size:20px;font-weight:700;margin:26px 0 2px;color:#1b5e20}
+.x-doc-page .evs{font-size:13.5px;color:#3c4043;margin-bottom:20px}
+.x-doc-page .emp{font-size:17px;font-weight:700;margin:6px 0 22px}
+.x-doc-page h6{font-size:14px;font-weight:700;color:#1b5e20;margin:20px 0 6px;padding-bottom:3px;border-bottom:1px solid #cfd8dc;font-family:Arial,Helvetica,sans-serif;text-transform:none;letter-spacing:0}
+.x-doc-page table{border-collapse:collapse;width:100%;margin:6px 0 14px;font-size:12.5px}
+.x-doc-page th{background:#e8f5e9;border:1px solid #b0bec5;padding:6px 8px;text-align:left}
+.x-doc-page td{border:1px solid #b0bec5;padding:6px 8px}
+.x-doc-page .ph{background:#fff4c2;border-radius:2px;padding:0 3px}
+.x-doc-page a{color:#1155cc;text-decoration:underline}
+.x-doc-page ul{margin:4px 0 0 22px;padding:0}
+.x-doc-page .meta{margin-top:6px}
+.x-doc-page .brk{border-top:1px dashed #c4c7c5;margin:22px -20px 0;text-align:center;font-size:10px;color:#9aa0a6;line-height:0}
+.x-doc-hint{background:#fff;padding:9px 16px;font-size:12px;color:#5f6368;border-top:1px solid #e3e5e8}
+.x-doc-hint .ph{background:#fff4c2;padding:0 4px;border-radius:2px}
+@media(max-width:700px){.x-doc-page{padding:28px 20px}}
+
+.x-xl.compact table{min-width:0;width:100%}
+.x-xl.compact td.c,.x-xl.compact th.col{white-space:normal}
+.x-xl td.bad{background:#fee2e2 !important;color:#991b1b}
+.x-xl td.warn{background:#fef3c7 !important;color:#92400e}
+.x-xl td.good{background:#dcfce7 !important;color:#166534;font-weight:600}
+.x-xl td.blank{background:#fff1f2 !important;color:#b91c1c;font-style:italic}
+.x-xl tr.dup td.c{background:#ede9fe !important;color:#5b21b6}
+.x-xl tr.out td.c{text-decoration:line-through;color:#9ca3af;background:#f9fafb !important}
+.x-flecha{text-align:center;font-weight:800;color:var(--sena-verde-dark);margin:2px 0 -6px;font-size:13px;letter-spacing:.3px}
+.x-flecha b{display:inline-block;background:var(--sena-verde-bg);border:1px solid var(--sena-verde-border);border-radius:14px;padding:3px 14px}
+.x-xl-note{padding:8px 14px;font-size:12px;color:#444;background:#fafafa;border-top:1px solid #e0e0e0;line-height:1.55}
+.x-xl-note b{color:#217346}
+.x-leyenda{display:flex;flex-wrap:wrap;gap:10px;font-size:11.5px;margin:6px 0 2px;color:var(--texto-muted)}
+.x-leyenda span{display:inline-flex;align-items:center;gap:6px}
+.x-leyenda i{width:14px;height:14px;border-radius:3px;display:inline-block;border:1px solid rgba(0,0,0,.12)}
+
+.x-par-t{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;margin:22px 0 4px;color:var(--texto-main)}
+.x-par-s{font-size:12.5px;color:var(--texto-muted);margin:0 0 10px}
+.x-pares{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:12px;margin:8px 0 14px}
+.x-par{background:#fff;border:1px solid var(--borde-light);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow-card)}
+.x-par .fn{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.x-par .es,.x-par .en{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;border-radius:8px;padding:4px 9px;white-space:nowrap}
+.x-par .es{background:#dcfce7;color:#166534;border:1px solid #bbf7d0}
+.x-par .en{background:#dbeafe;color:#1d4ed8;border:1px solid #bfdbfe}
+.x-par .ar{color:var(--texto-sub);font-weight:800}
+.x-par .ds{font-size:12px;color:var(--texto-muted);line-height:1.5;margin:8px 0 0}
+.x-par-lg{display:flex;gap:14px;font-size:11px;font-weight:800;margin:4px 0 6px}
+.x-par-lg span:first-child{color:#166534}.x-par-lg span:last-child{color:#1d4ed8}
+
+.x-prob{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:14px;margin:16px 0}
+.x-prob .pc{background:#fff;border:1px solid var(--borde-light);border-top:5px solid var(--c);border-radius:16px;padding:14px 16px;box-shadow:var(--shadow-card);display:flex;flex-direction:column;gap:9px}
+.x-prob .ph{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.x-prob h4{font-family:'Syne',sans-serif;font-size:14.5px;font-weight:800;color:var(--c);margin:0;line-height:1.25}
+.x-prob .dim{font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--c);background:color-mix(in srgb,var(--c) 12%,#fff);border:1px solid color-mix(in srgb,var(--c) 30%,#fff);border-radius:12px;padding:2px 9px;white-space:nowrap}
+.x-prob .lb{font-size:10.5px;font-weight:800;color:var(--texto-sub);text-transform:uppercase;letter-spacing:.8px}
+.x-prob .ch{display:flex;flex-wrap:wrap;gap:6px}
+.x-prob .m,.x-prob .f{font-size:12px;line-height:1.35;border-radius:8px;padding:4px 9px}
+.x-prob .m{background:#f1f5f9;color:#334155;border:1px solid #e2e8f0;font-weight:600}
+.x-prob .f{background:#dcfce7;color:#166534;border:1px solid #bbf7d0;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11.5px}
+.x-prob-lg{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;margin:4px 0 0;color:var(--texto-muted)}
+.x-prob-lg .m,.x-prob-lg .f{font-size:11px;border-radius:8px;padding:2px 8px}
+.x-prob-lg .m{background:#f1f5f9;border:1px solid #e2e8f0}.x-prob-lg .f{background:#dcfce7;border:1px solid #bbf7d0;font-family:'JetBrains Mono',monospace}
+
+.x-fichas{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin:16px 0}
+.x-ficha{background:#fff;border:1px solid var(--borde-light);border-left:5px solid var(--c);border-radius:14px;box-shadow:var(--shadow-card);padding:14px 16px;display:flex;flex-direction:column;gap:9px}
+.x-ficha .fh{display:flex;gap:10px;align-items:flex-start}
+.x-ficha .n{flex:0 0 26px;height:26px;border-radius:50%;background:var(--c);color:#fff;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center}
+.x-ficha .ft{font-family:'Syne',sans-serif;font-size:13.5px;font-weight:800;color:var(--texto-main);line-height:1.4;overflow-wrap:anywhere}
+.x-ficha .ft em{font-style:italic;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700}
+.x-ficha .ft code{font-size:12px}
+.x-ficha .fl{border-top:1px dashed var(--borde-light);padding-top:8px}
+.x-ficha .fl b{display:block;font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--c);margin-bottom:3px}
+.x-ficha .fl p{margin:0;font-size:12.5px;line-height:1.55;color:var(--texto-muted)}
+.x-ficha .fl p strong{color:var(--texto-main)}
+.x-ficha .fl.solo{border-top:none;padding-top:0}
+.x-ficha .fl.solo p{font-size:13px}
+.x-ficha .fl.ej{background:color-mix(in srgb,var(--c) 8%,#fff);border:1px solid color-mix(in srgb,var(--c) 22%,#fff);border-radius:10px;padding:8px 11px}
+.x-fichas.anchas{grid-template-columns:repeat(auto-fit,minmax(420px,1fr))}
+@media(max-width:560px){.x-fichas,.x-fichas.anchas{grid-template-columns:1fr}}
+
+.x-dash{background:#0f172a;border-radius:16px;padding:16px;margin:16px 0;box-shadow:var(--shadow-card);color:#e2e8f0;font-family:'Plus Jakarta Sans',sans-serif}
+.x-dash .dt{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.x-dash .dt b{font-family:'Syne',sans-serif;font-size:15px;color:#fff}
+.x-dash .dt span{font-size:11px;color:#94a3b8}
+.x-dash .sl{display:flex;gap:6px;flex-wrap:wrap}
+.x-dash .sl i{font-style:normal;font-size:11px;font-weight:700;border-radius:8px;padding:3px 10px;background:#1e293b;border:1px solid #334155;color:#cbd5e1}
+.x-dash .sl i.on{background:#39a900;border-color:#39a900;color:#fff}
+.x-dash .kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+.x-dash .k{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:10px 14px}
+.x-dash .k small{display:block;font-size:10px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:#94a3b8}
+.x-dash .k strong{font-family:'Syne',sans-serif;font-size:24px;color:#fff;line-height:1.2}
+.x-dash .k em{display:block;font-style:normal;font-size:11px;color:#86efac}
+.x-dash .gr{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px}
+.x-dash .g{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:12px 14px}
+.x-dash .g h5{margin:0 0 10px;font-size:12.5px;color:#f1f5f9;font-weight:800}
+.x-dash .br{display:grid;grid-template-columns:78px 1fr 40px;gap:8px;align-items:center;margin:6px 0;font-size:11.5px}
+.x-dash .br .t{height:14px;background:#0f172a;border-radius:7px;overflow:hidden}
+.x-dash .br .t i{display:block;height:100%;border-radius:7px;background:var(--c,#39a900)}
+.x-dash .br b{text-align:right;color:#fff}
+.x-dash .nt{margin-top:10px;font-size:11px;color:#fde68a}
+
+.x-chat{background:#f1f5f9;border:1px solid var(--borde-light);border-radius:16px;padding:14px 16px;margin:16px 0;display:flex;flex-direction:column;gap:10px}
+.x-chat .m{max-width:88%;padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.55;box-shadow:0 1px 2px rgba(15,23,42,.08)}
+.x-chat .m b.q{display:block;font-size:10.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:3px}
+.x-chat .a{align-self:flex-start;background:#fff;border-top-left-radius:4px}
+.x-chat .a b.q{color:#ea580c}
+.x-chat .b{align-self:flex-end;background:#dcfce7;border-top-right-radius:4px}
+.x-chat .b b.q{color:#166534}
+.x-linea{position:relative;margin:18px 0 8px;padding-left:34px}
+.x-linea:before{content:"";position:absolute;left:13px;top:6px;bottom:6px;width:3px;background:linear-gradient(var(--sena-verde),#0284c7);border-radius:2px}
+.x-linea .it{position:relative;margin-bottom:16px}
+.x-linea .it .n{position:absolute;left:-34px;top:0;width:28px;height:28px;border-radius:50%;background:var(--c,#39a900);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px #fff}
+.x-linea .it h4{margin:0 0 3px;font-family:'Syne',sans-serif;font-size:15px;color:var(--c,#39a900)}
+.x-linea .it p{margin:0 0 6px;font-size:13.5px;line-height:1.6;color:var(--texto-muted)}
+.x-linea .it .ej{display:inline-block;background:color-mix(in srgb,var(--c,#39a900) 9%,#fff);border:1px solid color-mix(in srgb,var(--c,#39a900) 25%,#fff);border-radius:10px;padding:6px 11px;font-size:12.5px;color:var(--texto-main)}
+.x-form-mock{background:#fff;border:1px solid #cbd5e1;border-radius:14px;box-shadow:var(--shadow-card);overflow:hidden;margin:16px 0}
+.x-form-mock .fh{background:#217346;color:#fff;padding:8px 14px;font-family:'Syne',sans-serif;font-weight:800;font-size:13px}
+.x-form-mock .fr{display:grid;grid-template-columns:170px 1fr auto;gap:10px;align-items:center;padding:9px 14px;border-bottom:1px solid #eef2f7;font-size:13px}
+.x-form-mock .fr:last-child{border-bottom:none}
+.x-form-mock .fr .l{font-weight:700;color:#334155}
+.x-form-mock .fr .v{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:4px 10px;color:#0f172a}
+.x-form-mock .fr .t{font-size:11px;font-weight:800;border-radius:12px;padding:3px 10px;white-space:nowrap;color:var(--c);background:color-mix(in srgb,var(--c) 12%,#fff);border:1px solid color-mix(in srgb,var(--c) 30%,#fff)}
+.x-bars{background:#fff;border:1px solid var(--borde-light);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow-card);margin:14px 0}
+.x-bars h5{margin:0 0 22px;font-size:13px;font-weight:800;color:var(--texto-main)}
+.x-bars .pl{position:relative;display:flex;align-items:flex-end;gap:5px;height:170px;border-bottom:2px solid #cbd5e1;padding-top:6px}
+.x-bars .pl .b{flex:1;background:#94a3b8;border-radius:5px 5px 0 0;position:relative;min-width:8px}
+.x-bars .pl .b.out{background:#dc2626}
+.x-bars .pl .b span{position:absolute;top:-17px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:800;color:#334155;white-space:nowrap}
+.x-bars .ln{position:absolute;left:0;right:0;border-top:2px dashed var(--c);z-index:2}
+.x-bars .ln em{position:absolute;right:0;top:-19px;font-style:normal;font-size:10.5px;font-weight:800;color:var(--c);background:#fff;padding:0 6px;border-radius:6px}
+.x-pv{display:grid;grid-template-columns:200px 1fr;gap:0;background:#fff;border:1px solid #c6c6c6;border-radius:12px;overflow:hidden;box-shadow:var(--shadow-card);margin:16px 0}
+.x-pv .fl{background:#f3f3f3;border-right:1px solid #d4d4d4;padding:10px 12px;font-size:12.5px}
+.x-pv .fl h6{margin:0 0 8px;font-size:12px;color:#217346;font-weight:800}
+.x-pv .fl label{display:flex;align-items:center;gap:7px;margin:5px 0;color:#334155;font-weight:600}
+.x-pv .fl label i{width:13px;height:13px;border:1.5px solid #94a3b8;border-radius:3px;display:inline-block;background:#fff}
+.x-pv .fl label i.on{background:#217346;border-color:#217346}
+.x-pv .ar{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px}
+.x-pv .ar .z{border:1px solid #d4d4d4;border-radius:8px;background:#fafafa;min-height:70px;padding:6px 8px}
+.x-pv .ar .z b{display:block;font-size:10.5px;font-weight:800;color:#64748b;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
+.x-pv .ar .z span{display:inline-block;background:#fff;border:1px solid #217346;color:#166534;border-radius:6px;padding:2px 9px;font-size:12px;font-weight:700;margin:2px 3px 2px 0}
+.x-gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px;margin:16px 0}
+.x-gal .g{background:#fff;border:1px solid var(--borde-light);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow-card)}
+.x-gal .g h5{margin:0 0 2px;font-family:'Syne',sans-serif;font-size:14px;color:var(--c)}
+.x-gal .g small{display:block;font-size:11.5px;color:var(--texto-muted);margin-bottom:8px;line-height:1.45}
+.x-gal .g .p{display:flex;align-items:flex-end;gap:6px;height:80px;border-bottom:2px solid #cbd5e1;padding:0 4px}
+.x-gal .g .p i{flex:1;background:var(--c);border-radius:4px 4px 0 0;display:block}
+.x-gal .g .pie{width:84px;height:84px;border-radius:50%;margin:0 auto;border:3px solid #fff;box-shadow:0 0 0 1px #cbd5e1}
+.x-gal .g svg{width:100%;height:84px;display:block}
+.x-gal .g .q{margin-top:8px;font-size:12px;color:var(--texto-main);background:color-mix(in srgb,var(--c) 8%,#fff);border-radius:8px;padding:5px 9px}
+.x-esc{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px;margin:16px 0}
+.x-esc .e{background:#fff;border:1px solid var(--borde-light);border-radius:14px;padding:13px 15px;box-shadow:var(--shadow-card)}
+.x-esc .e h5{margin:0 0 5px;font-size:12px;font-weight:800;letter-spacing:.4px;color:var(--c);text-transform:uppercase}
+.x-esc .e p{margin:0 0 7px;font-size:13px;line-height:1.55;color:var(--texto-muted)}
+.x-esc .e .r{font-size:12.5px;background:color-mix(in srgb,var(--c) 9%,#fff);border-radius:9px;padding:6px 10px;color:var(--texto-main)}
+.x-cafe{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin:14px 0}
+.x-cafe .c{background:#fff;border:1px solid var(--borde-light);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow-card)}
+.x-cafe .c h5{margin:0 0 8px;font-size:13px;font-weight:800}
+.x-cafe .f{display:grid;grid-template-columns:86px 1fr 92px;gap:8px;align-items:center;margin:5px 0;font-size:12px}
+.x-cafe .f .t{height:13px;background:#e2e8f0;border-radius:7px;overflow:hidden}
+.x-cafe .f .t i{display:block;height:100%;background:var(--c,#94a3b8);border-radius:7px}
+.x-cafe .f b{text-align:right}
+
+.x-er{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:16px 0}
+.x-er .t{background:#fff;border:2px solid var(--c);border-radius:12px;overflow:hidden;box-shadow:var(--shadow-card)}
+.x-er .t h5{margin:0;padding:8px 12px;background:var(--c);color:#fff;font-family:'Syne',sans-serif;font-size:14px}
+.x-er .t div{padding:5px 12px;font-size:12.5px;border-top:1px solid var(--borde-light);display:flex;justify-content:space-between;gap:8px}
+.x-er .t div i{font-style:normal;font-weight:800;font-size:10.5px;border-radius:8px;padding:1px 7px;background:#fef3c7;color:#92400e}
+.x-er .t div i.fk{background:#dbeafe;color:#1e40af}
+.x-rel{text-align:center;font-size:12.5px;color:var(--texto-muted);margin:-4px 0 10px}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-brand"><div class="sidebar-logo"><svg width="24" height="24" viewBox="0 0 64 62" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+          <g transform="translate(-377 -19)">
+            <path d="M409.164 19C412.922 19 415.992 22.09 415.992 25.8778 415.992 29.6656 412.932 32.7556 409.164 32.7556 405.397 32.7556 402.336 29.6656 402.336 25.8778 402.336 22.09 405.407 19 409.164 19"/>
+            <path d="M384.305 41.1884 384.305 41.2183C384.285 41.3379 384.275 41.4177 384.275 41.4675 384.275 41.8264 384.474 42.0855 384.873 42.265 385.282 42.4344 385.9 42.5241 386.747 42.5241 387.395 42.5241 387.893 42.4543 388.262 42.3148 388.631 42.1752 388.81 41.9759 388.81 41.7267 388.81 41.3479 388.082 41.0489 386.647 40.8096 386.478 40.7797 386.348 40.7598 386.268 40.7498 386.179 40.7299 386.039 40.71 385.86 40.6801 383.567 40.3013 382.092 39.8926 381.434 39.454 381.115 39.2347 380.876 38.9855 380.706 38.6965 380.547 38.4074 380.467 38.0785 380.467 37.7096 380.467 36.8125 380.995 36.1248 382.052 35.6563 383.109 35.1878 384.654 34.9486 386.677 34.9486 388.7 34.9486 390.166 35.1678 391.133 35.6064 392.1 36.045 392.578 36.7228 392.578 37.6399L392.578 37.7495 388.78 37.7495 388.78 37.7096C388.78 37.3907 388.591 37.1614 388.202 36.992 387.813 36.8325 387.255 36.7428 386.508 36.7428 385.929 36.7428 385.481 36.8026 385.182 36.9122 384.863 37.0318 384.713 37.1913 384.713 37.4006 384.713 37.7794 385.541 38.1084 387.195 38.3675 387.514 38.4174 387.764 38.4572 387.943 38.4871 389.119 38.6865 389.966 38.8559 390.465 38.9955 390.963 39.135 391.392 39.3045 391.761 39.4939 392.159 39.7132 392.478 39.9923 392.698 40.3312 392.917 40.6701 393.027 41.0389 393.027 41.4476 393.027 42.3746 392.448 43.0823 391.302 43.5907 390.156 44.0891 388.501 44.3383 386.348 44.3383 384.195 44.3383 382.67 44.099 381.723 43.6206 380.766 43.1421 380.298 42.3746 380.298 41.308L380.298 41.1685 384.305 41.1685ZM394.711 44.1987 394.711 35.0881 405.546 35.0881 405.546 37.0518 398.778 37.0518 398.778 38.5071 405.028 38.5071 405.028 40.4508 398.778 40.4508 398.778 42.2151 405.795 42.2151 405.795 44.2087 394.711 44.2087ZM407.5 44.1987 407.5 35.0881 412.643 35.0881 418.155 41.2084 418.155 35.0881 422.063 35.0881 422.063 44.1987 416.72 44.1987 411.387 38.0585 411.387 44.1987 407.49 44.1987ZM432.569 40.5604 430.625 37.2511 428.572 40.5604 432.579 40.5604ZM426.369 44.1987 422.292 44.1987 428.592 35.0881 433.107 35.0881 439.118 44.1987 434.592 44.1987 433.675 42.554 427.366 42.554 426.389 44.1987Z"/>
+            <path d="M389.309 76.3351 385.67 72.9161 396.735 53.6881C397.333 52.6415 396.585 51.3257 395.379 51.3257L377.267 51.3257 377.267 46.5113 406.413 46.5113 389.309 76.3351Z"/>
+            <path d="M428.701 76.3351 432.34 72.9161 421.275 53.6881C420.677 52.6415 421.425 51.3257 422.631 51.3257L440.743 51.3257 440.743 46.5113 411.597 46.5113 428.701 76.3351Z"/>
+            <path d="M408.965 51.5949C408.965 51.5949 409.005 51.5251 409.005 51.5251L425.432 78.7174 421.066 80.99 410.48 63.2373C409.852 62.1907 408.347 62.1907 407.729 63.2373 404.2 69.1981 397.213 80.99 397.213 80.99L392.947 78.8768C392.947 78.8768 408.088 53.09 408.965 51.5949"/>
+          </g>
+        </svg></div>
+      <div><div class="sidebar-title">GDAI · F23 y F24</div><div class="sidebar-sub">Sesión 5 · EV04</div></div></div>
+    <button class="sidebar-toggle-btn" onclick="toggleSidebar()" title="Colapsar Menú Lateral">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="9" x2="9" y1="3" y2="21"/><path d="m14 9-3 3 3 3"/></svg>
+    </button>
+  </div>
+  <div class="sidebar-scroll"><div class="nav-group"><div class="nav-group-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Bloque 1: Encuadre</span></div><a href="#slide-1" class="nav-link active" data-slide="1"><span class="nav-link-num">01</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span><span class="nav-link-text">Portada y Sesión 5</span></a><a href="#slide-2" class="nav-link" data-slide="2"><span class="nav-link-num">02</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span><span class="nav-link-text">Objetivos de Hoy</span></a><a href="#slide-3" class="nav-link" data-slide="3"><span class="nav-link-num">03</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg></span><span class="nav-link-text">Dónde Estamos</span></a><a href="#slide-4" class="nav-link" data-slide="4"><span class="nav-link-num">04</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><span class="nav-link-text">Agenda de la Sesión</span></a></div><div class="nav-group"><div class="nav-group-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg><span>Bloque 2: Diseña la base</span></div><a href="#slide-5" class="nav-link" data-slide="5"><span class="nav-link-num">05</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg></span><span class="nav-link-text">Qué Pide la Guía</span></a><a href="#slide-6" class="nav-link" data-slide="6"><span class="nav-link-num">06</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg></span><span class="nav-link-text">Campos Independientes</span></a><a href="#slide-7" class="nav-link" data-slide="7"><span class="nav-link-num">07</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg></span><span class="nav-link-text">Tablas, Claves y Relaciones</span></a><a href="#slide-8" class="nav-link" data-slide="8"><span class="nav-link-num">08</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span><span class="nav-link-text">Normalización</span></a><a href="#slide-9" class="nav-link" data-slide="9"><span class="nav-link-num">09</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span class="nav-link-text">Qué Datos Incluir</span></a><a href="#slide-10" class="nav-link" data-slide="10"><span class="nav-link-num">10</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg></span><span class="nav-link-text">Política de Captura</span></a><a href="#slide-11" class="nav-link" data-slide="11"><span class="nav-link-num">11</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><span class="nav-link-text">Base como Activo</span></a></div><div class="nav-group"><div class="nav-group-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg><span>Bloque 3: Demo en Access</span></div><a href="#slide-12" class="nav-link" data-slide="12"><span class="nav-link-num">12</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg></span><span class="nav-link-text">Demo: Crear Tablas</span></a><a href="#slide-13" class="nav-link" data-slide="13"><span class="nav-link-num">13</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg></span><span class="nav-link-text">Demo: Relaciones</span></a><a href="#slide-14" class="nav-link" data-slide="14"><span class="nav-link-num">14</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg></span><span class="nav-link-text">Demo: Importar</span></a><a href="#slide-15" class="nav-link" data-slide="15"><span class="nav-link-num">15</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span><span class="nav-link-text">Demo: Consulta</span></a><a href="#slide-16" class="nav-link" data-slide="16"><span class="nav-link-num">16</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></svg></span><span class="nav-link-text">Herramientas</span></a></div><div class="nav-group"><div class="nav-group-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Bloque 4: La Evidencia</span></div><a href="#slide-17" class="nav-link" data-slide="17"><span class="nav-link-num">17</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg></span><span class="nav-link-text">Qué Entregas</span></a><a href="#slide-18" class="nav-link" data-slide="18"><span class="nav-link-num">18</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><span class="nav-link-text">Lista de Revisión</span></a><a href="#slide-19" class="nav-link" data-slide="19"><span class="nav-link-num">19</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span><span class="nav-link-text">Preguntas Frecuentes</span></a><a href="#slide-20" class="nav-link" data-slide="20"><span class="nav-link-num">20</span>
+<span class="nav-link-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg></span><span class="nav-link-text">Cierre</span></a></div></div>
+  <div class="sidebar-footer"><div class="sidebar-corte-badge"><span>EV04 · Base de datos</span><span>Equipo de 4</span><span>Comp. 220501114 · RAP 220501114-01</span></div><a href="../docs/Guia_aprendizaje_5.pdf" target=_blank class="sidebar-link-btn" style=""><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg> Guía 5 (PDF) ↗</a><a href="../explorar.html"  class="sidebar-link-btn" style="background:#f1f5f9;border-color:#e2e8f0;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Volver al Hub</a></div>
+</aside>
+<button class="floating-sidebar-toggle" id="floatingToggle" onclick="toggleSidebar()">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="9" x2="9" y1="3" y2="21"/><path d="m11 9 3 3-3 3"/></svg>
+  <span>Menú (20 Slides)</span>
+</button>
+<div class="main-content" id="mainContent">
+
+  <section class="slide" id="slide-1" data-slide="1" data-title="01. Portada &amp; Sesión 5">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 01 / 20</div>
+    <div class="slide-inner"><div class="hero-wrapper"><div>
+      <div class="slide-header-badge"><span class="dot"></span> SESIÓN 5 · EV04</div>
+      <h1 class="hero-title">Base de datos <span class="grad-verde">final</span> para <span class="grad-naranja">gestión de análisis</span></h1>
+      <p class="hero-subtitle">Organizamos los datos de tu empresa en <strong>tablas con campos independientes, claves y relaciones</strong>, definimos la política de captura y hacemos una demo en <strong>Access</strong>. Es la evidencia <strong>GA5-220501114-AA1-EV04</strong>.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a href="#slide-4" class="btn-action-pro verde"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" ><polygon points="5 3 19 12 5 21 5 3"/></svg> Ver agenda de la sesión</a>
+        <a href="../Sesión 4/PRESENTACION_SESION04_DUDAS_EVIDENCIAS.html" target="_blank" class="btn-action-pro tech"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg> Repasar la Sesión 4 ↗</a>
+      </div>
+    </div>
+    <div class="hero-card-widget">
+      <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--texto-main);margin-bottom:18px;display:flex;align-items:center;justify-content:space-between">
+        <span>DATOS DE LA SESIÓN 5</span>
+        <span style="font-size:10.5px;color:var(--sena-verde-dark);background:var(--sena-verde-bg);padding:3px 10px;border-radius:12px;border:1px solid var(--sena-verde-border);font-weight:800">EV04</span></div>
+      <div class="hero-meta-grid">
+        <div class="meta-box"><div class="meta-box-title">Evidencia</div><div class="meta-box-val">EV04</div><div class="meta-box-sub">Equipo de 4</div></div>
+        <div class="meta-box"><div class="meta-box-title">Duración</div><div class="meta-box-val">60 min</div><div class="meta-box-sub">F23 7:30 · F24 8:30 p. m.</div></div>
+        <div class="meta-box"><div class="meta-box-title">Sesión</div><div class="meta-box-val">24 / Nov / 2026</div><div class="meta-box-sub">Martes · Teams</div></div>
+        <div class="meta-box"><div class="meta-box-title">Entrega EV04</div><div class="meta-box-val" style="color:var(--sena-naranja-dark)">02 / Dic / 2026</div><div class="meta-box-sub">Miércoles 11:59 p. m.</div></div>
+      </div>
+      <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--borde-light);font-size:12.5px;color:var(--texto-muted);display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:8px"><div class="card-icon-badge verde" style="width:26px;height:26px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><span><strong>Instructor:</strong> Julián Andrés Trujillo</span></div>
+        <span style="font-size:11px;color:var(--texto-sub)">Fichas 3466323 · 3466324</span></div>
+    </div></div></div>
+  </section>
+
+  <section class="slide" id="slide-2" data-slide="2" data-title="02. Objetivos de Hoy">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 02 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge naranja"><span class="dot"></span> PUNTO DE PARTIDA</div>
+      <h2 class="sec-title">¿Qué vas a lograr hoy?</h2>
+      <p class="sec-desc">Hoy convertimos los datos que ya recolectaste, depuraste y analizaste en una base de datos bien estructurada.</p>
+      
+      <div class="grid-3"><div class="card-premium top-verde"><div>
+  <div class="card-header-flex"><div class="card-icon-badge verde"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><span class="card-pill-tag verde">Objetivos</span></div>
+  <h3 class="card-title">Al terminar la sesión podrás…</h3><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Explicar <strong>qué es una base de datos estructurada</strong> y por qué sirve para el análisis</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Definir <strong>campos independientes</strong>, <strong>claves principales</strong> y <strong>relaciones</strong></span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Revisar tus tablas con la <strong>normalización (1FN a 3FN)</strong></span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Redactar una <strong>política de captura</strong> y cuidar la base como activo</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Saber qué entregar en la <strong>GA5-220501114-AA1-EV04</strong> y cuándo</span></li></ul>
+</div></div><div class="card-premium top-naranja"><div>
+  <div class="card-header-flex"><div class="card-icon-badge naranja"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><span class="card-pill-tag naranja">Metodología</span></div>
+  <h3 class="card-title">Cómo vamos a trabajar</h3><p class="card-text">Primero el concepto, luego la demo en Access.</p><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Ejemplo con una empresa <strong>ficticia</strong>: Lácteos del Valle S.A.S.</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span><strong>Demo en vivo</strong> en Access: dos tablas relacionadas, importación y una consulta</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Al final, la evidencia y tus preguntas</span></li></ul>
+</div></div><div class="card-premium top-tech"><div>
+  <div class="card-header-flex"><div class="card-icon-badge tech"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></div><span class="card-pill-tag tech">Por qué importa</span></div>
+  <h3 class="card-title">Qué tiene que ver con el RAP 1</h3><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Una base bien armada permite <strong>informes asertivos</strong> sin rehacer el trabajo</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Es el paso entre los datos depurados (EV02) y el análisis (EV03) hechos <strong>reutilizables</strong></span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Debe cumplir <strong>políticas y requisitos legales</strong> de la empresa</span></li></ul>
+</div></div></div><div class="x-note piensa"><h5>🤔 Antes de seguir, piensa</h5><p>Si mañana te piden «¿cuántos clientes de Cali compraron queso en octubre?», ¿tus datos actuales te dejan responder en un minuto?</p><details><summary>Ver pista</summary><p>Si están en una sola hoja desordenada o con campos mezclados (nombre y apellido juntos), cuesta mucho. Una base estructurada responde con una consulta.</p></details></div>
+      
+    </div>
+  </section>
+
+  <section class="slide" id="slide-3" data-slide="3" data-title="03. Dónde Estamos">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 03 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge tech"><span class="dot"></span> MAPA DEL CAMINO</div>
+      <h2 class="sec-title">Dónde estamos en la guía</h2>
+      <p class="sec-desc">La EV04 retoma el trabajo de las tres primeras evidencias y lo deja listo para consultar.</p>
+      
+      <div class="x-tres"><div class="e" style="--c:#39a900"><div class="id">EV01</div><div class="nm">Recolección</div><p>Conseguiste los datos de la empresa.</p><span class="est">Cerrada</span></div><div class="e" style="--c:#0284c7"><div class="id">EV02</div><div class="nm">Sistematización</div><p>Los dejaste limpios y documentados.</p><span class="est">Cerrada</span></div><div class="e" style="--c:#ea580c"><div class="id">EV03</div><div class="nm">Análisis</div><p>Los analizaste con tabla, gráfico y dashboard.</p><span class="est">Cerrada</span></div><div class="e" style="--c:#7c3aed"><div class="id">EV04</div><div class="nm">Base de datos final</div><p>Los organizas en una base que sirva para informes.</p><span class="est">Entrega 02/Dic/2026</span></div></div><div class="x-note analogia"><h5>💡 Para entenderlo con algo cotidiano</h5><p>Hasta ahora llenaste <strong>cajas</strong> con ingredientes. La base de datos es la <strong>despensa bien organizada</strong>: cada cosa en su estante, con etiqueta, para encontrarla al instante y no comprar dos veces lo mismo.</p></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>La EV04 <strong>no empieza de cero</strong>: parte de los datos que ya tienes y los organiza mejor.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-4" data-slide="4" data-title="04. Agenda de la Sesión">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 04 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge tech"><span class="dot"></span> RUTA DE LOS 60 MINUTOS</div>
+      <h2 class="sec-title">Agenda de la Sesión 5</h2>
+      <p class="sec-desc">Primero diseñamos la base, luego la construimos en Access y al final vemos la evidencia.</p>
+      
+      <div class="x-agenda"><div class="bar"><span style="--c:#39a900;flex:5"></span><span style="--c:#0284c7;flex:20"></span><span style="--c:#ea580c;flex:20"></span><span style="--c:#7c3aed;flex:15"></span></div><div class="bar-lbl"><span style="flex:5">5 min</span><span style="flex:20">20 min</span><span style="flex:20">20 min</span><span style="flex:15">15 min</span></div><div class="cards"><div class="card" style="--c:#39a900"><div class="top"><span class="n">1</span><span class="t">00–05 min</span></div><h4>Apertura y dónde estamos</h4><p>Objetivos y cómo se conecta con las evidencias anteriores.</p><div class="m"><span>5 min</span><span>Slides 1–4</span></div></div><div class="card" style="--c:#0284c7"><div class="top"><span class="n">2</span><span class="t">05–25 min</span></div><h4>Diseña la base de datos</h4><p>Campos, claves, relaciones, normalización, datos, política y seguridad.</p><div class="m"><span>20 min</span><span>Slides 5–11</span></div></div><div class="card" style="--c:#ea580c"><div class="top"><span class="n">3</span><span class="t">25–45 min</span></div><h4>Demo en Access</h4><p>Dos tablas relacionadas, importación y una consulta para un informe.</p><div class="m"><span>20 min</span><span>Slides 12–16</span></div></div><div class="card" style="--c:#7c3aed"><div class="top"><span class="n">4</span><span class="t">45–60 min</span></div><h4>Evidencia y dudas</h4><p>Qué entregas, lista de revisión y preguntas.</p><div class="m"><span>15 min</span><span>Slides 17–20</span></div></div></div></div><div class="callout-box"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></div>
+<div class="callout-content"><h4>Pregunta para arrancar</h4><p>Si una persona nueva abre tus datos, ¿encuentra en segundos qué cliente compró qué y dónde? Hoy los organizamos para que la respuesta sea <strong>sí</strong>.</p></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Primero el <strong>diseño</strong>, después la <strong>demo</strong> y al final <strong>la evidencia</strong>.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-5" data-slide="5" data-title="05. Qué Pide la Guía">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 05 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge naranja"><span class="dot"></span> LA EVIDENCIA</div>
+      <h2 class="sec-title">Qué pide la GA5-220501114-AA1-EV04</h2>
+      <p class="sec-desc">Antes de la técnica, traducimos el enunciado de la guía a palabras sencillas.</p>
+      
+      <div class="x-fichas anchas"><div class="x-ficha" style="--c:#39a900"><div class="fh"><span class="n">1</span><div class="ft">«Crearán y dejarán dispuesta una base de datos para la empresa seleccionada»</div></div><div class="fl solo"><p>Es <strong>la misma empresa</strong> de la EV01. La base queda lista para usarse.</p></div></div><div class="x-ficha" style="--c:#0284c7"><div class="fh"><span class="n">2</span><div class="ft">«Requerimientos de políticas, normas y protocolos organizacionales y legales»</div></div><div class="fl solo"><p>La base respeta <strong>las reglas de la empresa</strong> y la ley de protección de datos personales.</p></div></div><div class="x-ficha" style="--c:#ea580c"><div class="fh"><span class="n">3</span><div class="ft">«En equipos de 4 aprendices»</div></div><div class="fl solo"><p>Una sola base por equipo.</p></div></div><div class="x-ficha" style="--c:#7c3aed"><div class="fh"><span class="n">4</span><div class="ft">«A partir de los informes presentados»</div></div><div class="fl solo"><p>Se arma con la información de las evidencias anteriores.</p></div></div><div class="x-ficha" style="--c:#dc2626"><div class="fh"><span class="n">5</span><div class="ft">«Que permita fácil y flexiblemente presentar informes asertivos»</div></div><div class="fl solo"><p>Se pueden hacer <strong>consultas e informes distintos</strong> sin reorganizar los datos.</p></div></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>La base debe ser <strong>estructurada, legal y útil para informes</strong>.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-6" data-slide="6" data-title="06. Campos Independientes">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 06 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge verde"><span class="dot"></span> PASO A</div>
+      <h2 class="sec-title">Define los campos de forma independiente</h2>
+      <p class="sec-desc">Cada elemento que quieras guardar se convierte en un campo (una columna).</p>
+      
+      <div class="x-xl compact"><div class="x-xl-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg> Antes: campos mezclados</div><div class="x-xl-scroll"><table><thead><tr><th class="col corner"></th><th class="col">A</th><th class="col">B</th><th class="col">C</th></tr></thead><tbody><tr class="hd"><td class="rn">1</td><td class="c">Cliente</td><td class="c">Contacto</td><td class="c">Ciudad</td></tr><tr class=""><td class="rn">2</td><td class="c bad">Ana María Pérez</td><td class="c bad">310 555 1234 / ana@mail.com</td><td class="c bad">Cali, Valle</td></tr><tr class=""><td class="rn">3</td><td class="c bad">Luis Gómez</td><td class="c ">320 444 9876</td><td class="c bad">Cali, Valle</td></tr></tbody></table></div><div class="x-xl-tabs"><span>Hoja1</span></div></div><div class="x-flecha"><b>↓ separamos cada dato en su propio campo</b></div><div class="x-xl compact"><div class="x-xl-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg> Después: un dato por campo</div><div class="x-xl-scroll"><table><thead><tr><th class="col corner"></th><th class="col">A</th><th class="col">B</th><th class="col">C</th><th class="col">D</th><th class="col">E</th><th class="col">F</th></tr></thead><tbody><tr class="hd"><td class="rn">1</td><td class="c">Nombres</td><td class="c">Apellidos</td><td class="c">Teléfono</td><td class="c">Correo</td><td class="c">Ciudad</td><td class="c">Departamento</td></tr><tr class=""><td class="rn">2</td><td class="c good">Ana María</td><td class="c good">Pérez</td><td class="c good">3105551234</td><td class="c good">ana@mail.com</td><td class="c good">Cali</td><td class="c good">Valle</td></tr><tr class=""><td class="rn">3</td><td class="c good">Luis</td><td class="c good">Gómez</td><td class="c good">3204449876</td><td class="c good">&nbsp;</td><td class="c good">Cali</td><td class="c good">Valle</td></tr></tbody></table></div><div class="x-xl-tabs"><span>Hoja1</span></div></div><div class="callout-box"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+<div class="callout-content"><h4>Regla</h4><p>Cada variable ocupa <strong>su propia columna</strong>: así se puede filtrar, ordenar y contar sin trucos.</p></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Un campo = <strong>un solo dato</strong>. Nombre y apellido, siempre separados.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-7" data-slide="7" data-title="07. Tablas, Claves y Relaciones">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 07 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge tech"><span class="dot"></span> PASO B</div>
+      <h2 class="sec-title">Tablas, claves principales y relaciones</h2>
+      <p class="sec-desc">Cada tema va en su tabla; las claves las conectan.</p>
+      
+      <div class="x-er"><div class="t" style="--c:#39a900"><h5>Clientes</h5><div><span>id_cliente</span><i class="pk">PK</i></div><div><span>nombres</span></div><div><span>apellidos</span></div><div><span>telefono</span></div><div><span>id_ciudad</span><i class="fk">FK</i></div></div><div class="t" style="--c:#0284c7"><h5>Ciudades</h5><div><span>id_ciudad</span><i class="pk">PK</i></div><div><span>ciudad</span></div><div><span>departamento</span></div></div><div class="t" style="--c:#ea580c"><h5>Ventas</h5><div><span>id_venta</span><i class="pk">PK</i></div><div><span>id_cliente</span><i class="fk">FK</i></div><div><span>id_producto</span><i class="fk">FK</i></div><div><span>fecha</span></div><div><span>unidades</span></div></div><div class="t" style="--c:#7c3aed"><h5>Productos</h5><div><span>id_producto</span><i class="pk">PK</i></div><div><span>producto</span></div><div><span>precio</span></div></div></div><p class="x-rel">Una ciudad tiene muchos clientes · un cliente tiene muchas ventas · un producto aparece en muchas ventas</p><div class="x-fichas anchas"><div class="x-ficha" style="--c:#39a900"><div class="fh"><span class="n">1</span><div class="ft">Clave principal (PK)</div></div><div class="fl solo"><p>La columna que <strong>identifica cada fila</strong> sin repetirse: <code>id_cliente</code>, <code>id_venta</code>.</p></div></div><div class="x-ficha" style="--c:#0284c7"><div class="fh"><span class="n">2</span><div class="ft">Clave externa (FK)</div></div><div class="fl solo"><p>Una columna que <strong>apunta a la clave principal de otra tabla</strong>: así se relacionan.</p></div></div><div class="x-ficha" style="--c:#ea580c"><div class="fh"><span class="n">3</span><div class="ft">Relación</div></div><div class="fl solo"><p>El vínculo entre dos tablas. Casi siempre «uno a muchos».</p></div></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Una tabla por tema, <strong>una clave principal por tabla</strong> y claves externas para unirlas.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-8" data-slide="8" data-title="08. Normalización">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 08 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge naranja"><span class="dot"></span> PASO C</div>
+      <h2 class="sec-title">Normalización: revisa tus tablas (1FN a 3FN)</h2>
+      <p class="sec-desc">Son reglas para comprobar que las tablas están bien estructuradas y no repiten datos.</p>
+      
+      <div class="x-xl compact"><div class="x-xl-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg> Ventas sin normalizar</div><div class="x-xl-scroll"><table><thead><tr><th class="col corner"></th><th class="col">A</th><th class="col">B</th><th class="col">C</th><th class="col">D</th><th class="col">E</th><th class="col">F</th><th class="col">G</th></tr></thead><tbody><tr class="hd"><td class="rn">1</td><td class="c">id_venta</td><td class="c">cliente</td><td class="c">teléfonos</td><td class="c">producto</td><td class="c">precio</td><td class="c">ciudad</td><td class="c">departamento</td></tr><tr class=""><td class="rn">2</td><td class="c ">1</td><td class="c ">Ana Pérez</td><td class="c bad">3105551234, 3201112222</td><td class="c ">Queso</td><td class="c ">9500</td><td class="c ">Cali</td><td class="c warn">Valle</td></tr><tr class=""><td class="rn">3</td><td class="c ">2</td><td class="c ">Luis Gómez</td><td class="c ">3204449876</td><td class="c ">Yogur</td><td class="c warn">4200</td><td class="c ">Cali</td><td class="c warn">Valle</td></tr><tr class=""><td class="rn">4</td><td class="c ">3</td><td class="c ">Ana Pérez</td><td class="c bad">3105551234, 3201112222</td><td class="c ">Yogur</td><td class="c warn">4200</td><td class="c ">Cali</td><td class="c warn">Valle</td></tr></tbody></table></div><div class="x-xl-tabs"><span>Hoja1</span></div></div><div class="x-fichas"><div class="x-ficha" style="--c:#39a900"><div class="fh"><div class="ft">1FN · Valores atómicos</div></div><div class="fl"><b>Regla</b><p>Cada celda guarda <strong>un solo valor</strong>.</p></div><div class="fl"><b>Problema del ejemplo</b><p>Dos teléfonos en una celda.</p></div><div class="fl"><b>Solución</b><p>Un teléfono por fila o tabla de teléfonos.</p></div></div><div class="x-ficha" style="--c:#0284c7"><div class="fh"><div class="ft">2FN · Depende de toda la clave</div></div><div class="fl"><b>Regla</b><p>Cada dato depende <strong>solo de la clave</strong>, no de una parte.</p></div><div class="fl"><b>Problema del ejemplo</b><p>El <em>precio</em> depende del producto, no de la venta.</p></div><div class="fl"><b>Solución</b><p>Tabla <strong>Productos</strong> con su precio.</p></div></div><div class="x-ficha" style="--c:#ea580c"><div class="fh"><div class="ft">3FN · Sin dependencias indirectas</div></div><div class="fl"><b>Regla</b><p>Ningún campo depende de <strong>otro campo que no es la clave</strong>.</p></div><div class="fl"><b>Problema del ejemplo</b><p>El <em>departamento</em> depende de la ciudad.</p></div><div class="fl"><b>Solución</b><p>Tabla <strong>Ciudades</strong> con su departamento.</p></div></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Normalizar es <strong>no repetir datos</strong>: cada dato vive en un solo lugar.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-9" data-slide="9" data-title="09. Qué Datos Incluir">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 09 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge tech"><span class="dot"></span> PASO D</div>
+      <h2 class="sec-title">Qué información incluir en la base</h2>
+      <p class="sec-desc">La guía propone tres grupos de datos. Úsalos como lista de chequeo para tus tablas.</p>
+      
+      <div class="grid-3"><div class="card-premium top-verde"><div>
+  <div class="card-header-flex"><div class="card-icon-badge verde"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><span class="card-pill-tag verde">Datos generales</span></div>
+  <h3 class="card-title">Quién es</h3><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Nombre y apellido</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Teléfono y correo electrónico</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Redes sociales (si aplica)</span></li></ul>
+</div></div><div class="card-premium top-tech"><div>
+  <div class="card-header-flex"><div class="card-icon-badge tech"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><span class="card-pill-tag tech">Datos para segmentar</span></div>
+  <h3 class="card-title">Para agrupar y analizar</h3><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Ciudad y departamento</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Estudios, profesión, empresa y puesto</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Nivel socioeconómico, hobbies</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Necesidad o problema; tipo de personalidad</span></li></ul>
+</div></div><div class="card-premium top-naranja"><div>
+  <div class="card-header-flex"><div class="card-icon-badge naranja"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg></div><span class="card-pill-tag naranja">Observaciones</span></div>
+  <h3 class="card-title">Lo que no cabe en otro campo</h3><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Última compra realizada</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Si paga a tiempo</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Si solicita factura</span></li></ul>
+</div></div></div><div class="callout-box"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+<div class="callout-content"><h4>Importante: datos personales</h4><p>Usa <strong>datos ficticios, anonimizados o autorizados</strong> (Ley 1581 de 2012). Nunca publiques datos personales reales de nadie sin su autorización.</p></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Incluye datos <strong>generales</strong>, datos para <strong>segmentar</strong> y un campo de <strong>observaciones</strong>.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-10" data-slide="10" data-title="10. Política de Captura">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 10 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge naranja"><span class="dot"></span> PASO E</div>
+      <h2 class="sec-title">Establece una política de captura de datos</h2>
+      <p class="sec-desc">Define las reglas para que todos capturen los datos de la misma manera.</p>
+      
+      <div class="x-steps"><div class="x-step"><div class="x-step-num">1</div><div><h4>Cómo se capturan</h4><p>Manual, desde un formulario, un CRM o una importación.</p></div></div><div class="x-step"><div class="x-step-num">2</div><div><h4>Reglas de escritura</h4><p>Mayúsculas y minúsculas, abreviaturas, formato de teléfono y fechas.</p></div></div><div class="x-step"><div class="x-step-num">3</div><div><h4>Responsable</h4><p>Quién actualiza la base.</p></div></div><div class="x-step"><div class="x-step-num">4</div><div><h4>Periodicidad y reporte</h4><p>Cada cuánto se actualiza y a quién se informa.</p></div></div></div><div class="x-code-wrap"><div class="x-code-head"><span>Ejemplo de política de captura (copia y adapta)</span>
+<button type="button" class="x-copy" onclick="copiarBloque('codePolitica', this)">Copiar</button></div>
+<pre class="x-code" id="codePolitica">POLÍTICA DE CAPTURA DE DATOS — Lácteos del Valle S.A.S. (ejemplo)
+1. Cómo se capturan: formulario de Access / importación desde Excel validado.
+2. Reglas de escritura: nombres en formato Título; sin abreviaturas; teléfono sin espacios (10 dígitos).
+3. Campos obligatorios: nombres, apellidos, teléfono, ciudad.
+4. Responsable de actualizar: coordinador de datos del equipo.
+5. Periodicidad: semanal (viernes).
+6. A quién reporta: gerente de la empresa.
+7. Datos personales: solo con autorización o anonimizados (Ley 1581 de 2012).</pre></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Sin política, cada persona escribe distinto y la base se <strong>ensucia de nuevo</strong>.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-11" data-slide="11" data-title="11. Base como Activo">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 11 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge tech"><span class="dot"></span> PASO F</div>
+      <h2 class="sec-title">Cuida tu base de datos como un activo estratégico</h2>
+      <p class="sec-desc">La base de datos es un bien valioso de la empresa y se protege.</p>
+      
+      <div class="grid-3"><div class="card-premium top-verde"><div>
+  <div class="card-header-flex"><div class="card-icon-badge verde"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg></div><span class="card-pill-tag verde">Copia de seguridad</span></div>
+  <h3 class="card-title">Respaldo</h3><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Guarda una copia del archivo en otro lugar</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Hazla con una frecuencia definida</span></li></ul>
+</div></div><div class="card-premium top-tech"><div>
+  <div class="card-header-flex"><div class="card-icon-badge tech"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><span class="card-pill-tag tech">Acceso controlado</span></div>
+  <h3 class="card-title">Pocas personas</h3><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>No des acceso a todo el mundo</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Permisos según el rol: ver o editar</span></li></ul>
+</div></div><div class="card-premium top-naranja"><div>
+  <div class="card-header-flex"><div class="card-icon-badge naranja"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><span class="card-pill-tag naranja">Lugar seguro</span></div>
+  <h3 class="card-title">Protege la información</h3><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Evita robo, manipulación y errores</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Cuida los datos confidenciales y críticos</span></li></ul>
+</div></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Respaldo, acceso limitado y lugar seguro: <strong>tres hábitos</strong> que cuidan tu base.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-12" data-slide="12" data-title="12. Demo: Crear Tablas">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 12 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge verde"><span class="dot"></span> DEMO EN ACCESS · 1</div>
+      <h2 class="sec-title">Demo en Access: crea dos tablas</h2>
+      <p class="sec-desc">Empezamos con Ciudades y Clientes.</p>
+      
+      <div class="x-steps"><div class="x-step"><div class="x-step-num">1</div><div><h4>Crear la base</h4><p>Abre Access y elige <strong>Base de datos en blanco</strong>. Dale un nombre, por ejemplo <code>LacteosDelValle.accdb</code>.</p></div></div><div class="x-step"><div class="x-step-num">2</div><div><h4>Crear la tabla Ciudades</h4><p>Pestaña <strong>Crear → Diseño de tabla</strong>. Campos: <code>id_ciudad</code> (Autonumeración, clave principal), <code>ciudad</code>, <code>departamento</code> (Texto corto).</p></div></div><div class="x-step"><div class="x-step-num">3</div><div><h4>Crear la tabla Clientes</h4><p>Campos: <code>id_cliente</code> (clave principal), <code>nombres</code>, <code>apellidos</code>, <code>telefono</code> y <code>id_ciudad</code> (Número).</p></div></div><div class="x-step"><div class="x-step-num">4</div><div><h4>Guardar</h4><p>Guarda cada tabla con <strong>Ctrl + G</strong> y su nombre.</p></div></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Clave principal en <strong>la columna que identifica</strong> cada fila.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-13" data-slide="13" data-title="13. Demo: Relaciones">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 13 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge tech"><span class="dot"></span> DEMO EN ACCESS · 2</div>
+      <h2 class="sec-title">Demo en Access: relaciona las tablas</h2>
+      <p class="sec-desc">La relación une las tablas y evita datos inconsistentes.</p>
+      
+      <div class="x-steps"><div class="x-step"><div class="x-step-num">1</div><div><h4>Abrir Relaciones</h4><p><strong>Herramientas de base de datos → Relaciones</strong>.</p></div></div><div class="x-step"><div class="x-step-num">2</div><div><h4>Agregar las tablas</h4><p>Añade Ciudades y Clientes.</p></div></div><div class="x-step"><div class="x-step-num">3</div><div><h4>Arrastrar el campo</h4><p>Arrastra <code>id_ciudad</code> de Ciudades sobre <code>id_ciudad</code> de Clientes.</p></div></div><div class="x-step"><div class="x-step-num">4</div><div><h4>Exigir integridad referencial</h4><p>Marca la casilla: así no se puede registrar un cliente con una ciudad que no existe. Tipo: <strong>uno a varios</strong>.</p></div></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>La relación se hace <strong>clave principal → clave externa</strong>.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-14" data-slide="14" data-title="14. Demo: Importar">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 14 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge naranja"><span class="dot"></span> DEMO EN ACCESS · 3</div>
+      <h2 class="sec-title">Demo en Access: importa los datos</h2>
+      <p class="sec-desc">Reutilizas el trabajo de la EV02 en lugar de digitar de nuevo.</p>
+      
+      <div class="x-steps"><div class="x-step"><div class="x-step-num">1</div><div><h4>Preparar el Excel</h4><p>Usa los datos de tu EV02: una hoja por tabla, con encabezados iguales a los campos.</p></div></div><div class="x-step"><div class="x-step-num">2</div><div><h4>Iniciar la importación</h4><p><strong>Datos externos → Nuevo origen de datos → Desde archivo → Excel</strong>.</p></div></div><div class="x-step"><div class="x-step-num">3</div><div><h4>Elegir destino</h4><p>Selecciona <strong>Anexar una copia de los registros a la tabla</strong> y la tabla correspondiente.</p></div></div><div class="x-step"><div class="x-step-num">4</div><div><h4>Revisar</h4><p>Abre la tabla y comprueba que no haya errores de importación ni duplicados.</p></div></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Importa primero las tablas <strong>«uno»</strong> (Ciudades) y después las «muchos» (Clientes).</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-15" data-slide="15" data-title="15. Demo: Consulta">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 15 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge verde"><span class="dot"></span> DEMO EN ACCESS · 4</div>
+      <h2 class="sec-title">Demo en Access: una consulta para un informe</h2>
+      <p class="sec-desc">La consulta responde la pregunta de negocio.</p>
+      
+      <div class="x-steps"><div class="x-step"><div class="x-step-num">1</div><div><h4>Crear la consulta</h4><p><strong>Crear → Asistente de consultas</strong> (o Diseño de consulta).</p></div></div><div class="x-step"><div class="x-step-num">2</div><div><h4>Elegir campos</h4><p>De Clientes: nombres y apellidos. De Ciudades: ciudad y departamento.</p></div></div><div class="x-step"><div class="x-step-num">3</div><div><h4>Aplicar un criterio</h4><p>En <em>Criterios</em> de ciudad escribe «Cali».</p></div></div><div class="x-step"><div class="x-step-num">4</div><div><h4>Ejecutar y guardar</h4><p>Pulsa <strong>Ejecutar</strong> y guarda la consulta: es la base de un informe.</p></div></div></div><div class="callout-box"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg></div>
+<div class="callout-content"><h4>Para el informe</h4><p>Con la consulta guardada puedes crear un <strong>informe</strong> (Crear → Informe) listo para presentar.</p></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Una consulta guardada es un <strong>informe que se repite sin esfuerzo</strong>.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-16" data-slide="16" data-title="16. Herramientas">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 16 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge tech"><span class="dot"></span> ELIGE TU HERRAMIENTA</div>
+      <h2 class="sec-title">¿Con qué herramienta lo hago?</h2>
+      <p class="sec-desc">El equipo elige la que mejor domine.</p>
+      
+      <div class="callout-box"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg></div>
+<div class="callout-content"><h4>Otras herramientas</h4><p>La guía acepta <strong>Excel, Access, Power BI u otra aplicación</strong> que administre bases de datos. Lo importante es que haya <strong>tablas, claves y relaciones</strong>, sea cual sea la herramienta.</p></div></div><div class="x-fichas"><div class="x-ficha" style="--c:#39a900"><div class="fh"><div class="ft">Excel</div></div><div class="fl"><b>Ventaja</b><p>Ya lo conoces. Hojas como tablas y modelo de datos.</p></div><div class="fl"><b>Cuidado</b><p>Las relaciones no se imponen solas; hay que cuidar la disciplina.</p></div></div><div class="x-ficha" style="--c:#0284c7"><div class="fh"><div class="ft">Access</div></div><div class="fl"><b>Ventaja</b><p>Hecho para bases de datos: relaciones, formularios y consultas.</p></div><div class="fl"><b>Cuidado</b><p>Solo en Windows.</p></div></div><div class="x-ficha" style="--c:#ea580c"><div class="fh"><div class="ft">Power BI</div></div><div class="fl"><b>Ventaja</b><p>Modelo de datos y visualizaciones en el mismo lugar.</p></div><div class="fl"><b>Cuidado</b><p>Requiere instalar la aplicación.</p></div></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Usa la herramienta que <strong>domines como equipo</strong>.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-17" data-slide="17" data-title="17. Qué Entregas">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 17 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge naranja"><span class="dot"></span> LA ENTREGA</div>
+      <h2 class="sec-title">Qué entregas en la GA5-220501114-AA1-EV04</h2>
+      <p class="sec-desc">Resumen de los lineamientos de entrega de la guía.</p>
+      
+      <div class="x-fichas anchas"><div class="x-ficha" style="--c:#39a900"><div class="fh"><span class="n">1</span><div class="ft">Producto</div></div><div class="fl solo"><p><strong>Base de datos estructurada</strong> con la información depurada de la empresa.</p></div></div><div class="x-ficha" style="--c:#0284c7"><div class="fh"><span class="n">2</span><div class="ft">Formato</div></div><div class="fl solo"><p>Excel, Access, Power BI u otra aplicación que administre bases de datos.</p></div></div><div class="x-ficha" style="--c:#ea580c"><div class="fh"><span class="n">3</span><div class="ft">Tamaño</div></div><div class="fl solo"><p><strong>10 GB</strong> como máximo.</p></div></div><div class="x-ficha" style="--c:#7c3aed"><div class="fh"><span class="n">4</span><div class="ft">Equipo</div></div><div class="fl solo"><p><strong>4 aprendices</strong>.</p></div></div><div class="x-ficha" style="--c:#dc2626"><div class="fh"><span class="n">5</span><div class="ft">Dónde se entrega</div></div><div class="fl solo"><p>En Zajuna, espacio <strong>GA5-220501114-AA1-EV04</strong>.</p></div></div><div class="x-ficha" style="--c:#0d9488"><div class="fh"><span class="n">6</span><div class="ft">Fecha límite</div></div><div class="fl solo"><p><strong>Miércoles, 2 de diciembre de 2026</strong>, 11:59 p. m.</p></div></div></div><div class="callout-box"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></div>
+<div class="callout-content"><h4>Antes de subir</h4><p>Confirma en el espacio de Zajuna si pide <strong>archivo</strong> o <strong>enlace</strong>. Si es enlace, usa una carpeta de Drive compartida con el instructor (permiso <em>Comentador</em>) y con acceso por enlace, como en las evidencias anteriores.</p></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Una <strong>base de datos estructurada</strong>, un equipo de 4 y entrega antes del <strong>miércoles, 2 de diciembre de 2026</strong>.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-18" data-slide="18" data-title="18. Lista de Revisión">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 18 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge verde"><span class="dot"></span> ANTES DE ENTREGAR</div>
+      <h2 class="sec-title">Lista de revisión antes de entregar</h2>
+      <p class="sec-desc">Marca cada punto en equipo. El instrumento oficial es la lista de verificación de la evidencia en Zajuna.</p>
+      
+      <div class="checklist-card"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+<h4 style="font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:var(--texto-main);">Checklist de Alistamiento</h4>
+<span id="checklistCounter" style="font-size:11px;font-weight:800;color:var(--sena-verde-dark);background:var(--sena-verde-bg);padding:3px 9px;border-radius:12px;border:1px solid var(--sena-verde-border)">0 / 9 Completados</span></div>
+<div class="checklist-item" onclick="toggleChecklistItem(this)"><div class="checklist-checkbox">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+<div class="checklist-text"><h5>Campos independientes</h5><p>Cada dato en su propia columna.</p></div></div><div class="checklist-item" onclick="toggleChecklistItem(this)"><div class="checklist-checkbox">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+<div class="checklist-text"><h5>Clave principal en cada tabla</h5><p>Identifica cada fila sin repetirse.</p></div></div><div class="checklist-item" onclick="toggleChecklistItem(this)"><div class="checklist-checkbox">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+<div class="checklist-text"><h5>Relaciones definidas</h5><p>Claves externas conectando las tablas.</p></div></div><div class="checklist-item" onclick="toggleChecklistItem(this)"><div class="checklist-checkbox">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+<div class="checklist-text"><h5>Normalización revisada</h5><p>Hasta la 3FN: sin datos repetidos.</p></div></div><div class="checklist-item" onclick="toggleChecklistItem(this)"><div class="checklist-checkbox">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+<div class="checklist-text"><h5>Datos generales y para segmentar</h5><p>Incluye observaciones.</p></div></div><div class="checklist-item" onclick="toggleChecklistItem(this)"><div class="checklist-checkbox">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+<div class="checklist-text"><h5>Política de captura redactada</h5><p>Reglas, responsable y periodicidad.</p></div></div><div class="checklist-item" onclick="toggleChecklistItem(this)"><div class="checklist-checkbox">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+<div class="checklist-text"><h5>Datos protegidos</h5><p>Ficticios, anonimizados o autorizados (Ley 1581).</p></div></div><div class="checklist-item" onclick="toggleChecklistItem(this)"><div class="checklist-checkbox">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+<div class="checklist-text"><h5>Copia de seguridad y acceso controlado</h5><p>La base cuidada como activo.</p></div></div><div class="checklist-item" onclick="toggleChecklistItem(this)"><div class="checklist-checkbox">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+<div class="checklist-text"><h5>Una consulta o informe de prueba</h5><p>Demuestra que sirve para presentar informes.</p></div></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Revisa también el <strong>instrumento de evaluación</strong> publicado en Zajuna.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-19" data-slide="19" data-title="19. Preguntas Frecuentes">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 19 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge tech"><span class="dot"></span> DUDAS COMUNES</div>
+      <h2 class="sec-title">Preguntas frecuentes</h2>
+      <p class="sec-desc">Toca «Ver respuesta» para revelar cada una.</p>
+      
+      <div class="x-qgrid c3"><div class="qc"><div class="qh"><span class="qn">1</span><span class="ql">Pregunta 1</span></div><p class="qt">¿Puedo dejar nombre y apellido en una sola columna?</p><details><summary>Ver respuesta</summary><div class="qa">No. Cada variable va en su propia columna.</div></details></div><div class="qc"><div class="qh"><span class="qn">2</span><span class="ql">Pregunta 2</span></div><p class="qt">¿Qué pasa si no pongo clave principal?</p><details><summary>Ver respuesta</summary><div class="qa">No hay forma segura de identificar cada fila y no se pueden relacionar tablas.</div></details></div><div class="qc"><div class="qh"><span class="qn">3</span><span class="ql">Pregunta 3</span></div><p class="qt">¿Puedo usar datos reales de personas?</p><details><summary>Ver respuesta</summary><div class="qa">Solo con autorización. Lo recomendado son datos ficticios o anonimizados.</div></details></div><div class="qc"><div class="qh"><span class="qn">4</span><span class="ql">Pregunta 4</span></div><p class="qt">¿Tiene que ser Access?</p><details><summary>Ver respuesta</summary><div class="qa">No. Puede ser Excel, Power BI u otra herramienta que administre bases de datos.</div></details></div><div class="qc"><div class="qh"><span class="qn">5</span><span class="ql">Pregunta 5</span></div><p class="qt">¿Es la misma empresa de la EV01?</p><details><summary>Ver respuesta</summary><div class="qa">Sí: la base es para la empresa seleccionada.</div></details></div><div class="qc"><div class="qh"><span class="qn">6</span><span class="ql">Pregunta 6</span></div><p class="qt">¿Qué reutilizo de la EV02?</p><details><summary>Ver respuesta</summary><div class="qa">Los datos depurados: se importan a las tablas.</div></details></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Si dudas, <strong>pregunta en la sesión o en Zajuna</strong>.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-20" data-slide="20" data-title="20. Cierre">
+    <div class="slide-num-indicator"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 20 / 20</div>
+    <div class="slide-inner">
+      
+      <div class="slide-header-badge"><span class="dot"></span> CIERRE DE LA SESIÓN</div>
+      <h2 class="sec-title">Cierre y próximos pasos</h2>
+      <p class="sec-desc">Lo esencial y lo que sigue:</p>
+      
+      <div class="callout-box"><div class="callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg></div>
+<div class="callout-content"><h4>Calendario que sigue</h4><p><strong>miércoles, 2 de diciembre de 2026:</strong> entrega de la <strong>GA5-220501114-AA1-EV04</strong>. <strong>martes, 1 de diciembre de 2026:</strong> Sesión 6, <strong>cuestionario de práctica</strong> para preparar la <strong>GA5-220501114-AA1-EV05</strong> (30 preguntas, individual).</p></div></div><div class="grid-3"><div class="card-premium top-verde"><div>
+  <div class="card-header-flex"><div class="card-icon-badge verde"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span class="card-pill-tag verde">Recuerda</span></div>
+  <h3 class="card-title">Lo esencial</h3><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Campos independientes y claves</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Relaciones y normalización</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-verde)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Política de captura y datos protegidos</span></li></ul>
+</div></div><div class="card-premium top-naranja"><div>
+  <div class="card-header-flex"><div class="card-icon-badge naranja"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg></div><span class="card-pill-tag naranja">Entrega</span></div>
+  <h3 class="card-title">EV04</h3><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Hasta el miércoles, 2 de diciembre de 2026</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Equipo de 4</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sena-naranja)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Base de datos estructurada</span></li></ul>
+</div></div><div class="card-premium top-tech"><div>
+  <div class="card-header-flex"><div class="card-icon-badge tech"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></div><span class="card-pill-tag tech">Dudas</span></div>
+  <h3 class="card-title">Dónde preguntar</h3><ul class="list-premium"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>En la sesión</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>En Zajuna</span></li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul-tech)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Con tu archivo abierto</span></li></ul>
+</div></div></div>
+      <div class="x-note llevar"><h5>✅ Idea para llevar</h5><p>Una base bien estructurada es <strong>el cimiento de todos tus informes</strong>.</p></div>
+    </div>
+  </section>
+</div>
+<div class="toast-notice" id="toastNotice"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span id="toastMessage">Copiado</span></div>
+<script>
+
+function toggleSidebar(){const s=document.getElementById('sidebar'),f=document.getElementById('floatingToggle'),b=document.getElementById('sidebarBackdrop');
+ if(window.innerWidth<=1024){s.classList.toggle('mobile-open');if(b)b.classList.toggle('active',s.classList.contains('mobile-open'));}
+ else{s.classList.toggle('collapsed');f.classList.toggle('visible',s.classList.contains('collapsed'));}}
+document.addEventListener('DOMContentLoaded',()=>{
+ document.querySelectorAll('.sidebar .nav-link').forEach(l=>l.addEventListener('click',()=>{if(window.innerWidth<=1024){document.getElementById('sidebar').classList.remove('mobile-open');const b=document.getElementById('sidebarBackdrop');if(b)b.classList.remove('active');}}));
+ const slides=document.querySelectorAll('.slide'),links=document.querySelectorAll('.sidebar .nav-link'),bar=document.getElementById('progressBar');
+ window.addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-window.innerHeight;bar.style.width=(h>0?window.scrollY/h*100:0)+'%';
+  let cur=null;slides.forEach(s=>{const r=s.getBoundingClientRect();if(r.top<=window.innerHeight*0.4&&r.bottom>=window.innerHeight*0.4)cur=s;});
+  if(cur){const n=cur.getAttribute('data-slide');links.forEach(l=>{if(l.getAttribute('data-slide')===n){l.classList.add('active');l.scrollIntoView({block:'nearest',behavior:'smooth'});}else l.classList.remove('active');});}});
+});
+function showToast(m){const t=document.getElementById('toastNotice');document.getElementById('toastMessage').textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);}
+function toggleChecklistItem(i){i.classList.toggle('checked');const tot=document.querySelectorAll('.checklist-item').length,ok=document.querySelectorAll('.checklist-item.checked').length,c=document.getElementById('checklistCounter');
+ if(c){c.textContent=ok+' / '+tot+' Completados';if(ok===tot){c.style.background='var(--sena-verde)';c.style.color='#fff';showToast('¡Listo! Tienes claro cómo armar tu base de datos.');}else{c.style.background='var(--sena-verde-bg)';c.style.color='var(--sena-verde-dark)';}}}
+function copiarBloque(id,btn){const el=document.getElementById(id);navigator.clipboard.writeText(el.innerText).then(()=>{const o=btn.textContent;btn.textContent='¡Copiado!';showToast('Contenido copiado al portapapeles');setTimeout(()=>btn.textContent=o,1800);}).catch(()=>showToast('Selecciona y copia el texto manualmente'));}
+document.addEventListener('keydown',e=>{const a=document.querySelector('.sidebar .nav-link.active'),n=a?parseInt(a.getAttribute('data-slide')):1,T=20;
+ if(e.key==='ArrowRight'||e.key==='PageDown'){if(n<T){e.preventDefault();const t=document.getElementById('slide-'+(n+1));if(t)t.scrollIntoView({behavior:'smooth'});}}
+ else if(e.key==='ArrowLeft'||e.key==='PageUp'){if(n>1){e.preventDefault();const t=document.getElementById('slide-'+(n-1));if(t)t.scrollIntoView({behavior:'smooth'});}}});
+</script>
+</body>
+</html>
